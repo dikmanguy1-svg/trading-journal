@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-l7hrtkS/8MT0iGCpF2OGl+gfmRs1QFc71FOiLnRYjgM=' https://www.gstatic.com https://apis.google.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src https://finnhub.io https://api.twelvedata.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.googleapis.com; frame-src https://accounts.google.com https://*.firebaseapp.com; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-nUUnJr5ZUy9PlDBR7vz2fxwJIMhqHKfFhHg/CO2Td+Q=' https://www.gstatic.com https://apis.google.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src https://finnhub.io https://api.twelvedata.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.googleapis.com; frame-src https://accounts.google.com https://*.firebaseapp.com; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet"><title>Trading.Journal</title>
 <style>
@@ -71,7 +71,7 @@ const SQ=["Weekly uptrend: higher highs and higher lows?","Price above the 50-da
 let S={set:{pf:10000,al:.1,mr:.01,rr:2},pulse:Array(7).fill(null),scr:{t:"",a:Array(9).fill(null)},calc:{t:"",dir:"Long",e:"",s:"",tg:""},trades:[],wl:[]};
 let setOpen=true,tab="pulse",ref=null,openN=null,tmr=null;
 const T=[["pulse","1. Daily pulse"],["scr","2. Stock screening"],["calc","3. Risk calculator"],["jr","4. Trade journal"],["dash","5. Dashboard"],["mon","6. Monthly report"],["wl","7. Watchlist"]];
-function save(){if(U&&cloudReady)return cloudSave();try{localStorage.setItem("tj_v1",JSON.stringify(S));$("sv").textContent="Saved on this device"}catch(e){$("sv").textContent="Could not save here"}}
+function save(){if(U&&cloudReady)return cloudSave();if(FB){$("sv").textContent="Log in to save your journal";return}try{localStorage.setItem("tj_v1",JSON.stringify(S));$("sv").textContent="Saved on this device"}catch(e){$("sv").textContent="Could not save here"}}
 const num=v=>v===""||v==null?null:Number(v);
 const pnl=t=>t.x==null?null:(t.x-t.e)*t.sh*(t.dir==="Short"?-1:1);
 const risk=t=>t.s==null?null:Math.abs(t.e-t.s)*t.sh;
@@ -199,13 +199,13 @@ document.addEventListener("submit",e=>{if(e.target.id!=="tf")return;e.preventDef
  S.trades.push({id:"t"+Date.now(),d:v.d,t:v.t.trim().toUpperCase(),dir:v.dir,e:num(v.e),s:num(v.s),tg:num(v.tg),sh:num(v.sh),m:num(v.m),th:v.th,x:null});save();view()});
 document.addEventListener('submit',e=>{if(e.target.id!=='wf')return;e.preventDefault();const v=Object.fromEntries(new FormData(e.target));S.wl.push({t:v.t.trim().toUpperCase(),dir:v.dir,e:num(v.e),s:num(v.s),tg:num(v.tg),p:num(v.p)});save();view()});
 const KK="tj_k",KT="tj_td";
-function load(){try{const r=localStorage.getItem("tj_v1");if(r)S=clean(JSON.parse(r))}catch(e){}try{if(!S.key){const k=localStorage.getItem(KK);if(k&&/^[\w-]{10,80}$/.test(k))S.key=k}if(!S.td){const k=localStorage.getItem(KT);if(k&&/^[\w-]{10,80}$/.test(k))S.td=k}}catch(e){}}
+function load(){try{const r=localStorage.getItem("tj_v1");if(r){if(FB)LOCAL=JSON.parse(r);else S=clean(JSON.parse(r))}}catch(e){}try{if(!S.key){const k=localStorage.getItem(KK);if(k&&/^[\w-]{10,80}$/.test(k))S.key=k}if(!S.td){const k=localStorage.getItem(KT);if(k&&/^[\w-]{10,80}$/.test(k))S.td=k}}catch(e){}}
 $("ex").onclick=()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify({...S,key:undefined,keyBad:undefined,td:undefined,tdBad:undefined})],{type:"application/json"}));a.download="trading-journal-backup.json";a.click()};
 $("im").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(f.size>3e6||!Array.isArray(d.trades))throw 0;if(!confirm("Replace the data on this device with this backup?"))return;const k=S.key,k2=S.td;S=clean(d);if(k2)S.td=k2;if(!S.key&&k)S.key=k;save();view()}catch(x){alert("This file is not a valid backup.")}e.target.value=""};
 /* ---- Accounts (Firebase). Stays hidden until FB is filled in. ---- */
 const FB={apiKey:"AIzaSyAbwXhBp2GW0MJvLUCALKSJ_60AEWOFKeQ",authDomain:"trading-journal-58021.firebaseapp.com",projectId:"trading-journal-58021",storageBucket:"trading-journal-58021.firebasestorage.app",messagingSenderId:"140544760726",appId:"1:140544760726:web:f63699ccf2bbc2030b5bb7"};
 const FBV="10.14.1";
-var U=null,cloudReady=false,cloudT=null,fbm=null;
+var LOCAL=null,U=null,cloudReady=false,cloudT=null,fbm=null;
 const hasData=d=>d.trades.length>0||d.wl.length>0;
 function carry(n){n.key=S.key;n.td=S.td;n.px=S.px;n.pxT=S.pxT;n.sma=S.sma;n.smaT=S.smaT;return n}
 function cloudSave(){clearTimeout(cloudT);$("sv").textContent="Saving...";cloudT=setTimeout(async()=>{try{const{key,keyBad,td,tdBad,px,pxT,sma,smaT,...d}=S;await fbm.fs.setDoc(fbm.fs.doc(fbm.db,"users",U.uid),{data:JSON.stringify(d),updated:Date.now()});$("sv").textContent="Saved to your account"}catch(e){$("sv").textContent="Could not save to your account"}},1200)}
@@ -213,10 +213,10 @@ async function onUser(u){
  if(u){U=u;cloudReady=false;$("sv").textContent="Loading your journal...";
   try{const snap=await fbm.fs.getDoc(fbm.fs.doc(fbm.db,"users",u.uid));
    if(snap.exists()){S=carry(clean(JSON.parse(snap.data().data)));cloudReady=true}
-   else if(hasData(S)&&confirm("Upload the journal saved on this device to your new account?")){cloudReady=true;cloudSave()}
+   else if(LOCAL&&hasData(clean(LOCAL))&&confirm("Upload the journal saved on this device to your new account?")){S=carry(clean(LOCAL));cloudReady=true;cloudSave()}
    else{S=carry(clean({}));cloudReady=true;cloudSave()}
    $("sv").textContent="Signed in"}catch(e){U=null;cloudReady=false;$("sv").textContent="Could not load your account. Try again."}}
- else{const was=cloudReady;U=null;cloudReady=false;if(was){const k=S.key;S=clean({});load();if(!S.key&&k)S.key=k}$("sv").textContent=""}
+ else{const was=cloudReady;U=null;cloudReady=false;if(was){const k=S.key;S=clean({});if(k)S.key=k}$("sv").textContent=""}
  $("who").textContent=U?String(U.displayName||U.email||"").split(" ")[0].slice(0,30):"";
  $("au").textContent=U?"Log out":"Sign up / Log in";view()}
 async function fbInit(){if(!FB)return;$("au").hidden=false;
