@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-soecdeL7mHUQUyEL1ee3JDaf1mJD8mLOTujQuqwhb2Y=' https://www.gstatic.com https://apis.google.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src https://finnhub.io https://api.twelvedata.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.googleapis.com; frame-src https://accounts.google.com https://*.firebaseapp.com; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-eBPqCQARL5VRm0oYDnL/ZrTc1wuJ2jZ/akl1GClIx9I=' https://www.gstatic.com https://apis.google.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src https://finnhub.io https://api.twelvedata.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.googleapis.com; frame-src https://accounts.google.com https://*.firebaseapp.com; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet"><title>Trading.Journal</title>
 <style>
@@ -190,7 +190,7 @@ for(const[nm,mp]of[["sma",d.sma],["smaT",d.smaT]])if(mp&&typeof mp==="object")fo
 if(typeof d.key==="string"&&/^[\w-]{10,80}$/.test(d.key))o.key=d.key;if(typeof d.td==="string"&&/^[\w-]{10,80}$/.test(d.td))o.td=d.td;return o}
 let pxBusy=false,pxMsg="";
 const pause=ms=>new Promise(z=>setTimeout(z,ms));
-const FKS=["dbgask9r01qiroogojog","dbgask9r01qiroogojp0","dbgao19r01qiroognfbg","dbgao19r01qiroognfb0"];let FK=FKS[0],FKI=0;
+const FKS=["dbgask9r01qiroogojogdbgask9r01qiroogojp0"];let FK=FKS[0],FKI=0;
 const SMA_UI=false;
 const smaOn=()=>SMA_UI&&(!!(S.td&&!S.tdBad)||!!(FK&&!S.keyBad&&!S.candBad));
 const smaDue=()=>smaOn()&&[...new Set(S.wl.map(w=>w.t))].filter(t=>t&&(!(S.smaT||{})[t]||Date.now()-S.smaT[t]>72e6));
