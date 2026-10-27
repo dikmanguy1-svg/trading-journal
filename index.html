@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-rz8fHzTZWLeYl3cFUoZl2rnHKd1jrwep84bqYDtdwN4='; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src https://finnhub.io https://api.twelvedata.com; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-l7hrtkS/8MT0iGCpF2OGl+gfmRs1QFc71FOiLnRYjgM=' https://www.gstatic.com https://apis.google.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src https://finnhub.io https://api.twelvedata.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.googleapis.com; frame-src https://accounts.google.com https://*.firebaseapp.com; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet"><title>Trading.Journal</title>
 <style>
@@ -9,7 +9,7 @@ body{margin:0;background:radial-gradient(700px 480px at 92% -4%,rgba(255,138,115
 body::before{content:"";position:fixed;inset:0;z-index:-1;background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%201600%20900%27%20preserveAspectRatio%3D%27xMidYMid%20slice%27%20fill%3D%27none%27%3E%3Cpath%20d%3D%27M24%20890V857M71%20890V831M118%20890V825M165%20890V855M212%20890V801M259%20890V847M306%20890V862M353%20890V796M400%20890V859M447%20890V855M494%20890V811M541%20890V813M588%20890V797M635%20890V844M682%20890V873M729%20890V791M776%20890V856M824%20890V822M871%20890V846M918%20890V866M965%20890V817M1012%20890V794M1059%20890V800M1106%20890V854M1153%20890V809M1200%20890V871M1247%20890V869M1294%20890V791M1341%20890V830M1388%20890V857M1435%20890V839M1482%20890V849M1529%20890V817M1576%20890V825%27%20stroke%3D%27%23f3e9d2%27%20stroke-opacity%3D%27.05%27%20stroke-width%3D%2716%27/%3E%3Cpath%20d%3D%27M71%20599V665M118%20571V649M165%20544V612M212%20553V615M259%20550V587M306%20522V591M353%20501V548M400%20448V528M494%20483V535M541%20451V491M635%20435V498M682%20399V488M729%20377V445M776%20343V412M824%20329V366M1012%20399V453M1059%20269V435M1106%20281V322M1247%20277V322M1341%20294V321M1482%20360V410M1529%20314V380M1576%20296V343M62%20660H80V621H62ZM109%20621H127V587H109ZM156%20587H174V579H156ZM203%20579H221V573H203ZM250%20573H268V564H250ZM297%20564H315V538H297ZM344%20538H362V520H344ZM391%20520H409V468H391ZM485%20495H503V491H485ZM532%20491H550V468H532ZM626%20490H644V460H626ZM673%20460H691V419H673ZM720%20419H738V409H720ZM767%20409H785V359H767ZM815%20359H833V333H815ZM1003%20446H1021V403H1003ZM1050%20403H1068V305H1050ZM1097%20305H1115V286H1097ZM1238%20312H1256V303H1238ZM1332%20305H1350V296H1332ZM1473%20405H1491V364H1473ZM1520%20364H1538V328H1520ZM1567%20328H1585V315H1567Z%27%20stroke%3D%27%23f3e9d2%27%20stroke-width%3D%272.2%27%20stroke-opacity%3D%27.2%27%20fill%3D%27%23f3e9d2%27%20fill-opacity%3D%270%27/%3E%3Cpath%20d%3D%27M24%20608V667M447%20429V516M588%20443V509M871%20310V334M918%20327V403M965%20369V464M1153%20275V329M1200%20286V331M1294%20300V343M1388%20281V392M1435%20377V433M15%20640H33V660H15ZM438%20468H456V495H438ZM579%20468H597V490H579ZM862%20333H880V334H862ZM909%20334H927V393H909ZM956%20393H974V446H956ZM1144%20286H1162V293H1144ZM1191%20293H1209V312H1191ZM1285%20303H1303V305H1285ZM1379%20296H1397V379H1379ZM1426%20379H1444V405H1426Z%27%20stroke%3D%27%23f3e9d2%27%20stroke-width%3D%272.2%27%20stroke-opacity%3D%27.2%27%20fill%3D%27%23f3e9d2%27%20fill-opacity%3D%270.16%27/%3E%3Cpolyline%20points%3D%2724%2C660%2071%2C641%20118%2C623%20165%2C612%20212%2C604%20259%2C597%20306%2C589%20353%2C569%20400%2C547%20447%2C534%20494%2C521%20541%2C506%20588%2C496%20635%2C485%20682%2C470%20729%2C462%20776%2C442%20824%2C420%20871%2C401%20918%2C387%20965%2C385%201012%2C383%201059%2C368%201106%2C357%201153%2C351%201200%2C348%201247%2C335%201294%2C315%201341%2C300%201388%2C311%201435%2C328%201482%2C338%201529%2C340%201576%2C342%27%20stroke%3D%27%23ff8a73%27%20stroke-width%3D%273.5%27%20opacity%3D%27.55%27/%3E%3C/svg%3E") center/cover no-repeat}
 main{max-width:1080px;margin:0 auto;padding:18px 18px 64px}
 .top{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.brand{font-family:"Young Serif",Georgia,serif;font-size:21px;letter-spacing:.005em}.brand b{color:var(--pen)}
+[hidden]{display:none!important}.tr{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}#who{font-size:13.5px;color:var(--mut)}.brand{font-family:"Young Serif",Georgia,serif;font-size:21px;letter-spacing:.005em}.brand b{color:var(--pen)}
 #sv{font-size:13px;color:var(--mut);min-height:1.5em}
 .hero{display:flex;align-items:flex-start;justify-content:space-between;gap:28px;margin:clamp(26px,5vw,56px) 0 30px}
 .hero>div:first-child{flex:1;min-width:0}
@@ -52,7 +52,7 @@ summary{cursor:pointer;font-weight:700;list-style:none}summary::-webkit-details-
 @media(max-width:760px){.hero{gap:16px}.hero p{font-size:16px}#hs{flex-basis:150px;padding:12px 12px 6px}#hs>b{font-size:22px}.two{grid-template-columns:1fr}.row{grid-template-columns:28px 1fr 96px}nav{gap:4px}nav button,nav button.gh{padding:8px 12px;font-size:13.5px}button.sm,label.bl{padding:9px 14px}td button{margin:2px 2px 2px 0}h1{font-size:clamp(34px,9.5vw,52px)}}
 @media(max-width:520px){.hero{flex-direction:column}#hs{flex-basis:auto;width:200px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
-</style></head><body><a class="skip" href="#v">Skip to content</a><main><div class="top"><div class="brand">Trading<b>.</b>Journal</div><span id="sv" role="status" aria-live="polite"></span></div>
+</style></head><body><a class="skip" href="#v">Skip to content</a><main><div class="top"><div class="brand">Trading<b>.</b>Journal</div><div class="tr"><span id="sv" role="status" aria-live="polite"></span><span id="who"></span><button class="gh sm" id="au" hidden>Sign up / Log in</button></div></div>
 <div class="hero"><div><h1>Write it down.<br>Own the trade.</h1><p>Five checks before you buy. One honest note after you sell. It all stays on your device.</p><button class="cta" data-t="jr">Log a trade</button></div><div id="hs"></div></div>
 <nav id="nav" aria-label="Sections"></nav>
 <div id="v"></div>
@@ -71,7 +71,7 @@ const SQ=["Weekly uptrend: higher highs and higher lows?","Price above the 50-da
 let S={set:{pf:10000,al:.1,mr:.01,rr:2},pulse:Array(7).fill(null),scr:{t:"",a:Array(9).fill(null)},calc:{t:"",dir:"Long",e:"",s:"",tg:""},trades:[],wl:[]};
 let setOpen=true,tab="pulse",ref=null,openN=null,tmr=null;
 const T=[["pulse","1. Daily pulse"],["scr","2. Stock screening"],["calc","3. Risk calculator"],["jr","4. Trade journal"],["dash","5. Dashboard"],["mon","6. Monthly report"],["wl","7. Watchlist"]];
-function save(){try{localStorage.setItem("tj_v1",JSON.stringify(S));$("sv").textContent="Saved on this device"}catch(e){$("sv").textContent="Could not save here"}}
+function save(){if(U&&cloudReady)return cloudSave();try{localStorage.setItem("tj_v1",JSON.stringify(S));$("sv").textContent="Saved on this device"}catch(e){$("sv").textContent="Could not save here"}}
 const num=v=>v===""||v==null?null:Number(v);
 const pnl=t=>t.x==null?null:(t.x-t.e)*t.sh*(t.dir==="Short"?-1:1);
 const risk=t=>t.s==null?null:Math.abs(t.e-t.s)*t.sh;
@@ -202,5 +202,27 @@ const KK="tj_k",KT="tj_td";
 function load(){try{const r=localStorage.getItem("tj_v1");if(r)S=clean(JSON.parse(r))}catch(e){}try{if(!S.key){const k=localStorage.getItem(KK);if(k&&/^[\w-]{10,80}$/.test(k))S.key=k}if(!S.td){const k=localStorage.getItem(KT);if(k&&/^[\w-]{10,80}$/.test(k))S.td=k}}catch(e){}}
 $("ex").onclick=()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify({...S,key:undefined,keyBad:undefined,td:undefined,tdBad:undefined})],{type:"application/json"}));a.download="trading-journal-backup.json";a.click()};
 $("im").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(f.size>3e6||!Array.isArray(d.trades))throw 0;if(!confirm("Replace the data on this device with this backup?"))return;const k=S.key,k2=S.td;S=clean(d);if(k2)S.td=k2;if(!S.key&&k)S.key=k;save();view()}catch(x){alert("This file is not a valid backup.")}e.target.value=""};
-load();view();$("pu").value=S.key||"";$("tu").value=S.td||"";$("tg").onclick=()=>{const v=$("tu").value.trim();if(!/^[\w-]{10,80}$/.test(v)){$("pxs").textContent="That key does not look right. Paste it again.";return}S.td=v;S.tdBad=false;S.smaT={};try{localStorage.setItem(KT,v)}catch(e){}save();getPx()};$("pg").onclick=()=>{S.key=$("pu").value.trim();S.keyBad=false;S.pxT={};try{localStorage.setItem(KK,S.key)}catch(e){}save();getPx()};setInterval(getPx,60000);
+/* ---- Accounts (Firebase). Stays hidden until FB is filled in. ---- */
+const FB={apiKey:"AIzaSyAbwXhBp2GW0MJvLUCALKSJ_60AEWOFKeQ",authDomain:"trading-journal-58021.firebaseapp.com",projectId:"trading-journal-58021",storageBucket:"trading-journal-58021.firebasestorage.app",messagingSenderId:"140544760726",appId:"1:140544760726:web:f63699ccf2bbc2030b5bb7"};
+const FBV="10.14.1";
+var U=null,cloudReady=false,cloudT=null,fbm=null;
+const hasData=d=>d.trades.length>0||d.wl.length>0;
+function carry(n){n.key=S.key;n.td=S.td;n.px=S.px;n.pxT=S.pxT;n.sma=S.sma;n.smaT=S.smaT;return n}
+function cloudSave(){clearTimeout(cloudT);$("sv").textContent="Saving...";cloudT=setTimeout(async()=>{try{const{key,keyBad,td,tdBad,px,pxT,sma,smaT,...d}=S;await fbm.fs.setDoc(fbm.fs.doc(fbm.db,"users",U.uid),{data:JSON.stringify(d),updated:Date.now()});$("sv").textContent="Saved to your account"}catch(e){$("sv").textContent="Could not save to your account"}},1200)}
+async function onUser(u){
+ if(u){U=u;cloudReady=false;$("sv").textContent="Loading your journal...";
+  try{const snap=await fbm.fs.getDoc(fbm.fs.doc(fbm.db,"users",u.uid));
+   if(snap.exists()){S=carry(clean(JSON.parse(snap.data().data)));cloudReady=true}
+   else if(hasData(S)&&confirm("Upload the journal saved on this device to your new account?")){cloudReady=true;cloudSave()}
+   else{S=carry(clean({}));cloudReady=true;cloudSave()}
+   $("sv").textContent="Signed in"}catch(e){U=null;cloudReady=false;$("sv").textContent="Could not load your account. Try again."}}
+ else{const was=cloudReady;U=null;cloudReady=false;if(was){const k=S.key;S=clean({});load();if(!S.key&&k)S.key=k}$("sv").textContent=""}
+ $("who").textContent=U?String(U.displayName||U.email||"").split(" ")[0].slice(0,30):"";
+ $("au").textContent=U?"Log out":"Sign up / Log in";view()}
+async function fbInit(){if(!FB)return;$("au").hidden=false;
+ try{const b="https://www.gstatic.com/firebasejs/"+FBV+"/",[a,au,fs]=await Promise.all([import(b+"firebase-app.js"),import(b+"firebase-auth.js"),import(b+"firebase-firestore.js")]);
+  const app=a.initializeApp(FB);fbm={au,fs,auth:au.getAuth(app),db:fs.getFirestore(app)};
+  $("au").onclick=async()=>{try{if(U)await au.signOut(fbm.auth);else await au.signInWithPopup(fbm.auth,new au.GoogleAuthProvider())}catch(e){$("sv").textContent="Sign-in did not finish. Try again."}};
+  au.onAuthStateChanged(fbm.auth,onUser)}catch(e){$("sv").textContent="Accounts are unavailable right now.";$("au").hidden=true}}
+load();view();fbInit();$("pu").value=S.key||"";$("tu").value=S.td||"";$("tg").onclick=()=>{const v=$("tu").value.trim();if(!/^[\w-]{10,80}$/.test(v)){$("pxs").textContent="That key does not look right. Paste it again.";return}S.td=v;S.tdBad=false;S.smaT={};try{localStorage.setItem(KT,v)}catch(e){}save();getPx()};$("pg").onclick=()=>{S.key=$("pu").value.trim();S.keyBad=false;S.pxT={};try{localStorage.setItem(KK,S.key)}catch(e){}save();getPx()};setInterval(getPx,60000);
 </script></main></body></html>
