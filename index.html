@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-WPGgaWGtungIpXgZVYC9Yl53YYWbNs0WQhKv/Y8U/uc=' https://www.gstatic.com https://apis.google.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src https://finnhub.io https://api.twelvedata.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.googleapis.com; frame-src https://accounts.google.com https://*.firebaseapp.com; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-NqVcDZHgTLQLH3BTBpDJRi2/4seufJE1djJOj/C0Tvw=' https://www.gstatic.com https://apis.google.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src https://finnhub.io https://api.twelvedata.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.googleapis.com; frame-src https://accounts.google.com https://*.firebaseapp.com; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet"><title>Trading.Journal</title>
 <style>
@@ -53,7 +53,7 @@ summary{cursor:pointer;font-weight:700;list-style:none}summary::-webkit-details-
 @media(max-width:520px){.hero{flex-direction:column}#hs{flex-basis:auto;width:200px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style></head><body><a class="skip" href="#v">Skip to content</a><main><div class="top"><div class="brand">Trading<b>.</b>Journal</div><div class="tr"><span id="sv" role="status" aria-live="polite"></span><span id="who"></span><button class="gh sm" id="au" hidden>Sign up / Log in</button></div></div>
-<div class="hero"><div><h1>Write it down.<br>Own the trade.</h1><p>Five checks before you buy. One honest note after you sell. It all stays on your device.</p><button class="cta" data-t="jr">Log a trade</button></div><div id="hs"></div></div>
+<div class="hero"><div><h1>Write it down.<br>Own the trade.</h1><p>Five checks before you buy. One honest note after you sell. Private to your account.</p><button class="cta" data-t="jr">Log a trade</button></div><div id="hs"></div></div>
 <nav id="nav" aria-label="Sections"></nav>
 <div id="v"></div>
 <details class="card" id="st2" hidden><summary>Settings and backup</summary>
@@ -144,6 +144,7 @@ pxMsg=S.keyBad?"The key was not accepted. Check it and save it again.":(ok||!tod
 el.textContent=pxMsg;smaRun();const a=document.activeElement;if(!a||!/INPUT|SELECT|TEXTAREA/.test(a.tagName))view()}
 function view(){
  $("nav").innerHTML=T.map(t=>`<button class="${tab===t[0]?"on":"gh"}" data-t="${t[0]}"${tab===t[0]?' aria-current="page"':''}>${t[1]}</button>`).join("");
+ if(FB&&!U){$("hs").innerHTML="";$("v").innerHTML=`<div class="card"><h2>Log in to start your journal</h2><p class="mut">Create a free account with Google to log trades, build your watchlist and track your account. Your journal is private and only you can see it.</p><p><button class="cta" id="lgb">Sign up / Log in</button></p></div>`;const b=$("lgb");if(b)b.onclick=()=>$("au").click();return}
  let h="";
  if(tab==="pulse")h=`<div class="card"><h2>Mental and macro pulse check</h2><p class="mut">Complete at the start of every trading day, before opening your trading platform.</p>${yn(S.pulse,PQ,"pulse")}${gate(S.pulse,"Approved: continue to step 2","Stop for today: do not trade",7)}<p><button class="gh sm" data-a="rp">Reset for a new day</button></p></div>`;
  if(tab==="scr")h=`<div class="card"><h2>Candidate stock screening</h2><div class="f" style="max-width:260px;margin:8px 0"><label>Ticker<input data-k="st" value="${esc(S.scr.t)}" style="text-transform:uppercase"></label></div>${yn(S.scr.a,SQ,"scr")}${gate(S.scr.a,"Passes to step 3: risk calculator","Rejected: every criterion must be “Yes”",9)}<p><button class="gh sm" data-a="rs">Screen another stock</button></p></div>`;
