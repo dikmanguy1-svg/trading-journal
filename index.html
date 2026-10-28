@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-fc5p0+GOf0b4xNm9ED5hi0bwu8EST2cI6XyC0/W0W3g=' https://www.gstatic.com https://apis.google.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src https://finnhub.io https://api.twelvedata.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.googleapis.com; frame-src https://accounts.google.com https://*.firebaseapp.com; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-kJRpf8vy6mDU1L+2yKvR8CKAfv3bjuPbhkKGcOo7RFY=' https://www.gstatic.com https://apis.google.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src https://finnhub.io https://api.twelvedata.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.googleapis.com; frame-src https://accounts.google.com https://*.firebaseapp.com; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet"><title>Trading.Journal</title>
 <style>
@@ -348,11 +348,9 @@ async function onUser(u){
  $("au").textContent=U?"Log out":"Sign up / Log in";$("dl").hidden=!U;mkRender();view()}
 function csvDl_placeholder(){}
 function csvDl(){const q=v=>{v=String(v??"");if(/^[=+\-@\t\r]/.test(v))v="'"+v;return '"'+v.replace(/"/g,'""')+'"'},R=[];
-R.push(["TRADES"]);R.push(["Date","Ticker","Direction","Entry","Stop","Target","Shares","Exit price","Exit type","P&L ($)","Reason for entry","Reason for exit"]);
+R.push(["Date","Ticker","Direction","Entry","Stop","Target","Shares","Exit price","Exit type","P&L ($)","Reason for entry","Reason for exit"]);
 S.trades.forEach(t=>R.push([t.d,t.t,t.dir,t.e,t.s,t.tg,t.sh,t.x,t.rs,t.x==null?"":pnl(t).toFixed(2),t.th,t.xr]));
-R.push([]);R.push(["WATCHLIST"]);R.push(["Ticker","Direction","Planned entry","Planned stop","Planned target","Current price"]);
-S.wl.forEach(w=>R.push([w.t,w.dir,w.e,w.s,w.tg,w.p]));
-const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+R.map(r=>r.map(q).join(",")).join("\r\n")],{type:"text/csv;charset=utf-8"}));a.download="trading-journal-"+new Date().toISOString().slice(0,10)+".csv";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1e3)}
+const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+R.map(r=>r.map(q).join(",")).join("\r\n")],{type:"text/csv;charset=utf-8"}));a.download="trading-journal-trades-"+new Date().toISOString().slice(0,10)+".csv";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1e3)}
 
 
 var TH=(()=>{try{return localStorage.getItem("tj_theme")==="d"?"d":"l"}catch(e){return"l"}})();
