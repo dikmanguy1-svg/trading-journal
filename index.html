@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Vs4sCYKdzibX02WAtDyRuIfk749b0S5/SwgZX9bDqBM=' https://www.gstatic.com https://apis.google.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src https://finnhub.io https://api.twelvedata.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.googleapis.com; frame-src https://accounts.google.com https://*.firebaseapp.com; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-nrxunZx1al4Y7hmtawBn7U9CuMEBJ4N2O9Y1prsyShI=' https://www.gstatic.com https://apis.google.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src https://finnhub.io https://api.twelvedata.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.googleapis.com; frame-src https://accounts.google.com https://*.firebaseapp.com; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet"><title>Trading.Journal</title>
 <style>
@@ -684,6 +684,7 @@ async function coApi(q,img,hist){if(!U)throw new Error("Log in to use the coach.
  if(!r.ok)throw new Error("The coach could not answer right now. Try again later.");
  let d;try{d=await r.json()}catch(e){d=null}
  if(!d||typeof d.a!=="string"||!d.a.trim())throw new Error("The coach could not answer right now. Try again later.");
+ if(d.left&&isFinite(d.left.m)&&isFinite(d.left.i)){try{localStorage.setItem("tj_co_use",JSON.stringify({d:coDay(),m:CO_MAX.m-d.left.m-1,i:CO_MAX.i-d.left.i-(img?1:0)}))}catch(e){}}
  return d.a.slice(0,6000)}
 async function coSend(){if(coBusy)return;const ta=$("coq"),q=(ta?ta.value:"").trim();if(!q&&!coImg)return;
  const u=coUse();if(u.m>=CO_MAX.m){coErr="You reached today's message limit. Try again tomorrow.";return coRender()}
