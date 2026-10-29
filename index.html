@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-H2SaDAqOT1aRh8nSvqH12eAzMgHLgaxxFn+2p7+Cyjc=' https://www.gstatic.com https://apis.google.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src https://finnhub.io https://api.twelvedata.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.googleapis.com; frame-src https://accounts.google.com https://*.firebaseapp.com; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Vs4sCYKdzibX02WAtDyRuIfk749b0S5/SwgZX9bDqBM=' https://www.gstatic.com https://apis.google.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src https://finnhub.io https://api.twelvedata.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.googleapis.com; frame-src https://accounts.google.com https://*.firebaseapp.com; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet"><title>Trading.Journal</title>
 <style>
@@ -263,7 +263,7 @@ function view(){ltSync();
  if(tab==="jr"){const rows=[...S.trades].sort((a,b)=>a.d<b.d?1:a.d>b.d?-1:(a.id<b.id?1:-1));
   h=`<div class="card"><h2>Import trades</h2><p class="mut">Upload your own journal from Excel or Google Sheets (an .xlsx or CSV file; in Google Sheets: File → Download → Microsoft Excel), or a CSV file from your broker (for example Interactive Brokers). We recognize the columns automatically, you can check and fix everything before the trades are added, and they are sorted by date in your journal. Your file is read on your device and is not uploaded anywhere.</p><p><label class="bl" for="imf">Choose file</label><input type="file" id="imf" accept=".xlsx,.xls,.csv,.tsv,.txt,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" class="vh"></p>${IMP?`<div id="imp">${impTable()}</div>`:""}</div><div class="card"><h2>Add a trade</h2><form id="tf" class="f"><label>Entry date<input type="text" readonly class="dpk" name="d" required value="${(()=>{const n=new Date();return n.getFullYear()+"-"+String(n.getMonth()+1).padStart(2,"0")+"-"+String(n.getDate()).padStart(2,"0")})()}"></label><label>Ticker<input name="t" required style="text-transform:uppercase"></label><label>Direction<select name="dir"><option>Long</option><option>Short</option></select></label><label>Entry price<input type="number" step="any" name="e" required></label><label>Stop<input type="number" step="any" name="s"></label><label>Target<input type="number" step="any" name="tg"></label><label>Shares<input type="number" step="any" name="sh" required></label><label>Position size ($)<input type="number" step="any" name="amt"><small id="amh" class="mut">&nbsp;</small></label><label>Mindset (1-5)<input type="number" min="1" max="5" name="m"></label><label style="grid-column:1/-1">Thesis / entry reasons<textarea name="th" rows="2"></textarea></label><div><button>Save trade</button></div></form></div>
   <div class="card wrap jwrap" tabindex="0" role="region" aria-label="Table, scrollable"><table><thead><tr><th>Date</th><th>Ticker</th><th>Side</th><th class="rc">Reason for entry</th><th>Entry</th><th>Stop</th><th>Target</th><th>Shares</th><th>Size</th><th>Risk $</th><th>Plan R:R</th><th>Exit</th><th>Exit date</th><th>Current price</th><th class="rc">Exit type</th><th class="rc">Reason for exit</th><th>P&amp;L</th><th>R</th><th>Mind</th><th></th></tr></thead><tbody>
-  ${rows.map(t=>{const p=pnl(t)??fl(t),R=aR(t);return`<tr><td><input type="text" readonly class="ti dt dpk" data-k="tdt" data-id="${t.id}" value="${esc(t.d)}" aria-label="Entry date ${esc(t.t)}"></td><td><b data-n="${t.id}" style="cursor:pointer">${esc(t.t)}</b></td><td>${t.dir}</td><td class="rc"><div class="rbox${t.th?"":" empty"}" data-n="${t.id}" role="button" tabindex="0">${t.th?esc(t.th.slice(0,70))+(t.th.length>70?"…":""):"Add reason"}</div></td><td><input type="number" step="any" class="ti" data-k="te" data-id="${t.id}" value="${t.e??""}" aria-label="Entry price ${esc(t.t)}"></td><td><input type="number" step="any" class="ti" data-k="ts" data-id="${t.id}" value="${t.s??""}" aria-label="Stop ${esc(t.t)}"></td><td><input type="number" step="any" class="ti" data-k="tg" data-id="${t.id}" value="${t.tg??""}" aria-label="Target ${esc(t.t)}"></td><td><input type="number" step="any" class="ti" data-k="tsh" data-id="${t.id}" value="${t.sh??""}" aria-label="Shares ${esc(t.t)}"></td><td>${$f(cost(t),0)} <small class="mut">${(cost(t)/acct()*100).toFixed(1)}%</small></td><td>${$f(risk(t),0)}</td><td>${rr(t)==null?"–":rr(t).toFixed(1)}</td><td>${t.x==null?"open":`<input type="number" step="any" class="ti" data-k="tx" data-id="${t.id}" value="${t.x}" aria-label="Exit price ${esc(t.t)}">`}</td><td>${t.x==null?"–":`<input type="text" readonly class="ti dt dpk" data-k="txd" data-id="${t.id}" value="${esc(t.xd||"")}" placeholder="Set date" aria-label="Exit date ${esc(t.t)}">`}</td><td>${t.x==null?(lp(t)==null?"–":$f(lp(t),2)):"–"}</td><td class="rc">${t.x==null?"–":`<select data-k="trs" data-id="${t.id}" aria-label="Exit type ${esc(t.t)}"><option value="">Choose</option>${RSL.map(o=>`<option${t.rs===o?" selected":""}>${o}</option>`).join("")}</select>`}</td><td class="rc">${t.x==null?"–":`<div class="rbox${t.xr?"":" empty"}" data-n="${t.id}" role="button" tabindex="0">${t.xr?esc(t.xr.slice(0,70))+(t.xr.length>70?"…":""):"Add reason"}</div>`}</td><td class="${p>0?"pos":p<0?"neg":""}">${$f(p,2)}</td><td>${R==null?"–":R.toFixed(2)+"R"}</td><td>${t.m??"–"}</td><td>${t.x==null?`<button class="gh sm" data-a="cl" data-id="${t.id}">Close</button> `:""}${t.x!=null?`<button class="gh sm" data-a="ro" data-id="${t.id}">Reopen</button> `:""}<button class="gh sm" data-a="dl" data-id="${t.id}">Delete</button></td></tr>${openN===t.id?`<tr><td colspan="20" class="n"><label style="display:block;margin-top:6px">Reason for entry<textarea data-k="tth" data-id="${t.id}" rows="4" maxlength="2000" placeholder="Why did you take this trade?">${esc(t.th||"")}</textarea></label>${t.x!=null?`<label style="display:block;margin-top:8px">Reason for exit<textarea data-k="txr" data-id="${t.id}" rows="3" maxlength="2000" placeholder="Why did you close it? Stop, target, plan changed, fear...">${esc(t.xr||"")}</textarea></label>`:""}${t.ls?"<br><b>Lessons:</b> "+esc(t.ls):""}</td></tr>`:""}`}).join("")||`<tr><td colspan="20" class="mut" style="text-align:center">Nothing logged yet. Add your first trade in the form above.</td></tr>`}</tbody></table></div>${jCards(rows)}<p class="mut">Click a ticker to read its notes.</p>`}
+  ${rows.map(t=>{const p=pnl(t)??fl(t),R=aR(t);return`<tr><td><input type="text" readonly class="ti dt dpk" data-k="tdt" data-id="${t.id}" value="${esc(t.d)}" aria-label="Entry date ${esc(t.t)}"></td><td><b data-n="${t.id}" style="cursor:pointer">${esc(t.t)}</b></td><td>${t.dir}</td><td class="rc"><div class="rbox${t.th?"":" empty"}" data-n="${t.id}" role="button" tabindex="0">${t.th?esc(t.th.slice(0,70))+(t.th.length>70?"…":""):"Add reason"}</div></td><td><input type="number" step="any" class="ti" data-k="te" data-id="${t.id}" value="${t.e??""}" aria-label="Entry price ${esc(t.t)}"></td><td><input type="number" step="any" class="ti" data-k="ts" data-id="${t.id}" value="${t.s??""}" aria-label="Stop ${esc(t.t)}"></td><td><input type="number" step="any" class="ti" data-k="tg" data-id="${t.id}" value="${t.tg??""}" aria-label="Target ${esc(t.t)}"></td><td><input type="number" step="any" class="ti" data-k="tsh" data-id="${t.id}" value="${t.sh??""}" aria-label="Shares ${esc(t.t)}"></td><td>${$f(cost(t),0)} <small class="mut">${(cost(t)/acct()*100).toFixed(1)}%</small></td><td>${$f(risk(t),0)}</td><td>${rr(t)==null?"–":rr(t).toFixed(1)}</td><td>${t.x==null?"open":`<input type="number" step="any" class="ti" data-k="tx" data-id="${t.id}" value="${t.x}" aria-label="Exit price ${esc(t.t)}">`}</td><td>${t.x==null?"–":`<input type="text" readonly class="ti dt dpk" data-k="txd" data-id="${t.id}" value="${esc(t.xd||"")}" placeholder="Set date" aria-label="Exit date ${esc(t.t)}">`}</td><td>${t.x==null?(lp(t)==null?"–":$f(lp(t),2)):"–"}</td><td class="rc">${t.x==null?"–":`<select data-k="trs" data-id="${t.id}" aria-label="Exit type ${esc(t.t)}"><option value="">Choose</option>${RSL.map(o=>`<option${t.rs===o?" selected":""}>${o}</option>`).join("")}</select>`}</td><td class="rc">${t.x==null?"–":`<div class="rbox${t.xr?"":" empty"}" data-n="${t.id}" role="button" tabindex="0">${t.xr?esc(t.xr.slice(0,70))+(t.xr.length>70?"…":""):"Add reason"}</div>`}</td><td class="${p>0?"pos":p<0?"neg":""}">${$f(p,2)}</td><td>${R==null?"–":R.toFixed(2)+"R"}</td><td>${t.m??"–"}</td><td>${t.x==null?`<button class="gh sm" data-a="cl" data-id="${t.id}">Close</button> `:""}${t.x!=null?`<button class="gh sm" data-a="ro" data-id="${t.id}">Reopen</button> `:""}<button class="gh sm" data-co="t" data-id="${t.id}" aria-label="Ask coach about ${esc(t.t)}">Ask coach</button> <button class="gh sm" data-a="dl" data-id="${t.id}">Delete</button></td></tr>${openN===t.id?`<tr><td colspan="20" class="n"><label style="display:block;margin-top:6px">Reason for entry<textarea data-k="tth" data-id="${t.id}" rows="4" maxlength="2000" placeholder="Why did you take this trade?">${esc(t.th||"")}</textarea></label>${t.x!=null?`<label style="display:block;margin-top:8px">Reason for exit<textarea data-k="txr" data-id="${t.id}" rows="3" maxlength="2000" placeholder="Why did you close it? Stop, target, plan changed, fear...">${esc(t.xr||"")}</textarea></label>`:""}${t.ls?"<br><b>Lessons:</b> "+esc(t.ls):""}</td></tr>`:""}`}).join("")||`<tr><td colspan="20" class="mut" style="text-align:center">Nothing logged yet. Add your first trade in the form above.</td></tr>`}</tbody></table></div>${jCards(rows)}<p class="mut">Click a ticker to read its notes.</p>`}
  if(tab==="dash"){const cl=S.trades.filter(t=>t.x!=null).sort((a,b)=>a.d<b.d?-1:1),P=cl.map(pnl),W=P.filter(x=>x>0),Lo=P.filter(x=>x<0),net=P.reduce((a,b)=>a+b,0),gw=W.reduce((a,b)=>a+b,0),gl=Math.abs(Lo.reduce((a,b)=>a+b,0)),Rs=cl.map(aR).filter(x=>x!=null),rw=Rs.filter(x=>x>0),rl=Rs.filter(x=>x<=0),av=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:null,ms=S.trades.map(t=>t.m).filter(x=>x!=null);
   const K=[["Closed trades",cl.length],["Win rate",cl.length?Math.round(W.length/cl.length*100)+"%":"–"],["Avg R on wins",av(rw)==null?"–":av(rw).toFixed(2)+"R"],["Avg R on losses",av(rl)==null?"–":av(rl).toFixed(2)+"R"],["Expectancy (avg R)",av(Rs)==null?"–":av(Rs).toFixed(2)+"R"],["Profit factor",gl?(gw/gl).toFixed(2):"–"],["Cumulative P&L",$f(net),net],["Return on portfolio",(net/S.set.pf*100).toFixed(1)+"%",net],["Avg mindset (1-5)",av(ms)==null?"–":av(ms).toFixed(1)],["Open positions",S.trades.length-cl.length]];
   let c=0;const pts=[0,...P.map(p=>c+=p)],Wd=720,H=240,Lm=56,Rm=12,Tm=12,B=24,mn=Math.min(...pts),mx=Math.max(...pts,0),sp=(mx-mn)||1,X=i=>Lm+i*(Wd-Lm-Rm)/Math.max(pts.length-1,1),Y=v=>Tm+(mx-v)*(H-Tm-B)/sp;
@@ -627,7 +627,201 @@ function jCards(rows){const ni=(k,v,lab,t)=>`<label>${lab}<input type="number" s
  <div class="jg jg2"><label>Exit${o?`<span class="jro">open</span>`:`<input type="number" step="any" inputmode="decimal" class="ti" data-k="tx" data-id="${t.id}" value="${t.x}" aria-label="Exit price ${esc(t.t)}">`}</label><label>Exit date${o?`<span class="jro">–</span>`:`<input type="text" readonly class="ti dt dpk" data-k="txd" data-id="${t.id}" value="${esc(t.xd||"")}" placeholder="Set date" aria-label="Exit date ${esc(t.t)}">`}</label></div>
  <details class="jmore" data-id="${t.id}"${JMO.has(t.id)?" open":""}><summary>More</summary><div class="jkv"><div><span>Size</span><b>${$f(cost(t),0)} <small class="mut">${(cost(t)/acct()*100).toFixed(1)}%</small></b></div><div><span>Risk $</span><b>${$f(risk(t),0)}</b></div><div><span>Plan R:R</span><b>${rr(t)==null?"–":rr(t).toFixed(1)}</b></div><div><span>Current price</span><b>${o?(lp(t)==null?"–":$f(lp(t),2)):"–"}</b></div><div><span>R</span><b>${R==null?"–":R.toFixed(2)+"R"}</b></div><div><span>Mind</span><b>${t.m??"–"}</b></div></div>${o?"":`<label class="jfull">Exit type<select data-k="trs" data-id="${t.id}" aria-label="Exit type ${esc(t.t)}"><option value="">Choose</option>${RSL.map(x=>`<option${t.rs===x?" selected":""}>${x}</option>`).join("")}</select></label><div class="jfull"><span class="mut">Reason for exit</span><div class="rbox${t.xr?"":" empty"}" data-n="${t.id}" role="button" tabindex="0">${t.xr?esc(t.xr.slice(0,90))+(t.xr.length>90?"…":""):"Add reason"}</div></div>`}</details>
  ${openN===t.id?`<div class="jnotes"><label>Reason for entry<textarea data-k="tth" data-id="${t.id}" rows="4" maxlength="2000" placeholder="Why did you take this trade?">${esc(t.th||"")}</textarea></label>${o?"":`<label>Reason for exit<textarea data-k="txr" data-id="${t.id}" rows="3" maxlength="2000" placeholder="Why did you close it? Stop, target, plan changed, fear...">${esc(t.xr||"")}</textarea></label>`}${t.ls?"<p><b>Lessons:</b> "+esc(t.ls)+"</p>":""}</div>`:""}
- <div class="jact">${o?`<button class="gh sm" data-a="cl" data-id="${t.id}">Close</button>`:`<button class="gh sm" data-a="ro" data-id="${t.id}">Reopen</button>`}<button class="gh sm" data-a="dl" data-id="${t.id}">Delete</button></div></article>`}).join("")+`</div>`}
+ <div class="jact"><button class="gh sm" data-co="t" data-id="${t.id}" aria-label="Ask coach about ${esc(t.t)}">Ask coach</button>${o?`<button class="gh sm" data-a="cl" data-id="${t.id}">Close</button>`:`<button class="gh sm" data-a="ro" data-id="${t.id}">Reopen</button>`}<button class="gh sm" data-a="dl" data-id="${t.id}">Delete</button></div></article>`}).join("")+`</div>`}
+/* AI coach (draft). To undo: remove this block, the two "Ask coach" buttons in the journal, and nothing else. */
+const CO_URL="";/* server address; empty = demo answers built by fixed rules, nothing is sent anywhere */
+const CO_MAX={m:20,i:5},CO_SIDE=1568,CO_BYTES=2e6,CO_TYPES=["image/png","image/jpeg","image/webp"];
+let coOpen=false,coMsgs=[],coBusy=false,coImg=null,coScope="d30",coTid=null,coErr="",coGen=0;
+const coDay=()=>dkey(new Date());
+function coUse(){try{const u=JSON.parse(localStorage.getItem("tj_co_use")||"{}");if(u&&u.d===coDay())return u}catch(e){}return{d:coDay(),m:0,i:0}}
+function coBump(img){const u=coUse();u.m++;if(img)u.i++;try{localStorage.setItem("tj_co_use",JSON.stringify(u))}catch(e){}}
+function coOk(){try{return localStorage.getItem("tj_co_ok")==="1"}catch(e){return false}}
+const coCut=(s,n)=>String(s||"").slice(0,n);
+function coTrades(){const all=S.trades.slice().sort((a,b)=>a.d<b.d?1:-1);
+ if(coScope==="t"){const t=all.find(x=>x.id===coTid);return t?[t]:[]}
+ if(coScope==="n10")return all.slice(0,10);
+ if(coScope==="all")return all.slice(0,50);
+ const c=new Date();c.setDate(c.getDate()-30);const k=dkey(c);return all.filter(t=>t.d>=k).slice(0,50)}
+function coStats(L){const C=L.filter(t=>t.x!=null),W=C.filter(t=>pnl(t)>0),Lo=C.filter(t=>pnl(t)<0);
+ const early=W.filter(t=>t.tg!=null&&(t.dir==="Short"?t.x>t.tg:t.x<t.tg));
+ const past=Lo.filter(t=>t.s!=null&&(t.dir==="Short"?t.x>t.s:t.x<t.s));
+ const noStop=L.filter(t=>t.s==null),noWhy=L.filter(t=>!String(t.th||"").trim());
+ const lowRR=S.set.rr?L.filter(t=>rr(t)!=null&&rr(t)<S.set.rr):[];
+ const path=early.map(t=>(t.x-t.e)/(t.tg-t.e)).filter(v=>isFinite(v));
+ const tk=a=>a.map(t=>t.t).slice(0,10);
+ return{trades:L.length,closed:C.length,wins:W.length,losses:Lo.length,earlyExits:early.length,earlyAvgPctOfTarget:path.length?Math.round(path.reduce((a,b)=>a+b,0)/path.length*100):null,exitPastStop:past.length,noStop:noStop.length,noReason:noWhy.length,belowMinRR:lowRR.length,
+  tickers:{earlyExits:tk(early),exitPastStop:tk(past),noStop:tk(noStop),belowMinRR:tk(lowRR)}}}
+function coCtx(){const L=coTrades(),st=S.st,tl=toolsFor(st.type);
+ return{strategy:{type:STP[st.type]||"",style:STY[st.style]||"",tools:st.tools.map(k=>(tl[k]||[k])[0]).concat((st.custom||[]).map(c=>c.n||"")).filter(Boolean)},
+  rules:{minRR:S.set.rr||null,maxRiskPct:S.set.mr?+(S.set.mr*100).toFixed(2):null},
+  trades:L.map(t=>({date:t.d,exitDate:t.xd||null,ticker:t.t,side:t.dir,entry:t.e,stop:t.s,target:t.tg,shares:t.sh,exit:t.x,reason:coCut(t.th,500),exitReason:coCut(t.xr,500)})),
+  stats:coStats(L)}}
+/* Demo answer: fixed rules over the user's own trades. Replaced by the server's answer once CO_URL is set. */
+function coMock(hasImg){const s=coCtx().stats,H=LANG==="he",out=[],b=[],nE=n=>n===1?"1 trade":n+" trades",nH=n=>n===1?"עסקה אחת":n+" עסקאות";
+ if(!s.trades)return H?"אין עסקאות בטווח שנבחר. בחר טווח אחר למעלה, או הוסף עסקאות ליומן.":"There are no trades in the selected range. Pick another range above, or log some trades.";
+ out.push(H?`בדקתי ${nH(s.trades)} (${s.closed} סגורות).`:`I checked ${nE(s.trades)} (${s.closed} closed).`);
+ const p=s.earlyAvgPctOfTarget;
+ if(s.earlyExits)b.push(H?`ב-${s.earlyExits} מתוך ${s.wins} העסקאות המרוויחות יצאת **לפני היעד**${p!=null?` (בממוצע ${p}% מהדרך ליעד)`:""}.`:`In ${s.earlyExits} of ${s.wins} winning trades you exited **before the target**${p!=null?` (on average ${p}% of the way)`:""}.`);
+ if(s.exitPastStop)b.push(H?`ב-${s.exitPastStop} מתוך ${s.losses} העסקאות המפסידות יצאת **מעבר לסטופ** שהגדרת.`:`In ${s.exitPastStop} of ${s.losses} losing trades you exited **beyond the stop** you set.`);
+ if(s.noStop)b.push(H?`${nH(s.noStop)} **בלי סטופ**.`:`${nE(s.noStop)} ${s.noStop===1?"has":"have"} **no stop**.`);
+ if(s.belowMinRR)b.push(H?`${s.belowMinRR===1?"בעסקה אחת":"ב-"+s.belowMinRR+" עסקאות"} יחס הסיכון/סיכוי **נמוך מ-1:${S.set.rr}** שהגדרת.`:`${nE(s.belowMinRR)} ${s.belowMinRR===1?"has":"have"} a risk/reward **below the 1:${S.set.rr}** you set.`);
+ if(s.noReason)b.push(H?`${nH(s.noReason)} **בלי סיבת כניסה** כתובה.`:`${nE(s.noReason)} ${s.noReason===1?"has":"have"} **no written reason** for entry.`);
+ if(!b.length)b.push(H?"לא מצאתי חריגות מהכללים שאני יודע לבדוק כרגע.":"I found no breaks of the rules I can check right now.");
+ out.push(b.map(x=>"- "+x).join("\n"));
+ if(hasImg)out.push(H?"ניתוח של תמונת הגרף יעבוד אחרי החיבור לשרת.":"Reading the chart image will work once the server is connected.");
+ const q=s.earlyExits?(H?"מה גרם לך לצאת לפני היעד?":"What made you exit before the target?"):s.exitPastStop?(H?"מה עצר אותך מלצאת בסטופ?":"What stopped you from exiting at your stop?"):s.noStop?(H?"איפה הסטופ היה צריך להיות לפי הכלל שלך?":"Where should the stop have been by your own rule?"):(H?"איזה כלל תרצה שאבדוק בפעם הבאה?":"Which rule should I check next time?");
+ out.push((H?"**שאלה לחשוב עליה:** ":"**Something to think about:** ")+q);
+ return out.join("\n\n")}
+async function coApi(q,img,hist){if(!U)throw new Error("Log in to use the coach.");const tok=await U.getIdToken();
+ const ctl=new AbortController(),tm=setTimeout(()=>ctl.abort(),45000);let r;
+ try{r=await fetch(CO_URL,{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+tok},signal:ctl.signal,
+  body:JSON.stringify({q:q.slice(0,1000),lang:LANG,ctx:coCtx(),hist,img:img?{mime:img.mime,data:img.url.split(",")[1]}:null})})}
+ catch(e){throw new Error(e&&e.name==="AbortError"?"The coach took too long. Try again.":"Could not reach the coach. Check your connection and try again.")}
+ finally{clearTimeout(tm)}
+ if(r.status===401||r.status===403)throw new Error("The coach is not available for this account.");
+ if(r.status===429)throw new Error("You reached today's limit. Try again tomorrow.");
+ if(r.status===413)throw new Error("That image is too large. Use a smaller screenshot.");
+ if(!r.ok)throw new Error("The coach could not answer right now. Try again later.");
+ let d;try{d=await r.json()}catch(e){d=null}
+ if(!d||typeof d.a!=="string"||!d.a.trim())throw new Error("The coach could not answer right now. Try again later.");
+ return d.a.slice(0,6000)}
+async function coSend(){if(coBusy)return;const ta=$("coq"),q=(ta?ta.value:"").trim();if(!q&&!coImg)return;
+ const u=coUse();if(u.m>=CO_MAX.m){coErr="You reached today's message limit. Try again tomorrow.";return coRender()}
+ if(coImg&&u.i>=CO_MAX.i){coErr="You reached today's image limit. Try again tomorrow.";return coRender()}
+ const img=coImg,g=coGen,hist=coMsgs.slice(-6).map(m=>({role:m.r==="u"?"user":"coach",text:coCut(m.r==="u"?m.q:m.a,1500)}));
+ coMsgs.push({r:"u",q,img:img&&img.url});if(ta)ta.value="";coImg=null;coErr="";coBusy=true;coRender();
+ let a=null,demo=false,err="";
+ try{if(!CO_URL){await pause(600);a=coMock(!!img);demo=true}else a=await coApi(q,img,hist);coBump(!!img)}
+ catch(e){err=(e&&e.message)||"The coach could not answer right now. Try again later."}
+ if(g!==coGen)return;coBusy=false;if(a!=null)coMsgs.push({r:"a",a,demo});else coErr=err;coRender()}
+async function coPick(f){coErr="";if(!f)return coRender();
+ if(!CO_TYPES.includes(f.type)){coErr="Use a PNG, JPEG or WebP image.";return coRender()}
+ if(f.size>15e6){coErr="That image is too large. Use a smaller screenshot.";return coRender()}
+ try{const url0=await new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(r.result);r.onerror=no;r.readAsDataURL(f)});
+  const im=await new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=no;i.src=url0});
+  const k=Math.min(1,CO_SIDE/Math.max(im.naturalWidth,im.naturalHeight)),c=document.createElement("canvas");
+  c.width=Math.max(1,Math.round(im.naturalWidth*k));c.height=Math.max(1,Math.round(im.naturalHeight*k));
+  const x=c.getContext("2d");x.fillStyle="#fff";x.fillRect(0,0,c.width,c.height);x.drawImage(im,0,0,c.width,c.height);
+  let q=.85,url=c.toDataURL("image/jpeg",q);while(url.length*.75>CO_BYTES&&q>.4){q-=.15;url=c.toDataURL("image/jpeg",q)}
+  if(url.length*.75>CO_BYTES){coErr="That image is too large. Use a smaller screenshot.";return coRender()}
+  coImg={url,mime:"image/jpeg",name:coCut(f.name||"chart",60),size:Math.round(url.length*.75),w:c.width,h:c.height}}
+ catch(e){coErr="Could not read that image. Try another file."}
+ coRender();const t=$("coq");if(t)t.focus()}
+function coFmt(s){return esc(s).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").split(/\n{2,}/).map(p=>{const L=p.split("\n").filter(l=>l.trim());if(!L.length)return"";
+ if(L.every(l=>/^\s*[-•*]\s/.test(l)))return"<ul>"+L.map(l=>"<li>"+l.replace(/^\s*[-•*]\s/,"")+"</li>").join("")+"</ul>";return"<p>"+L.join("<br>")+"</p>"}).join("")}
+const CO_SVG={x:'<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+ at:'<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5l-8.6 8.6a5 5 0 0 1-7.1-7.1l8.6-8.6a3.4 3.4 0 0 1 4.8 4.8l-8.6 8.6a1.7 1.7 0 0 1-2.4-2.4l7.9-7.9"/></svg>',
+ go:'<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+ logo:'<svg viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 7v18M16 4v24M23 9v15"/></g><rect x="6.5" y="11" width="5" height="9" rx="1" style="fill:var(--note)"/><rect x="13.5" y="8" width="5" height="13" rx="1" fill="currentColor"/><rect x="20.5" y="12.5" width="5" height="7" rx="1" style="fill:var(--note)"/></svg>'};
+function coHead(){return`<div class="cohd"><div><h2 id="coh">Coach</h2><p class="mut cosub">Reviews your process. Never tells you what to buy or sell.</p></div><button class="gh sm coib" data-co="x" aria-label="Close the coach">${CO_SVG.x}</button></div>`}
+function coRender(){const w=$("cow");if(!w)return;w.hidden=!coOpen;document.documentElement.classList.toggle("lto",coOpen||ltOpen);if(!coOpen)return;
+ const d=$("cod"),ta=$("coq"),keep=ta?ta.value:"",foc=ta&&document.activeElement===ta;
+ if(FB&&!U){d.innerHTML=coHead()+`<p class="mut">Log in to use the coach.</p>`;return}
+ if(!coOk()){d.innerHTML=coHead()+`<div class="coc"><h3>Before you start with the coach</h3><ul>
+<li>The coach reviews your process: stops, exits and sticking to your plan. It does not tell you what to buy or sell.</li>
+<li>It is a helper tool, not investment advice. It can be wrong, and the decisions are yours.</li>
+<li>To answer, only your question, the relevant trades and your chart are sent to the AI provider. Not your name or email.</li>
+<li>Do not upload screenshots with account numbers or personal details.</li></ul>
+<p><a href="privacy.html" target="_blank" rel="noopener">Read the privacy policy</a></p>
+<div class="bk"><button data-co="ok">I understand and agree</button><button class="gh" data-co="x">Not now</button></div>
+<p class="mut" style="font-size:12px;margin:10px 0 0">Draft text, to be finalized after a legal review.</p></div>`;const b=d.querySelector('[data-co="ok"]');if(b)b.focus();return}
+ const n=coTrades().length,u=coUse(),tt=coTid&&S.trades.find(x=>x.id===coTid);
+ const opt=(v,l)=>`<option value="${v}"${coScope===v?" selected":""}>${l}</option>`;
+ const msgs=coMsgs.map(m=>m.r==="u"?`<div class="cou">${m.img?`<img src="${m.img}" alt="${esc(tr("Chart you uploaded"))}">`:""}${m.q?`<p data-nt>${esc(m.q)}</p>`:""}</div>`
+  :`<div class="coa"><div data-nt>${coFmt(m.a)}</div>${m.demo?`<p class="codemo">Demo answer, built from your trades by fixed rules. No AI yet.</p>`:""}<p class="codis">A helper tool only, not investment advice.</p></div>`).join("");
+ d.innerHTML=coHead()+`<div class="coctx"><label for="cosc">The coach sees:</label><select id="cosc" data-co="sc">${tt?opt("t","This trade ("+esc(tt.t)+")"):""}${opt("n10","Last 10 trades")}${opt("d30","Last 30 days")}${opt("all","All trades (up to 50)")}</select><span class="cochip">${n===1?"1 trade":n+" trades"}</span><span class="cochip">Your strategy</span></div>
+<div class="colist" id="colist" aria-live="polite">${msgs||`<p class="mut cohint">Ask about your trades, or attach a chart. The coach points out where you left your plan and asks questions. It does not give buy or sell tips.</p>`}${coBusy?`<p class="cowait" role="status">The coach is checking your trades…</p>`:""}</div>
+${coErr?`<p class="coerr" role="alert">${coErr}</p>`:""}
+<div class="coqk"><button class="gh sm" data-co="qk" data-v="Where am I not following my plan?">Where am I not following my plan?</button><button class="gh sm" data-co="q10">Review my last 10 trades</button><button class="gh sm" data-co="at">Analyze a chart</button></div>
+<div class="cobox">${coImg?`<div class="coim"><img src="${coImg.url}" alt=""><span data-nt>${esc(coImg.name)} · ${coImg.size<1e6?Math.max(1,Math.round(coImg.size/1e3))+"KB":(coImg.size/1e6).toFixed(1)+"MB"}</span><button class="gh sm coib" data-co="rmi" aria-label="Remove image">${CO_SVG.x}</button></div>`:""}
+<div class="corow"><button class="gh sm coib" data-co="at" aria-label="Attach a chart image">${CO_SVG.at}</button><textarea id="coq" rows="2" maxlength="1000" aria-label="Question for the coach" placeholder="Ask about your trades, or paste a chart (Ctrl+V)"></textarea><button class="coib cogo" data-co="go" aria-label="Send"${coBusy?" disabled":""}>${CO_SVG.go}</button></div></div>
+<input type="file" id="cof" accept="image/png,image/jpeg,image/webp" hidden>
+<p class="mut cocnt">Left today: ${Math.max(0,CO_MAX.m-u.m)} of ${CO_MAX.m} messages · ${Math.max(0,CO_MAX.i-u.i)} of ${CO_MAX.i} images</p>
+<p class="mut cocnt">Crop out account numbers and personal details before uploading a chart.</p>`;
+ const t2=$("coq");if(t2){t2.value=keep;if(foc)t2.focus()}const l=$("colist");if(l)l.scrollTop=l.scrollHeight}
+function coShow(v,tid){if(v){if(tid){coTid=tid;coScope="t"}}else{coGen++;coMsgs=[];coImg=null;coErr="";coBusy=false;coTid=null;coScope="d30"}
+ coOpen=v;coRender();coSync();if(v){const e=$("coq")||$("cod").querySelector("button");if(e)e.focus()}else{const b=$("cob");if(b)b.focus()}}
+function coSync(){const b=$("cob");if(b)b.hidden=!!(FB&&!U)||coOpen;if(FB&&!U&&coOpen)coShow(false)}
+(function(){const st=document.createElement("style");st.textContent=`
+.cob{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));inset-inline-end:20px;z-index:800;width:64px;height:64px;padding:0;border-radius:50%;background:var(--ink);color:var(--paper);border:3px solid var(--note);box-shadow:0 8px 24px rgba(0,0,0,.28);display:flex;align-items:center;justify-content:center}
+.cob:hover{background:var(--ink)}.cob svg{width:34px;height:34px}
+#cow .ltov{background:rgba(0,0,0,.18)}
+.cod{display:flex;flex-direction:column;gap:10px;width:420px;padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px));overflow:hidden}
+.cohd{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}.cohd h2{margin:0;font-size:22px}.cosub{margin:2px 0 0;font-size:13px}
+.coib{flex:0 0 44px;width:44px;height:44px;padding:0;border-radius:12px;display:inline-flex;align-items:center;justify-content:center}.coib svg{width:20px;height:20px}
+.cogo{background:var(--ink);color:var(--paper)}.cogo:hover{background:var(--ink);opacity:.9}.cogo:disabled{opacity:.45;cursor:default}
+[dir=rtl] .cogo svg{transform:scaleX(-1)}
+.coctx{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;background:var(--in);border:1px solid var(--line);border-radius:12px;padding:8px 10px;font-size:13px}.coctx label{color:var(--mut)}.coctx select{width:auto;padding:4px 8px;font-size:13px}
+.cochip{background:var(--note);color:#2b2100;border-radius:999px;padding:2px 10px;font-weight:700}
+.colist{flex:1;min-height:120px;overflow:auto;display:flex;flex-direction:column;gap:10px;padding:2px}
+.cohint{margin:0;font-size:14px}
+.cou{align-self:flex-end;max-width:86%;background:var(--note);color:#2b2100;border-radius:16px 16px 4px 16px;padding:9px 13px}.cou p{margin:0;white-space:pre-wrap}
+[dir=rtl] .cou{border-radius:16px 16px 16px 4px}
+.cou img{display:block;max-width:100%;max-height:180px;border-radius:10px;margin-bottom:6px}
+.coa{align-self:flex-start;max-width:94%;background:var(--card);border:1px solid var(--line);border-radius:16px 16px 16px 4px;padding:11px 14px;font-size:14.5px}
+[dir=rtl] .coa{border-radius:16px 16px 4px 16px}
+.coa p{margin:0 0 8px}.coa ul{margin:0 0 8px;padding-inline-start:18px}.coa li{margin-bottom:4px}
+.coa .codis{margin:8px 0 0;padding-top:7px;border-top:1px solid var(--line);color:var(--mut);font-size:12px}
+.coa .codemo{font-size:12px;color:var(--mut);font-style:italic;margin:0}
+.cowait{color:var(--mut);font-size:13.5px;margin:0}
+.coerr{color:var(--r);border:1px solid var(--r);border-radius:12px;padding:8px 12px;font-size:13.5px;margin:0}
+.coqk{display:flex;flex-wrap:wrap;gap:6px}
+.cobox{background:var(--in);border:1px solid rgba(var(--rgb),.3);border-radius:16px;padding:6px}
+.corow{display:flex;align-items:flex-end;gap:6px}.corow textarea{border:0;background:transparent;resize:none;padding:10px 4px;min-height:44px}
+.coim{display:flex;align-items:center;gap:8px;background:var(--card);border-radius:10px;padding:6px;margin-bottom:6px;font-size:13px}.coim img{width:56px;height:40px;object-fit:cover;border-radius:6px}.coim span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cocnt{margin:0;font-size:12px}
+.cod.drag .cobox{outline:2px dashed var(--hl);outline-offset:3px}
+.coc{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}.coc h3{margin:0;font-family:"Young Serif",Georgia,serif;font-weight:400;font-size:19px}.coc ul{padding-inline-start:20px;margin:10px 0 12px}.coc li{margin-bottom:6px}
+body:not(.lo) main{padding-bottom:110px}
+@media(max-width:640px){.cod{width:100%}.cob{width:58px;height:58px}}`;document.head.appendChild(st);
+ const b=document.createElement("button");b.id="cob";b.className="cob";b.type="button";b.hidden=true;b.setAttribute("aria-haspopup","dialog");b.setAttribute("aria-label","Open the coach");b.innerHTML=CO_SVG.logo;document.body.appendChild(b);
+ const w=document.createElement("div");w.id="cow";w.hidden=true;w.innerHTML=`<div class="ltov" id="coov"></div><aside id="cod" class="ltd cod" role="dialog" aria-modal="true" aria-labelledby="coh"></aside>`;document.body.appendChild(w);
+ b.onclick=()=>coShow(true);$("coov").onclick=()=>coShow(false);
+ const d=$("cod");
+ d.addEventListener("dragover",e=>{if(!coOk())return;e.preventDefault();d.classList.add("drag")});
+ d.addEventListener("dragleave",e=>{if(!d.contains(e.relatedTarget))d.classList.remove("drag")});
+ d.addEventListener("drop",e=>{d.classList.remove("drag");if(!coOk())return;e.preventDefault();const f=e.dataTransfer&&e.dataTransfer.files[0];if(f)coPick(f)})})();
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-co]");if(!b||b.tagName!=="BUTTON")return;const a=b.dataset.co;
+ if(a==="t")return coShow(true,b.dataset.id);if(a==="x")return coShow(false);
+ if(a==="ok"){try{localStorage.setItem("tj_co_ok","1")}catch(e){}coRender();const t=$("coq");if(t)t.focus();return}
+ if(a==="go")return coSend();if(a==="at"){const f=$("cof");if(f)f.click();return}
+ if(a==="rmi"){coImg=null;coRender();const t=$("coq");if(t)t.focus();return}
+ if(a==="qk"){const t=$("coq");if(t){t.value=tr(b.dataset.v);coSend()}return}
+ if(a==="q10"){coScope="n10";const t=$("coq");if(t){t.value=tr("Review my last 10 trades");coSend()}return}});
+document.addEventListener("change",e=>{const el=e.target;if(el.id==="cosc"){coScope=el.value;coRender()}else if(el.id==="cof"){coPick(el.files&&el.files[0]);el.value=""}});
+document.addEventListener("keydown",e=>{if(!coOpen)return;
+ if(e.key==="Escape"){if(document.querySelector(".calw"))return;coShow(false);return}
+ if(e.key==="Enter"&&!e.shiftKey&&e.target&&e.target.id==="coq"&&!e.isComposing){e.preventDefault();coSend();return}
+ if(e.key==="Tab"){const F=[...$("cod").querySelectorAll("button,input:not([hidden]),select,textarea,a[href]")].filter(x=>!x.disabled&&x.offsetParent!==null);if(!F.length)return;const f0=F[0],f1=F[F.length-1];
+  if(e.shiftKey&&document.activeElement===f0){e.preventDefault();f1.focus()}else if(!e.shiftKey&&document.activeElement===f1){e.preventDefault();f0.focus()}}});
+document.addEventListener("paste",e=>{if(!coOpen||!coOk())return;const it=[...((e.clipboardData&&e.clipboardData.items)||[])].find(i=>i.kind==="file"&&i.type.startsWith("image/"));if(!it)return;e.preventDefault();coPick(it.getAsFile())});
+{const v0=view;view=function(){v0();coSync()}}
+Object.assign(HE,{"Coach":"המאמן","Ask coach":"שאל את המאמן","Open the coach":"פתח את המאמן","Close the coach":"סגור את המאמן",
+"Reviews your process. Never tells you what to buy or sell.":"מבקר את התהליך שלך. לא אומר לך מה לקנות או למכור.",
+"Log in to use the coach.":"התחבר כדי להשתמש במאמן.","Before you start with the coach":"לפני שמתחילים עם המאמן",
+"The coach reviews your process: stops, exits and sticking to your plan. It does not tell you what to buy or sell.":"המאמן מבקר את התהליך שלך: סטופים, יציאות והיצמדות לתוכנית. הוא לא אומר לך מה לקנות או למכור.",
+"It is a helper tool, not investment advice. It can be wrong, and the decisions are yours.":"זה כלי עזר, לא ייעוץ השקעות. הוא יכול לטעות, וההחלטות שלך.",
+"To answer, only your question, the relevant trades and your chart are sent to the AI provider. Not your name or email.":"כדי לענות, נשלחים לספק ה-AI רק השאלה, העסקאות הרלוונטיות והגרף. לא השם והמייל שלך.",
+"Do not upload screenshots with account numbers or personal details.":"אל תעלה צילומי מסך עם מספרי חשבון או פרטים אישיים.",
+"Read the privacy policy":"קרא את מדיניות הפרטיות","I understand and agree":"הבנתי ומסכים","Not now":"לא עכשיו",
+"Draft text, to be finalized after a legal review.":"טקסט טיוטה, ייקבע סופית אחרי בדיקה משפטית.",
+"The coach sees:":"המאמן רואה:","Last 10 trades":"10 העסקאות האחרונות","Last 30 days":"30 הימים האחרונים","All trades (up to 50)":"כל העסקאות (עד 50)","Your strategy":"האסטרטגיה שלך",
+"Ask about your trades, or attach a chart. The coach points out where you left your plan and asks questions. It does not give buy or sell tips.":"שאל על העסקאות שלך, או צרף גרף. המאמן מראה איפה סטית מהתוכנית ושואל שאלות. הוא לא נותן המלצות קנייה או מכירה.",
+"The coach is checking your trades…":"המאמן בודק את העסקאות…","Chart you uploaded":"הגרף שהעלית",
+"Demo answer, built from your trades by fixed rules. No AI yet.":"תשובת הדגמה, מחושבת מהעסקאות שלך לפי כללים קבועים. עדיין בלי AI.",
+"A helper tool only, not investment advice.":"כלי עזר בלבד, לא ייעוץ השקעות.",
+"Where am I not following my plan?":"איפה אני לא עומד בתוכנית?","Review my last 10 trades":"בדוק את 10 העסקאות האחרונות","Analyze a chart":"נתח גרף",
+"Remove image":"הסר תמונה","Attach a chart image":"צרף תמונת גרף","Question for the coach":"שאלה למאמן","Send":"שלח",
+"Ask about your trades, or paste a chart (Ctrl+V)":"שאל על העסקאות שלך, או הדבק גרף (Ctrl+V)",
+"Crop out account numbers and personal details before uploading a chart.":"חתוך מספרי חשבון ופרטים אישיים לפני העלאת גרף.",
+"You reached today's message limit. Try again tomorrow.":"הגעת למגבלת ההודעות להיום. נסה שוב מחר.","You reached today's image limit. Try again tomorrow.":"הגעת למגבלת התמונות להיום. נסה שוב מחר.",
+"Use a PNG, JPEG or WebP image.":"השתמש בתמונה מסוג PNG, JPEG או WebP.","That image is too large. Use a smaller screenshot.":"התמונה גדולה מדי. נסה צילום מסך קטן יותר.",
+"Could not read that image. Try another file.":"לא הצלחתי לקרוא את התמונה. נסה קובץ אחר.",
+"The coach took too long. Try again.":"המאמן לקח יותר מדי זמן. נסה שוב.","Could not reach the coach. Check your connection and try again.":"אין חיבור למאמן. בדוק את החיבור ונסה שוב.",
+"The coach is not available for this account.":"המאמן לא זמין לחשבון הזה.","You reached today's limit. Try again tomorrow.":"הגעת למגבלה של היום. נסה שוב מחר.",
+"The coach could not answer right now. Try again later.":"המאמן לא הצליח לענות כרגע. נסה שוב מאוחר יותר."});
+HR.push([/^Left today: (\d+) of (\d+) messages · (\d+) of (\d+) images$/,x=>"נשארו היום: "+x[1]+" מתוך "+x[2]+" הודעות · "+x[3]+" מתוך "+x[4]+" תמונות"],
+[/^(\d+) trades$/,x=>x[1]+" עסקאות"],[/^1 trade$/,()=>"עסקה אחת"],[/^This trade \((.+)\)$/,x=>"העסקה הזו ("+x[1]+")"],[/^Ask coach about (.+)$/,x=>"שאל את המאמן על "+x[1]]);
 load();view();ayInit();$("th").onclick=()=>{TH=TH==="l"?"d":"l";thApply()};thApply();fbInit();$("pu").value=S.key||"";$("tu").value=S.td||"";$("tg").onclick=()=>{const v=$("tu").value.trim();if(!/^[\w-]{10,80}$/.test(v)){$("pxs").textContent="That key does not look right. Paste it again.";return}S.td=v;S.tdBad=false;S.smaT={};try{localStorage.setItem(KT,v)}catch(e){}save();getPx()};$("pg").onclick=()=>{S.key=$("pu").value.trim();S.keyBad=false;S.pxT={};try{localStorage.setItem(KK,S.key)}catch(e){}save();getPx()};setInterval(getPx,60000);
 
 $("lg").textContent=LANG==="he"?"English":"עברית";$("lg").onclick=()=>{try{localStorage.setItem("tj_lang",LANG==="he"?"en":"he")}catch(e){}location.reload()};
