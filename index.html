@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Ftak+3f4tMHLaBz/GN2FoPbXl1scCtBEnbjfjSGTZIQ=' https://www.gstatic.com https://apis.google.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src https://trading-coach.dikmanguy1.workers.dev https://finnhub.io https://api.twelvedata.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.googleapis.com; frame-src https://accounts.google.com https://*.firebaseapp.com; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-PyGKfIB8YWIz3m4r+dPAFO/DawQGhLYIVHSVF5aVDDg=' https://www.gstatic.com https://apis.google.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src https://trading-coach.dikmanguy1.workers.dev https://finnhub.io https://api.twelvedata.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.googleapis.com; frame-src https://accounts.google.com https://*.firebaseapp.com; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet"><title>Trading.Journal</title>
 <style>
@@ -648,8 +648,16 @@ function coAv(m,h){const sm=h<40,ti=h<=28,I="#1c1f26",w=sm?9:6,ck=o=>sm?"":`<ell
  if(m==="pleased")s+=ck(.7)+arcs+(ti?"":`<path d="M48 85q12 16 24 0z" fill="${I}" stroke="${I}" stroke-width="3" stroke-linejoin="round"/>`);
  else if(m==="concerned")s+=`<path d="M38 59l14-5M82 59l-14-5" fill="none" stroke="${I}" stroke-width="${sm?6:4}" stroke-linecap="round"/><circle cx="46" cy="70" r="${sm?8:5.5}" fill="${I}"/><circle cx="74" cy="70" r="${sm?8:5.5}" fill="${I}"/>`+(ti?"":`<path d="M48 92q6-5 12 0t12 0" fill="none" stroke="${I}" stroke-width="${sm?6:4}" stroke-linecap="round"/>`);
  else if(m==="celebrating")s+=ck(.7)+arcs+(ti?"":`<ellipse cx="60" cy="91" rx="9" ry="8" fill="${I}"/>`)+`<path d="M12 30l2 5 5 2-5 2-2 5-2-5-5-2 5-2zM106 26l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="currentColor"/>`;
+ else if(m==="sad")s+=`<path d="M38 61l13-4M82 61l-13-4" fill="none" stroke="${I}" stroke-width="${sm?6:3.5}" stroke-linecap="round"/><circle cx="46" cy="70" r="${sm?8:6}" fill="${I}"/><circle cx="74" cy="70" r="${sm?8:6}" fill="${I}"/>`+(ti?"":`<path d="M48 95q12-11 24 0" fill="none" stroke="${I}" stroke-width="${sm?6:4}" stroke-linecap="round"/>`)+(sm?"":`<path d="M40 78q-3 5 0 7q3-2 0-7z" fill="#5ac8fa"/>`);
+ else if(m==="neutral")s+=ck(.35)+`<circle cx="46" cy="68" r="${sm?8:6.5}" fill="${I}"/><circle cx="74" cy="68" r="${sm?8:6.5}" fill="${I}"/>`+(ti?"":`<path d="M50 90h20" fill="none" stroke="${I}" stroke-width="${sm?6:4}" stroke-linecap="round"/>`);
  else s+=ck(.55)+`<circle cx="46" cy="68" r="${sm?8:6.5}" fill="${I}"/><circle cx="74" cy="68" r="${sm?8:6.5}" fill="${I}"/>`+(sm?"":`<circle cx="48.3" cy="65.6" r="2.2" fill="#fff"/><circle cx="76.3" cy="65.6" r="2.2" fill="#fff"/>`)+(ti?"":`<path d="M50 88q10 8 20 0" fill="none" stroke="${I}" stroke-width="${sm?6:4}" stroke-linecap="round"/>`);
  return s+`</svg>`}
+/* Market mood: the coach's face follows the S&P 500 (SPY) day. Green = smile, red = sad, about flat = neutral. */
+let coMk=null;const CO_FLAT=0.15;
+const coMkMood=()=>coMk==null?"calm":coMk>CO_FLAT?"pleased":coMk< -CO_FLAT?"sad":"neutral";
+function coMkLabel(){const he=LANG==="he",base=he?"פתיחת הצ'אט עם המאמן":"Open coach chat";if(coMk==null)return base;const v=(coMk>0?"+":"")+coMk.toFixed(2)+"%";return base+(he?". S&P 500 ביום המסחר האחרון: ":". S&P 500 last session: ")+v}
+function coMkApply(){const b=$("cob");if(b){b.innerHTML=coAv(coMkMood(),39);b.setAttribute("aria-label",coMkLabel());b.title=coMkLabel()}const h=document.querySelector(".cohav");if(h)h.innerHTML=coAv(coMkMood(),34)}
+async function coMkLoad(){if(!FK||S.keyBad)return;try{const r=await fetch("https://finnhub.io/api/v1/quote?symbol=SPY&token="+encodeURIComponent(FK));if(!r.ok)return;const d=await r.json();if(d&&typeof d.dp==="number"&&isFinite(d.dp)){coMk=d.dp;coMkApply()}}catch(e){}}
 /* What the coach sees */
 function coTrades(){if(coOff.tr)return[];const all=S.trades.slice().sort((a,b)=>a.d<b.d?1:-1);
  if(coScope==="t"){const t=all.find(x=>x.id===coTid);return t?[t]:[]}
@@ -745,7 +753,7 @@ function coChips(){const tt=coTid&&S.trades.find(x=>x.id===coTid),n=coTrades().l
  return`<div class="cosee"><span class="coseel">Coach sees:</span>${chip("tr",`<label class="covh" for="cosc">Trades</label><select id="cosc" data-co="sc">${tt?opt("t",esc(tt.t)+" trade"):""}${opt("n10","Last 10 trades")}${opt("d30","Last 30 days")}${opt("all","All trades")}</select><b>${n}</b>`,"Trades")}${chip("st","Strategy","Strategy")}${chip("rk","Risk settings","Risk settings")}${chip("pl","Daily pulse","Daily pulse")}</div>`}
 function coRender(){const w=$("cow");if(!w)return;w.hidden=!coOpen;document.documentElement.classList.toggle("coo",coOpen);const bt=$("cob");if(bt){bt.setAttribute("aria-expanded",String(coOpen));bt.classList.toggle("dot",!coOpen&&!coPulseDone()&&!coSeen())}if(!coOpen)return;
  const d=$("cod"),ta=$("coq"),keep=ta?ta.value:"",foc=ta&&document.activeElement===ta,u=coUse();
- const head=`<div class="cohd"><span class="coav cohav">${coAv("calm",34)}</span><div class="cohn"><b id="coh">Coach</b><small>Your trading coach</small></div>${coOk()&&!(FB&&!U)?`<span class="cocnt">${u.m} / ${CO_MAX.m} today</span>`:""}<button class="coib cox" data-co="x" aria-label="Close the coach">${CO_SVG.x}</button></div>`;
+ const head=`<div class="cohd"><span class="coav cohav">${coAv(coMkMood(),34)}</span><div class="cohn"><b id="coh">Coach</b><small>Your trading coach</small></div>${coOk()&&!(FB&&!U)?`<span class="cocnt">${u.m} / ${CO_MAX.m} today</span>`:""}<button class="coib cox" data-co="x" aria-label="Close the coach">${CO_SVG.x}</button></div>`;
  if(FB&&!U){d.innerHTML=head+`<div class="cobody"><p class="mut">Log in to use the coach.</p></div>`;return}
  if(!coOk()){d.innerHTML=head+`<div class="cobody"><div class="coc"><span class="coav" style="margin-bottom:8px">${coAv("calm",52)}</span><h3>Before you start with the coach</h3><ul>
 <li>The coach reviews your process: stops, exits and sticking to your plan. It does not tell you what to buy or sell, and it never changes your trades.</li>
@@ -833,7 +841,7 @@ body:not(.lo) main{padding-bottom:110px}
  html.coo{overflow:hidden}html.coo .cobtn{display:none}}`;document.head.appendChild(st);
  const b=document.createElement("button");b.id="cob";b.className="cobtn";b.type="button";b.hidden=true;b.setAttribute("aria-haspopup","dialog");b.setAttribute("aria-expanded","false");b.setAttribute("aria-label","Open coach chat");b.innerHTML=coAv("calm",39);document.body.appendChild(b);
  const w=document.createElement("div");w.id="cow";w.className="cow";w.hidden=true;w.setAttribute("role","dialog");w.setAttribute("aria-labelledby","coh");w.innerHTML=`<div id="cod"></div>`;document.body.appendChild(w);
- b.onclick=()=>coShow(!coOpen);
+ b.onclick=()=>coShow(!coOpen);coMkLoad();setInterval(coMkLoad,6e5);
  w.addEventListener("dragover",e=>{if(!coOk())return;e.preventDefault();w.classList.add("drag")});
  w.addEventListener("dragleave",e=>{if(!w.contains(e.relatedTarget))w.classList.remove("drag")});
  w.addEventListener("drop",e=>{w.classList.remove("drag");if(!coOk())return;e.preventDefault();const f=e.dataTransfer&&e.dataTransfer.files[0];if(f)coPick(f)})})();
