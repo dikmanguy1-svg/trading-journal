@@ -781,5 +781,10 @@ window.HE_EXT = {
   "The best trades wait for you.": "העסקאות הטובות מחכות לך.",
   "Your portfolio": "התיק שלך",
   "Time does the heavy lifting.": "הזמן עושה את העבודה הקשה.",
-  "Not answered": "לא נענה"
+  "Not answered": "לא נענה",
+  "Actions": "פעולות",
+  "Live price": "מחיר חי",
+  "Type price": "להקליד מחיר",
+  "All columns": "כל העמודות",
+  "Fewer columns": "פחות עמודות"
 };
