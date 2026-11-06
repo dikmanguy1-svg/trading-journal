@@ -3,7 +3,7 @@
  *
  * XP perks: every 5 levels unlock something.
  * - Level 5: more Wick messages and chart images a day.
- * - Level 10: the Ink color theme and a cap for Wick.
+ * - Level 10: the Forest color theme and a cap for Wick.
  * - Level 15: a gold star next to your level (later also a plan discount).
  * - Level 20: a free month of a paid plan, when paid plans launch.
  * Tapping the level pill at the top opens a window that explains XP, levels and perks.
@@ -19,7 +19,7 @@ const XPK = [
     "30 messages and 8 chart images a day with Wick, instead of 20 and 5.",
     "now"
   ],
-  [10, "Ink theme and Wick's cap", "Unlock the Ink color theme and a cap for Wick.", "now"],
+  [10, "Forest theme and Wick's cap", "Unlock the Forest color theme and a cap for Wick.", "now"],
   [15, "Gold star", "A gold star next to your level. Later also a discount on paid plans.", "now"],
   [20, "Free month", "A free month of a paid plan, when paid plans launch.", "later"]
 ];
@@ -31,7 +31,7 @@ const xpL = () => {
     return 0;
   }
 };
-// The Ink theme is unlocked.
+// The Forest theme is unlocked.
 const inkOk = () => xpL() >= 10;
 // Wick wears his cap (unlocked at level 10, can be turned off).
 function capOn() {
@@ -59,7 +59,7 @@ function xpPerks() {
 }
 // Level 10 perks were on at the last check.
 let xpU = null;
-// Next theme for the theme button: light, dark, then Ink when unlocked.
+// Next theme for the theme button: light, dark, then Forest when unlocked.
 function thNext() {
   TH = TH === "l" ? "d" : TH === "d" && inkOk() ? "i" : "l";
   thApply();
@@ -109,7 +109,7 @@ function xpOpen() {
       .join(""),
     set =
       L >= 10
-        ? `<div class="xpset"><button class="gh sm" type="button" data-xp="th">${TH === "i" ? "Turn off the Ink theme" : "Use the Ink theme"}</button><button class="gh sm" type="button" data-xp="cap">${capOn() ? "Hide Wick's cap" : "Show Wick's cap"}</button></div>`
+        ? `<div class="xpset"><button class="gh sm" type="button" data-xp="th">${TH === "i" ? "Turn off the Forest theme" : "Use the Forest theme"}</button><button class="gh sm" type="button" data-xp="cap">${capOn() ? "Hide Wick's cap" : "Show Wick's cap"}</button></div>`
         : "";
   const w = document.createElement("div");
   w.id = "xpw";
@@ -174,8 +174,8 @@ Object.assign(HE, {
   "More from Wick": "יותר מ-Wick",
   "30 messages and 8 chart images a day with Wick, instead of 20 and 5.":
     "30 הודעות ו-8 גרפים ביום עם Wick, במקום 20 ו-5.",
-  "Ink theme and Wick's cap": "ערכת הדיו וכובע ל-Wick",
-  "Unlock the Ink color theme and a cap for Wick.": "פותחים את ערכת הצבעים 'דיו' וכובע ל-Wick.",
+  "Forest theme and Wick's cap": "ערכת היער וכובע ל-Wick",
+  "Unlock the Forest color theme and a cap for Wick.": "פותחים את ערכת הצבעים 'יער' וכובע ל-Wick.",
   "Gold star": "כוכב זהב",
   "A gold star next to your level. Later also a discount on paid plans.":
     "כוכב זהב ליד הרמה שלך. בהמשך גם הנחה על תוכניות בתשלום.",
@@ -192,11 +192,11 @@ Object.assign(HE, {
   "How to earn XP": "איך צוברים XP",
   "XP are counted from what is in your journal, so deleting trades also removes their XP.":
     "ה-XP נספרות ממה שיש ביומן, ולכן מחיקת עסקאות מורידה גם את ה-XP שלהן.",
-  "Use the Ink theme": "הפעל את ערכת הדיו",
-  "Turn off the Ink theme": "כבה את ערכת הדיו",
+  "Use the Forest theme": "הפעל את ערכת היער",
+  "Turn off the Forest theme": "כבה את ערכת היער",
   "Hide Wick's cap": "הסר את הכובע של Wick",
   "Show Wick's cap": "הצג את הכובע של Wick",
-  "Ink": "דיו",
+  "Forest": "יער",
   "XP levels and perks": "רמות XP והטבות",
   "Close": "סגור"
 });

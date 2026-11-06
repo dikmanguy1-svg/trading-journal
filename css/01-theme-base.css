@@ -8,7 +8,7 @@
  */
 
 :root {
-  --navbg: #0f2620;
+  --navbg: #131a33;
   --ink: #f2ebdc;
   --rgb: 242, 235, 220;
   --mut: rgba(var(--rgb), 0.74);
@@ -19,16 +19,16 @@
   --r: #ff6b6b;
   --gb: rgba(74, 222, 128, 0.13);
   --rb: rgba(255, 107, 107, 0.13);
-  --card: #173229;
-  --in: #122b24;
-  --paper: #0f2620;
+  --card: #1b2342;
+  --in: #161d39;
+  --paper: #131a33;
   --note: #b8a4ff;
   --hl: #c9baff;
   --on: #160e33;
   --ph: #cdbfff;
   --bg:
-    radial-gradient(760px 520px at 90% -6%, rgba(184, 164, 255, 0.13), transparent 70%),
-    linear-gradient(180deg, #0f2620 0%, #15342a 100%);
+    radial-gradient(760px 520px at 90% -6%, rgba(184, 164, 255, 0.18), transparent 70%),
+    linear-gradient(180deg, #121833 0%, #1a2246 100%);
   --candle: 0.28;
   color-scheme: dark;
   box-sizing: border-box;
@@ -36,13 +36,13 @@
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 :root.th-i {
-  --navbg: #131a33;
-  --card: #1b2342;
-  --in: #161d39;
-  --paper: #131a33;
+  --navbg: #0f2620;
+  --card: #173229;
+  --in: #122b24;
+  --paper: #0f2620;
   --bg:
-    radial-gradient(760px 520px at 90% -6%, rgba(184, 164, 255, 0.18), transparent 70%),
-    linear-gradient(180deg, #121833 0%, #1a2246 100%);
+    radial-gradient(760px 520px at 90% -6%, rgba(184, 164, 255, 0.13), transparent 70%),
+    linear-gradient(180deg, #0f2620 0%, #15342a 100%);
 }
 :root.th-l {
   --navbg: #f2ebdc;
