@@ -1,0 +1,168 @@
+/*
+ * 18b-tab-hero.js — part of the Trading.Journal app script.
+ *
+ * The top of the page (headline, line under it, button, small live fact) changes with the open tab.
+ * - TABH: the texts per tab. The Dashboard keeps the profile headline (HERO in 06-views-events.js).
+ * - heroFact(): one short live fact for the tab (for example "Today: 3 of 6 answered").
+ * - heroTab(): called by heroSet(); returns true when it drew a tab headline.
+ *
+ * All js/*.js files share one global scope and run in the order index.html lists them.
+ */
+
+// Texts per tab: [line 1, line 2, line under the headline, button tab, button text].
+const TABH = {
+  str: [
+    "Your plan.",
+    "Your rules.",
+    "Pick your profile, your tools and the rules you trade by. The site builds your checks from them.",
+    "pulse",
+    "Start today's check"
+  ],
+  pulse: [
+    "Check yourself",
+    "before you click.",
+    "One minute before the market opens. If one answer is No, today is not a trading day.",
+    "scr",
+    "Screen a stock"
+  ],
+  scr: [
+    "Only the best",
+    "setups pass.",
+    "Every answer must be Yes. If one is No, wait for a better setup.",
+    "calc",
+    "Size the trade"
+  ],
+  calc: [
+    "Size it",
+    "before you buy it.",
+    "Your stop decides how many shares. Never risk more than your rule.",
+    "jr",
+    "Log the trade"
+  ],
+  jr: [
+    "Write it down.",
+    "Own the trade.",
+    "Every trade with its reason. Close it with an honest note.",
+    "dash",
+    "See my dashboard"
+  ],
+  mon: [
+    "Your month,",
+    "honestly.",
+    "Wins, losses and lessons, month by month.",
+    "dash",
+    "See my dashboard"
+  ],
+  wl: [
+    "Wait for",
+    "your price.",
+    "Plan the entry, the stop and the target before the move. The signal tells you when.",
+    "scr",
+    "Screen a stock"
+  ],
+  pf: [
+    "Invest with a plan.",
+    "Stay with it.",
+    "Deposit on schedule and let time do the work.",
+    "dash",
+    "See my dashboard"
+  ]
+};
+// Investors only (long-term profile): calmer texts for the two check tabs.
+const TABH_LT = {
+  pulse: [
+    "Check in",
+    "before you invest.",
+    "A short check before every deposit or new purchase.",
+    "scr",
+    "Check a stock or fund"
+  ],
+  scr: [
+    "Buy what",
+    "you understand.",
+    "Every answer should be Yes before it goes into your portfolio.",
+    "pf",
+    "Open my portfolio"
+  ]
+};
+
+// One short live fact for the open tab, or "" when there is nothing to say.
+function heroFact(t) {
+  const cnt = (a, v) => (a || []).filter(x => x === v).length;
+  if (t === "pulse") {
+    const n = QP().length,
+      a = (S.pulse || []).filter(x => x === "Yes" || x === "No").length;
+    return `<span>Today</span>: <span class="ltn">${a}</span> <span>of</span> <span class="ltn">${n}</span> <span>answered</span>`;
+  }
+  if (t === "scr") {
+    const n = QS().length,
+      y = cnt(S.scr && S.scr.a, "Yes");
+    return S.scr && S.scr.t
+      ? `<span data-nt>${esc(S.scr.t)}</span>: <span class="ltn">${y}</span> <span>of</span> <span class="ltn">${n}</span> <span>Yes</span>`
+      : `<span class="ltn">${n}</span> <span>questions</span>`;
+  }
+  if (t === "calc") {
+    const r = (S.set && S.set.mr) || 0;
+    return `<span>Max risk per trade</span>: <span class="ltn">${(r * 100).toFixed((r * 100) % 1 ? 1 : 0)}%</span> · <span class="ltn">${$f(acct() * r, 0)}</span>`;
+  }
+  if (t === "jr") {
+    const o = S.trades.filter(x => x.x == null).length;
+    return `<span class="ltn">${o}</span> <span>open trades</span> · <span class="ltn">${S.trades.length - o}</span> <span>closed</span>`;
+  }
+  if (t === "mon") {
+    const m = dkey(new Date()).slice(0, 7),
+      p = S.trades
+        .filter(x => x.x != null && (x.xd || x.d).slice(0, 7) === m)
+        .reduce((a, x) => a + (pnl(x) || 0), 0);
+    return `<span>This month</span>: <span class="ltn ${p > 0 ? "pos" : p < 0 ? "neg" : ""}">${(p > 0 ? "+" : "") + $f(p, 0)}</span>`;
+  }
+  if (t === "wl") {
+    const hit = S.wl.filter(w => {
+      const e = num(w.e),
+        s = num(w.s),
+        p = wp(w),
+        L = w.dir !== "Short";
+      return e && p && !(s && (L ? p <= s : p >= s)) && (L ? p >= e : p <= e);
+    }).length;
+    return `<span class="ltn">${S.wl.length}</span> <span>on the list</span> · <span class="ltn">${hit}</span> <span>at the trigger</span>`;
+  }
+  if (t === "pf") {
+    const L = ltD();
+    if (!L.h.length) return `<span>No holdings yet.</span>`;
+    const T0 = ltTot();
+    return `<span class="ltn">${L.h.length}</span> <span>holdings</span> · <span class="ltn">${$f(T0.val, 0)}</span>`;
+  }
+  if (t === "str") {
+    const r = (S.rules || []).length,
+      k = ((S.st && S.st.tools) || []).length + ((S.st && S.st.custom) || []).length;
+    return `<span class="ltn">${r}</span> <span>rules</span> · <span class="ltn">${k}</span> <span>tools picked</span>`;
+  }
+  return "";
+}
+
+// Draw the headline for the open tab. Returns false on the Dashboard (the profile headline is used there).
+function heroTab() {
+  const H = (ltOnly() && TABH_LT[tab]) || TABH[tab];
+  const f = $("hst");
+  if (!H || !$("hh1")) {
+    if (f) {
+      f.innerHTML = "";
+      f.hidden = true;
+    }
+    return false;
+  }
+  const fact = heroFact(tab),
+    k = "tab|" + tab + "|" + (ltOnly() ? 1 : 0) + "|" + LANG + "|" + fact;
+  if (k === heroK) return true;
+  heroK = k;
+  $("hh1").innerHTML = `<span>${H[0]}</span><br><span>${H[1]}</span>`;
+  $("hsb").textContent = H[2];
+  const c = $("hcta");
+  c.dataset.t = H[3];
+  c.textContent = H[4];
+  if (f) {
+    f.innerHTML = fact;
+    f.hidden = !fact;
+  }
+  return true;
+}

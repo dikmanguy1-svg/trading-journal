@@ -48,10 +48,20 @@ try {
 } catch (e) {}
 // Which headline is shown now.
 let heroK = null;
-// Set the headline for the chosen profile.
+// Set the headline: the open tab's own headline (18b-tab-hero.js), or on the Dashboard the one for the chosen profile.
 function heroSet() {
-  const P = (S.prof || []).filter(p => PRN[p]),
-    H = HERO[P[0] || "swing"],
+  const P = (S.prof || []).filter(p => PRN[p]);
+  if ($("hpf")) {
+    const ck = P.join() + "|" + LANG;
+    if ($("hpf").dataset.k !== ck) {
+      $("hpf").dataset.k = ck;
+      $("hpf").innerHTML = P.length
+        ? `<button class="pchip" data-t="str" aria-label="${esc(tr("Your profile") + ": " + P.map(p => tr(PRN[p])).join(", ") + ". " + tr("Change it in Strategy"))}" data-nt>${P.map(p => esc(tr(PRN[p]))).join(" · ")} <span aria-hidden="true">✎</span></button>`
+        : `<button class="pchip pnone" data-t="str">Pick your profile <span aria-hidden="true">→</span></button>`;
+    }
+  }
+  if (typeof heroTab === "function" && heroTab()) return;
+  const H = HERO[P[0] || "swing"],
     k = P.join() + "|" + LANG;
   if (k === heroK || !$("hh1")) return;
   heroK = k;
@@ -60,9 +70,6 @@ function heroSet() {
   const c = $("hcta");
   c.dataset.t = H[3];
   c.textContent = H[4];
-  $("hpf").innerHTML = P.length
-    ? `<button class="pchip" data-t="str" aria-label="${esc(tr("Your profile") + ": " + P.map(p => tr(PRN[p])).join(", ") + ". " + tr("Change it in Strategy"))}" data-nt>${P.map(p => esc(tr(PRN[p]))).join(" · ")} <span aria-hidden="true">✎</span></button>`
-    : `<button class="pchip pnone" data-t="str">Pick your profile <span aria-hidden="true">→</span></button>`;
 }
 // The previous tab (for the slide direction).
 let aplTab = null;

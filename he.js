@@ -710,5 +710,55 @@ window.HE_EXT = {
   "Daily pulse and stock screening (up to 10 checks a month, one strategy)":
     "דופק יומי ושאלון סינון (עד 10 בדיקות בחודש, אסטרטגיה אחת)",
   "Dashboard for the last 30 days": "דשבורד ל-30 הימים האחרונים",
-  "Unlimited trades and checks": "עסקאות ובדיקות ללא הגבלה"
+  "Unlimited trades and checks": "עסקאות ובדיקות ללא הגבלה",
+  "Your plan.": "התוכנית שלך.",
+  "Your rules.": "החוקים שלך.",
+  "Pick your profile, your tools and the rules you trade by. The site builds your checks from them.":
+    "בחר פרופיל, כלים וחוקים שאתה סוחר לפיהם. האתר בונה מהם את הבדיקות שלך.",
+  "Start today's check": "להתחיל את הבדיקה של היום",
+  "Check yourself": "תבדוק את עצמך",
+  "before you click.": "לפני שאתה לוחץ.",
+  "One minute before the market opens. If one answer is No, today is not a trading day.":
+    "דקה אחת לפני פתיחת השוק. אם תשובה אחת היא לא, היום הוא לא יום מסחר.",
+  "Screen a stock": "לסנן מניה",
+  "Only the best": "רק הטובות",
+  "setups pass.": "עוברות.",
+  "Every answer must be Yes. If one is No, wait for a better setup.":
+    "כל התשובות חייבות להיות כן. אם אחת היא לא, מחכים להזדמנות טובה יותר.",
+  "Size the trade": "לחשב גודל עסקה",
+  "Size it": "תחשב את הגודל",
+  "before you buy it.": "לפני שאתה קונה.",
+  "Your stop decides how many shares. Never risk more than your rule.":
+    "הסטופ קובע כמה מניות. לעולם לא מסכנים יותר מהחוק שלך.",
+  "Log the trade": "לרשום את העסקה",
+  "Every trade with its reason. Close it with an honest note.":
+    "כל עסקה עם הסיבה שלה. סוגרים אותה עם הערה כנה.",
+  "See my dashboard": "ללוח הבקרה שלי",
+  "Your month,": "החודש שלך,",
+  "honestly.": "בכנות.",
+  "Wins, losses and lessons, month by month.": "רווחים, הפסדים ולקחים, חודש אחרי חודש.",
+  "Wait for": "תחכה",
+  "your price.": "למחיר שלך.",
+  "Plan the entry, the stop and the target before the move. The signal tells you when.":
+    "מתכננים כניסה, סטופ ויעד לפני התנועה. האות אומר לך מתי.",
+  "Deposit on schedule and let time do the work.": "מפקידים לפי התוכנית ונותנים לזמן לעבוד.",
+  "Check in": "בדיקה קצרה",
+  "before you invest.": "לפני שמשקיעים.",
+  "A short check before every deposit or new purchase.": "בדיקה קצרה לפני כל הפקדה או קנייה חדשה.",
+  "Check a stock or fund": "לבדוק מניה או קרן",
+  "Buy what": "קונים רק את מה",
+  "you understand.": "שמבינים.",
+  "Every answer should be Yes before it goes into your portfolio.":
+    "כל התשובות צריכות להיות כן לפני שזה נכנס לתיק.",
+  "answered": "נענו",
+  "questions": "שאלות",
+  "Max risk per trade": "סיכון מרבי לעסקה",
+  "closed": "סגורות",
+  "This month": "החודש",
+  "on the list": "ברשימה",
+  "at the trigger": "בטריגר",
+  "holdings": "החזקות",
+  "rules": "חוקים",
+  "tools picked": "כלים נבחרו",
+  "open trades": "עסקאות פתוחות"
 };

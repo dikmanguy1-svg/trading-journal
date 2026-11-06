@@ -733,3 +733,23 @@ details[open] > summary {
 [dir="rtl"] .k b {
   unicode-bidi: plaintext;
 }
+
+/* Live fact under the headline (changes with the open tab) */
+.hero p.hst {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  background: rgba(var(--rgb), 0.06);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 14px;
+  margin: -10px 0 22px;
+  max-width: none;
+}
+.hero p.hst[hidden] {
+  display: none;
+}
