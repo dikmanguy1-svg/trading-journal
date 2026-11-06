@@ -81,6 +81,7 @@ body {
   color: var(--ink);
   font:
     16px/1.55 Figtree,
+    Heebo,
     system-ui,
     -apple-system,
     "Segoe UI",
@@ -330,7 +331,7 @@ tr.ix td {
   padding: 34px 8px 22px;
 }
 .land h1 {
-  font-family: "Young Serif", Georgia, serif;
+  font-family: "Young Serif", "Frank Ruhl Libre", Georgia, serif;
   font-size: clamp(26px, 5vw, 42px);
   line-height: 1.2;
   margin: 0 auto 14px;
@@ -398,7 +399,7 @@ main {
   color: var(--mut);
 }
 .brand {
-  font-family: "Young Serif", Georgia, serif;
+  font-family: "Young Serif", "Frank Ruhl Libre", Georgia, serif;
   font-size: 21px;
   letter-spacing: 0.005em;
 }
@@ -420,4 +421,12 @@ main {
 .jpg .mut {
   display: block;
   margin-top: 6px;
+}
+
+/* Hebrew: Young Serif and Figtree have no Hebrew letters. Hebrew text uses Frank Ruhl Libre (headings, bold)
+   and Heebo (body), loaded from Google Fonts (Hebrew letters only are downloaded on Hebrew pages).
+   font-synthesis:none keeps the Latin digits in Young Serif regular while Hebrew gets the bold face. */
+html[lang="he"] :is(h1, h2, h3, .hq p, .plp b, #hs > b, .hqbig b, .ls-quote) {
+  font-weight: 700;
+  font-synthesis: none;
 }

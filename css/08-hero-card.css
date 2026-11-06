@@ -27,6 +27,7 @@
   justify-content: space-between;
   font:
     600 12px Figtree,
+    Heebo,
     system-ui,
     sans-serif;
   color: var(--mut);
@@ -37,7 +38,7 @@
   margin: 14px 0 0;
   padding-top: 12px;
   border-top: 1px solid var(--line);
-  font-family: "Young Serif", Georgia, serif;
+  font-family: "Young Serif", "Frank Ruhl Libre", Georgia, serif;
   font-size: 20px;
   line-height: 1.3;
   color: var(--ink);
@@ -49,6 +50,7 @@
 .hqt {
   font:
     700 12px/1 Figtree,
+    Heebo,
     system-ui,
     sans-serif;
   letter-spacing: 0.06em;
@@ -78,6 +80,7 @@
 .hqbig b {
   font:
     400 34px/1 "Young Serif",
+    "Frank Ruhl Libre",
     Georgia,
     serif;
   color: var(--ink);
