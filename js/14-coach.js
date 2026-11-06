@@ -143,7 +143,7 @@ const coMkMood = () =>
 // Accessible label of the coach button.
 function coMkLabel() {
   const he = LANG === "he",
-    base = he ? "פתיחת הצ'אט עם המאמן" : "Open coach chat";
+    base = he ? "פתיחת הצ'אט עם Wick" : "Open chat with Wick";
   if (coMk == null) return base;
   const v = (coMk > 0 ? "+" : "") + coMk.toFixed(2) + "%";
   return base + (he ? ". S&P 500 ביום המסחר האחרון: " : ". S&P 500 last session: ") + v;
@@ -298,12 +298,12 @@ function coMock(hasImg) {
     hv = n => (n === 1 ? "has" : "have");
   if (coOff.tr)
     return H
-      ? 'הורדת את העסקאות משורת "המאמן רואה", אז אין לי מה לבדוק. החזר אותן כדי שאבדוק.'
-      : 'You removed trades from "Coach sees", so there is nothing for me to check. Add them back and ask again.';
+      ? 'הורדת את העסקאות משורת "Wick רואה", אז אין לי מה לבדוק. החזר אותן כדי שאבדוק.'
+      : 'You removed trades from "Wick sees", so there is nothing for me to check. Add them back and ask again.';
   if (!s.trades)
     return H
-      ? 'אין עסקאות בטווח שנבחר. בחר טווח אחר בשורת "המאמן רואה", או הוסף עסקאות ליומן.'
-      : 'There are no trades in the selected range. Pick another range in "Coach sees", or log some trades.';
+      ? 'אין עסקאות בטווח שנבחר. בחר טווח אחר בשורת "Wick רואה", או הוסף עסקאות ליומן.'
+      : 'There are no trades in the selected range. Pick another range in "Wick sees", or log some trades.';
   out.push(
     H
       ? `בדקתי ${nH(s.trades)} (${s.closed} סגורות).`
@@ -376,7 +376,7 @@ function coMock(hasImg) {
 }
 // Send a question to the coach server (with the login token).
 async function coApi(q, img, hist) {
-  if (!U) throw new Error("Log in to use the coach.");
+  if (!U) throw new Error("Log in to use Wick.");
   const tok = await U.getIdToken();
   const ctl = new AbortController(),
     tm = setTimeout(() => ctl.abort(), 45000);
@@ -397,17 +397,17 @@ async function coApi(q, img, hist) {
   } catch (e) {
     throw new Error(
       e && e.name === "AbortError"
-        ? "The coach took too long. Try again."
-        : "Could not reach the coach. Check your connection and try again."
+        ? "Wick took too long. Try again."
+        : "Could not reach Wick. Check your connection and try again."
     );
   } finally {
     clearTimeout(tm);
   }
   if (r.status === 401 || r.status === 403)
-    throw new Error("The coach is not available for this account.");
+    throw new Error("Wick is not available for this account.");
   if (r.status === 429) throw new Error("You reached today's limit. Try again tomorrow.");
   if (r.status === 413) throw new Error("That image is too large. Use a smaller screenshot.");
-  if (!r.ok) throw new Error("The coach could not answer right now. Try again later.");
+  if (!r.ok) throw new Error("Wick could not answer right now. Try again later.");
   let d;
   try {
     d = await r.json();
@@ -415,7 +415,7 @@ async function coApi(q, img, hist) {
     d = null;
   }
   if (!d || typeof d.a !== "string" || !d.a.trim())
-    throw new Error("The coach could not answer right now. Try again later.");
+    throw new Error("Wick could not answer right now. Try again later.");
   if (d.left && isFinite(d.left.m) && isFinite(d.left.i)) {
     try {
       localStorage.setItem(
@@ -472,7 +472,7 @@ async function coSend() {
     } else a = await coApi(q, img, hist);
     coBump(!!img);
   } catch (e) {
-    err = (e && e.message) || "The coach could not answer right now. Try again later.";
+    err = (e && e.message) || "Wick could not answer right now. Try again later.";
   }
   if (g !== coGen) return;
   coBusy = false;
@@ -570,7 +570,7 @@ function coBubble(m) {
   return `<div class="comsg coa"><span class="coav">${coAv(m.mood || "calm", 30)}</span><div class="coaw"><div class="cob2"><div${m.local ? "" : " data-nt"}>${m.local ? m.a : coFmt(m.a)}</div>${m.demo ? `<p class="codemo">Demo answer, built from your trades by fixed rules. No AI yet.</p>` : ""}
 ${m.calc ? `<button class="cogo2" data-co="calc" data-id="${m.calc}">Open in risk calculator →</button>` : ""}${m.pulse ? `<button class="cogo2" data-co="pulse">Open Daily pulse →</button>` : ""}</div>${m.local ? "" : `<p class="codis">${CO_DIS}</p>`}</div></div>`;
 }
-// "Coach sees" chips (what the coach is allowed to see).
+// "Wick sees" chips (what the coach is allowed to see).
 function coChips() {
   const tt = coTid && S.trades.find(x => x.id === coTid),
     n = coTrades().length,
@@ -579,7 +579,7 @@ function coChips() {
       coOff[k]
         ? `<button class="cochip off" data-co="on" data-k="${k}" aria-label="${esc(tr("Add back: " + lab))}">+ ${lab}</button>`
         : `<span class="cochip">${inner}<button data-co="off" data-k="${k}" aria-label="${esc(tr("Remove: " + lab))}">${CO_SVG.x}</button></span>`;
-  return `<div class="cosee"><span class="coseel">Coach sees:</span>${chip("tr", `<label class="covh" for="cosc">Trades</label><select id="cosc" data-co="sc">${tt ? opt("t", esc(tt.t) + " trade") : ""}${opt("n10", "Last 10 trades")}${opt("d30", "Last 30 days")}${opt("all", "All trades")}</select><b>${n}</b>`, "Trades")}${chip("st", "Strategy", "Strategy")}${chip("rk", "Risk settings", "Risk settings")}${chip("pl", "Daily pulse", "Daily pulse")}</div>`;
+  return `<div class="cosee"><span class="coseel">Wick sees:</span>${chip("tr", `<label class="covh" for="cosc">Trades</label><select id="cosc" data-co="sc">${tt ? opt("t", esc(tt.t) + " trade") : ""}${opt("n10", "Last 10 trades")}${opt("d30", "Last 30 days")}${opt("all", "All trades")}</select><b>${n}</b>`, "Trades")}${chip("st", "Strategy", "Strategy")}${chip("rk", "Risk settings", "Risk settings")}${chip("pl", "Daily pulse", "Daily pulse")}</div>`;
 }
 // Draw the coach window.
 function coRender() {
@@ -598,18 +598,18 @@ function coRender() {
     keep = ta ? ta.value : "",
     foc = ta && document.activeElement === ta,
     u = coUse();
-  const head = `<div class="cohd"><span class="coav cohav">${coAv(coMkMood(), 34)}</span><div class="cohn"><b id="coh">Coach</b><small>Your trading coach</small></div>${coOk() && !(FB && !U) ? `<span class="cocnt">${u.m} / ${CO_MAX.m} today</span>` : ""}<button class="coib cox" data-co="x" aria-label="Close the coach">${CO_SVG.x}</button></div>`;
+  const head = `<div class="cohd"><span class="coav cohav">${coAv(coMkMood(), 34)}</span><div class="cohn"><b id="coh" data-nt>Wick</b><small>Your trading coach</small></div>${coOk() && !(FB && !U) ? `<span class="cocnt">${u.m} / ${CO_MAX.m} today</span>` : ""}<button class="coib cox" data-co="x" aria-label="Close chat with Wick">${CO_SVG.x}</button></div>`;
   if (FB && !U) {
-    d.innerHTML = head + `<div class="cobody"><p class="mut">Log in to use the coach.</p></div>`;
+    d.innerHTML = head + `<div class="cobody"><p class="mut">Log in to use Wick.</p></div>`;
     return;
   }
   if (!coOk()) {
     d.innerHTML =
       head +
-      `<div class="cobody"><div class="coc"><span class="coav" style="margin-bottom:8px">${coAv("calm", 52)}</span><h3>Before you start with the coach</h3><ul>
-<li>The coach reviews your process: stops, exits and sticking to your plan. It does not tell you what to buy or sell, and it never changes your trades.</li>
+      `<div class="cobody"><div class="coc"><span class="coav" style="margin-bottom:8px">${coAv("calm", 52)}</span><h3>Before you start with Wick</h3><ul>
+<li>Wick reviews your process: stops, exits and sticking to your plan. It does not tell you what to buy or sell, and it never changes your trades.</li>
 <li>It is a helper tool, not investment advice. It can be wrong, and the decisions are yours.</li>
-<li>To answer, only your question, the data you choose under "Coach sees" and your chart are sent to the AI provider. Not your name or email.</li>
+<li>To answer, only your question, the data you choose under "Wick sees" and your chart are sent to the AI provider. Not your name or email.</li>
 <li>While we test, the AI provider (Google Gemini, free tier) may use what is sent to improve its models, and people there may read it. Do not send anything sensitive.</li>
 <li>Do not upload screenshots with account numbers or personal details.</li></ul>
 <p><a href="privacy.html" target="_blank" rel="noopener">Read the privacy policy</a></p>
@@ -622,10 +622,10 @@ function coRender() {
   const msgs = coMsgs.map(coBubble).join("");
   d.innerHTML =
     head +
-    `<div class="cobody" id="colist" aria-live="polite">${msgs}${coMsgs.length < 2 ? `<div class="coqk"><button class="gh sm" data-co="qk" data-v="Where am I not following my plan?">Where am I not following my plan?</button><button class="gh sm" data-co="q10">Review my last 10 trades</button><button class="gh sm" data-co="at">Analyze a chart</button></div>` : ""}${coBusy ? `<div class="comsg coa cowb"><span class="coav">${coAv("calm", 30)}</span><p class="cowait" role="status">The coach is checking your trades…</p></div>` : ""}</div>
+    `<div class="cobody" id="colist" aria-live="polite">${msgs}${coMsgs.length < 2 ? `<div class="coqk"><button class="gh sm" data-co="qk" data-v="Where am I not following my plan?">Where am I not following my plan?</button><button class="gh sm" data-co="q10">Review my last 10 trades</button><button class="gh sm" data-co="at">Analyze a chart</button></div>` : ""}${coBusy ? `<div class="comsg coa cowb"><span class="coav">${coAv("calm", 30)}</span><p class="cowait" role="status">Wick is checking your trades…</p></div>` : ""}</div>
 <div class="cofoot">${coErr ? `<p class="coerr" role="alert">${coErr}</p>` : ""}${coChips()}
 ${coImg ? `<div class="coim"><img src="${coImg.url}" alt=""><span data-nt>${esc(coImg.name)} · ${coImg.size < 1e6 ? Math.max(1, Math.round(coImg.size / 1e3)) + "KB" : (coImg.size / 1e6).toFixed(1) + "MB"}</span><button class="coib" data-co="rmi" aria-label="Remove image">${CO_SVG.x}</button></div>` : ""}
-<div class="coin"><button class="coib coup" data-co="at" aria-label="Upload a chart">${CO_SVG.im}</button><label class="covh" for="coq">Question for the coach</label><input id="coq" type="text" maxlength="1000" autocomplete="off" placeholder="Ask your coach…"><button class="coib cosend" data-co="go" aria-label="Send"${coBusy ? " disabled" : ""}>${CO_SVG.go}</button></div>
+<div class="coin"><button class="coib coup" data-co="at" aria-label="Upload a chart">${CO_SVG.im}</button><label class="covh" for="coq">Question for Wick</label><input id="coq" type="text" maxlength="1000" autocomplete="off" placeholder="Ask Wick…"><button class="coib cosend" data-co="go" aria-label="Send"${coBusy ? " disabled" : ""}>${CO_SVG.go}</button></div>
 <input type="file" id="cof" accept="image/png,image/jpeg,image/webp" hidden>
 <p class="cohelp">${Math.max(0, CO_MAX.i - u.i)} of ${CO_MAX.i} chart images left today · Crop out account numbers first.</p></div>`;
   const t2 = $("coq");
@@ -786,7 +786,7 @@ body:not(.lo) main{padding-bottom:110px}
   b.hidden = true;
   b.setAttribute("aria-haspopup", "dialog");
   b.setAttribute("aria-expanded", "false");
-  b.setAttribute("aria-label", "Open coach chat");
+  b.setAttribute("aria-label", "Open chat with Wick");
   b.innerHTML = coAv("calm", 39);
   document.body.appendChild(b);
   const w = document.createElement("div");
@@ -935,22 +935,22 @@ document.addEventListener("paste", e => {
 }
 // "Ask coach" button for one trade.
 function coAskBtn(t) {
-  return `<button class="gh sm coask" data-co="t" data-id="${t.id}" aria-label="Ask coach about ${esc(t.t)}"><span class="coav">${coAv("calm", 26)}</span>Ask coach</button>`;
+  return `<button class="gh sm coask" data-co="t" data-id="${t.id}" aria-label="Ask Wick about ${esc(t.t)}"><span class="coav">${coAv("calm", 26)}</span>Ask Wick</button>`;
 }
 Object.assign(HE, {
   "Coach": "המאמן",
   "Your trading coach": "המאמן שלך למסחר",
-  "Ask coach": "שאל את המאמן",
-  "Open coach chat": "פתיחת הצ'אט עם המאמן",
-  "Close the coach": "סגירת הצ'אט עם המאמן",
-  "Log in to use the coach.": "התחבר כדי להשתמש במאמן.",
-  "Before you start with the coach": "לפני שמתחילים עם המאמן",
-  "The coach reviews your process: stops, exits and sticking to your plan. It does not tell you what to buy or sell, and it never changes your trades.":
-    "המאמן מבקר את התהליך שלך: סטופים, יציאות והיצמדות לתוכנית. הוא לא אומר לך מה לקנות או למכור, והוא אף פעם לא משנה את העסקאות שלך.",
+  "Ask Wick": "שאל את Wick",
+  "Open chat with Wick": "פתיחת הצ'אט עם Wick",
+  "Close chat with Wick": "סגירת הצ'אט עם Wick",
+  "Log in to use Wick.": "התחבר כדי להשתמש ב-Wick.",
+  "Before you start with Wick": "לפני שמתחילים עם Wick",
+  "Wick reviews your process: stops, exits and sticking to your plan. It does not tell you what to buy or sell, and it never changes your trades.":
+    "Wick מבקר את התהליך שלך: סטופים, יציאות והיצמדות לתוכנית. הוא לא אומר לך מה לקנות או למכור, והוא אף פעם לא משנה את העסקאות שלך.",
   "It is a helper tool, not investment advice. It can be wrong, and the decisions are yours.":
     "זה כלי עזר, לא ייעוץ השקעות. הוא יכול לטעות, וההחלטות שלך.",
-  'To answer, only your question, the data you choose under "Coach sees" and your chart are sent to the AI provider. Not your name or email.':
-    'כדי לענות, נשלחים לספק ה-AI רק השאלה, המידע שבחרת ב"המאמן רואה" והגרף. לא השם והמייל שלך.',
+  'To answer, only your question, the data you choose under "Wick sees" and your chart are sent to the AI provider. Not your name or email.':
+    'כדי לענות, נשלחים לספק ה-AI רק השאלה, המידע שבחרת ב"Wick רואה" והגרף. לא השם והמייל שלך.',
   "While we test, the AI provider (Google Gemini, free tier) may use what is sent to improve its models, and people there may read it. Do not send anything sensitive.":
     "בתקופת הניסוי, ספק ה-AI (Google Gemini, הגרסה החינמית) רשאי להשתמש במה שנשלח כדי לשפר את המודלים שלו, ואנשים שם עשויים לקרוא אותו. אל תשלח שום דבר רגיש.",
   "Do not upload screenshots with account numbers or personal details.":
@@ -959,7 +959,7 @@ Object.assign(HE, {
   "I understand and agree": "הבנתי ומסכים",
   "Not now": "לא עכשיו",
   "Draft text, to be finalized after a legal review.": "טקסט טיוטה, ייקבע סופית אחרי בדיקה משפטית.",
-  "Coach sees:": "המאמן רואה:",
+  "Wick sees:": "Wick רואה:",
   "Trades": "עסקאות",
   "Strategy": "אסטרטגיה",
   "Risk settings": "הגדרות סיכון",
@@ -967,7 +967,7 @@ Object.assign(HE, {
   "Last 10 trades": "10 אחרונות",
   "Last 30 days": "30 יום",
   "All trades": "כל העסקאות",
-  "The coach is checking your trades…": "המאמן בודק את העסקאות…",
+  "Wick is checking your trades…": "Wick בודק את העסקאות…",
   "Chart you uploaded": "הגרף שהעלית",
   "Demo answer, built from your trades by fixed rules. No AI yet.":
     "תשובת הדגמה, מחושבת מהעסקאות שלך לפי כללים קבועים. עדיין בלי AI.",
@@ -979,20 +979,20 @@ Object.assign(HE, {
   "Analyze a chart": "נתח גרף",
   "Remove image": "הסר תמונה",
   "Upload a chart": "העלאת גרף",
-  "Question for the coach": "שאלה למאמן",
+  "Question for Wick": "שאלה ל-Wick",
   "Send": "שלח",
-  "Ask your coach…": "שאל את המאמן…",
+  "Ask Wick…": "שאל את Wick…",
   "You reached today's message limit. Try again tomorrow.":
     "הגעת למגבלת ההודעות להיום. נסה שוב מחר.",
   "You reached today's image limit. Try again tomorrow.": "הגעת למגבלת התמונות להיום. נסה שוב מחר.",
   "Use a PNG, JPEG or WebP image.": "השתמש בתמונה מסוג PNG, JPEG או WebP.",
   "That image is too large. Use a smaller screenshot.": "התמונה גדולה מדי. נסה צילום מסך קטן יותר.",
   "Could not read that image. Try another file.": "לא הצלחתי לקרוא את התמונה. נסה קובץ אחר.",
-  "The coach took too long. Try again.": "המאמן לקח יותר מדי זמן. נסה שוב.",
-  "Could not reach the coach. Check your connection and try again.":
-    "אין חיבור למאמן. בדוק את החיבור ונסה שוב.",
-  "The coach is not available for this account.": "המאמן לא זמין לחשבון הזה.",
+  "Wick took too long. Try again.": "Wick לקח יותר מדי זמן. נסה שוב.",
+  "Could not reach Wick. Check your connection and try again.":
+    "אין חיבור ל-Wick. בדוק את החיבור ונסה שוב.",
+  "Wick is not available for this account.": "Wick לא זמין לחשבון הזה.",
   "You reached today's limit. Try again tomorrow.": "הגעת למגבלה של היום. נסה שוב מחר.",
-  "The coach could not answer right now. Try again later.":
-    "המאמן לא הצליח לענות כרגע. נסה שוב מאוחר יותר."
+  "Wick could not answer right now. Try again later.":
+    "Wick לא הצליח לענות כרגע. נסה שוב מאוחר יותר."
 });

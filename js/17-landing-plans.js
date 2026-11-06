@@ -71,7 +71,7 @@ function lsPlans(he) {
           "Full history",
           "CSV import from your broker",
           ["Full cost of indiscipline breakdown", 1],
-          ["AI coach", 1]
+          ["Wick, the AI coach", 1]
         ]
       },
       {
@@ -82,7 +82,7 @@ function lsPlans(he) {
           "Unlimited trades and checks",
           "All trading and long-term tools",
           ["Full cost of indiscipline breakdown", 1],
-          ["More messages to the AI coach", 1],
+          ["More messages to Wick", 1],
           ["Broker auto-sync", 1]
         ]
       }

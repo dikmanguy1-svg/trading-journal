@@ -15,7 +15,7 @@ HR.push(
     x => "נשארו היום " + x[1] + " מתוך " + x[2] + " גרפים · חתוך מספרי חשבון לפני ההעלאה."
   ],
   [/^([A-Z0-9.\-]{1,10}) trade$/, x => "עסקת " + x[1]],
-  [/^Ask coach about (.+)$/, x => "שאל את המאמן על " + x[1]],
+  [/^Ask Wick about (.+)$/, x => "שאל את Wick על " + x[1]],
   [/^Remove: (.+)$/, x => "הסר: " + trc(x[1])],
   [/^Add back: (.+)$/, x => "החזר: " + trc(x[1])],
   [/^\+ (Trades|Strategy|Risk settings|Daily pulse)$/, x => "+ " + trc(x[1])]
