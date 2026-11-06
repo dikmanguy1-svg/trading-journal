@@ -3,7 +3,7 @@
  *
  * XP perks: every 5 levels unlock something.
  * - Level 5: more Wick messages and chart images a day.
- * - Level 10: the Forest color theme and a cap for Wick.
+ * - Level 10: a cap for Wick. (Both dark themes, ink blue and Forest green, are free for now.)
  * - Level 15: a gold star next to your level (later also a plan discount).
  * - Level 20: a free month of a paid plan, when paid plans launch.
  * Tapping the level pill at the top opens a window that explains XP, levels and perks.
@@ -19,7 +19,7 @@ const XPK = [
     "30 messages and 8 chart images a day with Wick, instead of 20 and 5.",
     "now"
   ],
-  [10, "Forest theme and Wick's cap", "Unlock the Forest color theme and a cap for Wick.", "now"],
+  [10, "Wick's cap", "A cap for Wick, in the chat and on the coach button.", "now"],
   [15, "Gold star", "A gold star next to your level. Later also a discount on paid plans.", "now"],
   [20, "Free month", "A free month of a paid plan, when paid plans launch.", "later"]
 ];
@@ -31,8 +31,8 @@ const xpL = () => {
     return 0;
   }
 };
-// The Forest theme is unlocked.
-const inkOk = () => xpL() >= 10;
+// The Forest theme is open to everyone for now (it may become a perk later).
+const inkOk = () => true;
 // Wick wears his cap (unlocked at level 10, can be turned off).
 function capOn() {
   if (xpL() < 10) return false;
@@ -49,7 +49,6 @@ function xpPerks() {
   CO_MAX.i = L >= 5 ? 8 : 5;
   const p = $("lv");
   if (p) p.classList.toggle("gold", L >= 15);
-  if (TH === "i" && L < 10) TH = "d";
   // Refresh the theme button and Wick's cap when level 10 is crossed.
   if (L >= 10 !== xpU) {
     xpU = L >= 10;
@@ -59,7 +58,7 @@ function xpPerks() {
 }
 // Level 10 perks were on at the last check.
 let xpU = null;
-// Next theme for the theme button: light, dark, then Forest when unlocked.
+// Next theme for the theme button: light, dark (ink blue), Forest green.
 function thNext() {
   TH = TH === "l" ? "d" : TH === "d" && inkOk() ? "i" : "l";
   thApply();
@@ -109,7 +108,7 @@ function xpOpen() {
       .join(""),
     set =
       L >= 10
-        ? `<div class="xpset"><button class="gh sm" type="button" data-xp="th">${TH === "i" ? "Turn off the Forest theme" : "Use the Forest theme"}</button><button class="gh sm" type="button" data-xp="cap">${capOn() ? "Hide Wick's cap" : "Show Wick's cap"}</button></div>`
+        ? `<div class="xpset"><button class="gh sm" type="button" data-xp="cap">${capOn() ? "Hide Wick's cap" : "Show Wick's cap"}</button></div>`
         : "";
   const w = document.createElement("div");
   w.id = "xpw";
@@ -174,8 +173,8 @@ Object.assign(HE, {
   "More from Wick": "יותר מ-Wick",
   "30 messages and 8 chart images a day with Wick, instead of 20 and 5.":
     "30 הודעות ו-8 גרפים ביום עם Wick, במקום 20 ו-5.",
-  "Forest theme and Wick's cap": "ערכת היער וכובע ל-Wick",
-  "Unlock the Forest color theme and a cap for Wick.": "פותחים את ערכת הצבעים 'יער' וכובע ל-Wick.",
+  "Wick's cap": "כובע ל-Wick",
+  "A cap for Wick, in the chat and on the coach button.": "כובע ל-Wick, בצ'אט ובכפתור המאמן.",
   "Gold star": "כוכב זהב",
   "A gold star next to your level. Later also a discount on paid plans.":
     "כוכב זהב ליד הרמה שלך. בהמשך גם הנחה על תוכניות בתשלום.",
