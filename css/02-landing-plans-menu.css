@@ -182,13 +182,6 @@ a {
     radial-gradient(55% 50% at 50% 42%, rgba(184, 164, 255, 0.24), transparent 72%), #0d1226;
   border: 1px solid rgba(242, 235, 220, 0.08);
 }
-/* Forest green theme: the landing hero box turns green too. */
-:root.th-i .w-dark #ls1 .ls-stage {
-  background:
-    radial-gradient(55% 50% at 50% 42%, rgba(184, 164, 255, 0.24), transparent 72%), #0a1d18;
-  --card: #173229;
-  --in: #122b24;
-}
 .w-dark #ls1 .ls-hero::before {
   display: none;
 }
