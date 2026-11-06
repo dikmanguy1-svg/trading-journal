@@ -225,4 +225,26 @@ const STQD = {
   earn: "Is today's catalyst (earnings or news) clear, and does my plan fit the move?"
 };
 // Level titles (Rookie, Apprentice, ...).
-const TT = ["Rookie", "Apprentice", "Trader", "Sharp eye", "Pro", "Veteran", "Master"];
+// Level names. Every 5th level is a milestone that unlocks a perk (js/18c-xp-perks.js).
+const TT = [
+  "Rookie",
+  "Apprentice",
+  "Trader",
+  "Sharp eye",
+  "Steady hand",
+  "Planner",
+  "Pro",
+  "Tactician",
+  "Veteran",
+  "Iron will",
+  "Navigator",
+  "Pathfinder",
+  "Expert",
+  "Mentor",
+  "Elite",
+  "Ace",
+  "Sage",
+  "Champion",
+  "Titan",
+  "Legend"
+];

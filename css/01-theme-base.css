@@ -35,6 +35,15 @@
   padding-top: env(safe-area-inset-top, 0px);
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
+:root.th-i {
+  --navbg: #131a33;
+  --card: #1b2342;
+  --in: #161d39;
+  --paper: #131a33;
+  --bg:
+    radial-gradient(760px 520px at 90% -6%, rgba(184, 164, 255, 0.18), transparent 70%),
+    linear-gradient(180deg, #121833 0%, #1a2246 100%);
+}
 :root.th-l {
   --navbg: #f2ebdc;
   --ink: #0f2620;

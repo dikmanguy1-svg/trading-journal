@@ -754,3 +754,119 @@ details[open] > summary {
 .hero p.hst[hidden] {
   display: none;
 }
+/* Level pill opens the XP window; gold star from level 15. */
+.lvp {
+  cursor: pointer;
+}
+.lvp.gold {
+  background: linear-gradient(135deg, #f3d27a, #e2b04a);
+}
+.lvp.gold::before {
+  content: "★ ";
+}
+/* XP window. */
+.xpw {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(8, 18, 15, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+.xpd {
+  position: relative;
+  background: var(--card);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  width: min(560px, 100%);
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+  padding: 24px 22px 20px;
+  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.6);
+}
+.xpd h2 {
+  margin: 0 40px 10px 0;
+}
+.xpd h3 {
+  margin: 20px 0 6px;
+}
+.xpx {
+  position: absolute;
+  top: 14px;
+  inset-inline-end: 14px;
+}
+.xpl {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 4px 0 8px;
+}
+.xpnx {
+  font-weight: 700;
+  margin: 12px 0 2px;
+}
+.xpls {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+  display: grid;
+  gap: 8px;
+}
+.xpr {
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 10px 12px;
+  opacity: 0.72;
+}
+.xpr.on {
+  opacity: 1;
+  border-color: var(--note);
+  background: rgba(184, 164, 255, 0.1);
+}
+.xpn {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--mut);
+}
+.xpb small {
+  display: block;
+  color: var(--mut);
+  font-size: 13px;
+  line-height: 1.4;
+}
+.xps {
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.xpr.on .xps {
+  color: var(--hl);
+}
+.xpset {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+.xpt {
+  min-width: 0;
+}
+.xpt td:last-child {
+  text-align: end;
+  font-weight: 700;
+}
+@media (max-width: 520px) {
+  .xpr {
+    grid-template-columns: 1fr auto;
+  }
+  .xpn {
+    grid-column: 1 / -1;
+  }
+}

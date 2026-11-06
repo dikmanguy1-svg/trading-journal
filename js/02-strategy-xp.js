@@ -109,7 +109,7 @@ function gx() {
     ["exit", "Honest exit", "Write a reason for an exit", xr >= 1],
     ["stop10", "Risk manager", "Set a stop on 10 trades", sp >= 10],
     ["str3", "On a roll", "Daily pulse 3 trading days in a row", str >= 3],
-    ["pul5", "Disciplined", "Complete the Daily pulse on 5 days", days >= 5],
+    ["pul5", "Consistent", "Complete the Daily pulse on 5 days", days >= 5],
     ["scout", "Scout", "Add 10 stocks to the watchlist", wl >= 10],
     ["plan", "Strategist", "Build or edit your own questions", built]
   ];
@@ -143,7 +143,7 @@ function gamify() {
 function pcard() {
   const g = gx(),
     pc = Math.max(0, Math.min(100, ((g.xp - g.lo) / (g.hi - g.lo)) * 100));
-  return `<div class="card" style="margin-top:12px"><h2>Your progress</h2><div class="pl"><span class="big">Level ${g.L} · ${TT[Math.min(g.L - 1, TT.length - 1)]}</span><span>${g.xp} XP</span><span>Streak: <b>${g.str}</b> trading day${g.str === 1 ? "" : "s"}</span></div><div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(pc)}"><i style="width:${pc}%"></i></div><small class="mut">${g.hi - g.xp} XP to level ${g.L + 1}. XP are experience points: you earn them for good habits, and they raise your level. Earn XP by logging trades, writing your reasons, setting stops and completing the Daily pulse.</small><details style="margin-top:10px"><summary style="cursor:pointer;font-weight:600">How XP works</summary><table style="margin-top:8px;max-width:420px"><tbody><tr><td>Trade logged</td><td>+10</td></tr><tr><td>Reason for entry written</td><td>+10</td></tr><tr><td>Reason for exit written</td><td>+10</td></tr><tr><td>Exit type chosen</td><td>+5</td></tr><tr><td>Stop-loss set</td><td>+5</td></tr><tr><td>Stock on the watchlist</td><td>+2</td></tr><tr><td>Day with a completed Daily pulse</td><td>+15</td></tr><tr><td>Building your own questions (once)</td><td>+25</td></tr></tbody></table><p class="mut" style="margin:8px 0 0">Level 2 needs 40 XP, level 3 needs 160, level 4 needs 360, and so on.</p></details><div class="bdg">${g.B.map(b => `<div class="bg${b[3] ? " on" : ""}"><b>${b[3] ? "★" : "☆"} ${b[1]}</b>${b[2]}</div>`).join("")}</div></div>`;
+  return `<div class="card" style="margin-top:12px"><h2>Your progress</h2><div class="pl"><span class="big">Level ${g.L} · ${TT[Math.min(g.L - 1, TT.length - 1)]}</span><span>${g.xp} XP</span><span>Streak: <b>${g.str}</b> trading day${g.str === 1 ? "" : "s"}</span></div><div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(pc)}"><i style="width:${pc}%"></i></div><small class="mut">${g.hi - g.xp} XP to level ${g.L + 1}. XP are experience points: you earn them for good habits, and they raise your level. Earn XP by logging trades, writing your reasons, setting stops and completing the Daily pulse.</small><p style="margin:10px 0 0"><button class="gh sm" type="button" data-xpo>XP levels and perks</button></p><div class="bdg">${g.B.map(b => `<div class="bg${b[3] ? " on" : ""}"><b>${b[3] ? "★" : "☆"} ${b[1]}</b>${b[2]}</div>`).join("")}</div></div>`;
 }
 // HTML of the Strategy tab.
 function strPage() {

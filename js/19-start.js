@@ -11,10 +11,7 @@
 load();
 view();
 ayInit();
-$("th").onclick = () => {
-  TH = TH === "l" ? "d" : "l";
-  thApply();
-};
+$("th").onclick = thNext;
 thApply();
 fbInit();
 $("pu").value = S.key || "";

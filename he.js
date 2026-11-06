@@ -787,5 +787,20 @@ window.HE_EXT = {
   "Type price": "להקליד מחיר",
   "All columns": "כל העמודות",
   "Fewer columns": "פחות עמודות",
-  "About": "אודות"
+  "About": "אודות",
+  "Steady hand": "יד יציבה",
+  "Planner": "מתכנן",
+  "Tactician": "טקטיקן",
+  "Iron will": "רצון ברזל",
+  "Navigator": "נווט",
+  "Pathfinder": "גשש",
+  "Expert": "מומחה",
+  "Mentor": "מנטור",
+  "Elite": "עילית",
+  "Ace": "אס",
+  "Sage": "חכם",
+  "Champion": "אלוף",
+  "Titan": "טיטאן",
+  "Legend": "אגדה",
+  "Consistent": "עקבי"
 };
