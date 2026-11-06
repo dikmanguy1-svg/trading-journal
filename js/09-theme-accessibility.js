@@ -7,7 +7,7 @@
  * All js/*.js files share one global scope and run in the order index.html lists them.
  */
 
-// Theme: "l" light, "d" dark (ink blue) or "i" Forest green (saved on this device).
+// Theme: "l" light, "d" dark (ink blue) or "i" Forest green (unlocked at level 10; saved on this device).
 var TH = (() => {
   try {
     const v = localStorage.getItem("tj_theme");
