@@ -60,6 +60,7 @@ function heroSet() {
         : `<button class="pchip pnone" data-t="str">Pick your profile <span aria-hidden="true">→</span></button>`;
     }
   }
+  if (typeof heroCard === "function") heroCard();
   if (typeof heroTab === "function" && heroTab()) return;
   const H = HERO[P[0] || "swing"],
     k = P.join() + "|" + LANG;
