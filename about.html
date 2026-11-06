@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>About - TradeInk</title>
+    <link rel="icon" type="image/svg+xml" href="icons/wick.svg">
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&family=Frank+Ruhl+Libre:wght@700&family=Heebo:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+      :root{color-scheme:dark;--bg:#0F2620;--fg:#F2EBDC;--mut:rgba(242,235,220,.72);--ln:rgba(242,235,220,.16);--lv:#B8A4FF;--card:rgba(242,235,220,.05)}
+      *{box-sizing:border-box}
+      body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.7 Figtree,Heebo,system-ui,-apple-system,"Segoe UI",sans-serif}
+      main{max-width:760px;margin:0 auto;padding:22px 16px 72px}
+      a{color:var(--lv)}
+      .top{display:flex;justify-content:space-between;align-items:center;gap:12px;font-weight:600}
+      .top a{text-decoration:none}
+      .wm{font-family:"Young Serif","Frank Ruhl Libre",Georgia,serif;font-weight:400;color:var(--fg)}
+      .wm b{color:var(--lv);font-weight:400}
+      .hero{display:flex;align-items:center;gap:22px;margin:42px 0 8px}
+      .hero svg{flex:none}
+      h1,h2{font-family:"Young Serif","Frank Ruhl Libre",Georgia,serif;font-weight:400;line-height:1.15;margin:0}
+      h1{font-size:clamp(34px,7vw,48px)}
+      .tag{color:var(--lv);font-size:15px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;margin:0 0 6px}
+      h2{font-size:clamp(25px,5vw,30px);margin:46px 0 10px}
+      p,li{color:var(--mut)}
+      p strong,li strong{color:var(--fg);font-weight:600}
+      .card{background:var(--card);border:1px solid var(--ln);border-radius:22px;padding:20px 22px;margin-top:18px}
+      .candle{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+      .candle svg{flex:none}
+      .candle ul{list-style:none;padding:0;margin:0;flex:1;min-width:220px}
+      .candle li{margin:6px 0}
+      .dot{display:inline-block;width:10px;height:10px;border-radius:5px;margin-inline-end:8px;vertical-align:middle}
+      .bel{list-style:none;padding:0;margin:0}
+      .bel li{padding:12px 0;border-bottom:1px solid var(--ln)}
+      .bel li:last-child{border-bottom:0}
+      .lang{border-top:1px solid var(--ln);margin-top:64px;padding-top:12px}
+      [lang="he"] h1,[lang="he"] h2{font-weight:700;font-synthesis:none}
+      [lang="he"] .tag{letter-spacing:0}
+      .sm{font-size:15px}
+      @media (max-width:520px){.hero{gap:16px}.hero svg{width:64px;height:107px}.candle{flex-wrap:nowrap;gap:12px}.candle svg{width:52px;height:82px}.candle ul{min-width:0}}
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="top"><a href="./" class="wm">&larr; Trade<b>.</b>Ink</a><a href="#he" lang="he" dir="rtl">עברית</a></div>
+
+      <section lang="en" dir="ltr" id="en">
+        <div class="hero">
+          <svg width="84" height="140" viewBox="14 2 36 60" role="img" aria-label="Wick, the TradeInk coach"><path d="M32 4v10M32 50v10" stroke="#F2EBDC" stroke-width="4" stroke-linecap="round"/><rect x="17" y="13" width="30" height="38" rx="12" fill="#B8A4FF"/><path d="M23.5 30q3.5-4.5 7 0" stroke="#0F2620" stroke-width="2.8" stroke-linecap="round" fill="none"/><circle cx="37" cy="29" r="3" fill="#0F2620"/><path d="M28 38q4 3.5 8 0" stroke="#0F2620" stroke-width="2.6" stroke-linecap="round" fill="none"/></svg>
+          <div><p class="tag">About</p><h1>Write it down.<br>Own the trade.</h1></div>
+        </div>
+
+        <h2>Why the name TradeInk?</h2>
+        <p>Ink is what makes a thought permanent. A plan that lives only in your head can quietly change in the middle of a trade. A plan written in ink holds you to it.</p>
+        <p><strong>TradeInk is where you write every trade down:</strong> five quick checks before you click, and one honest note after you sell. Over time those notes show you what really works for you, and what keeps costing you money.</p>
+
+        <h2>Meet Wick, your coach</h2>
+        <p>Every candle on a chart has a <strong>wick</strong>: the thin line above and below the body.</p>
+        <div class="card candle">
+          <svg width="96" height="150" viewBox="0 0 64 100" role="img" aria-label="A candle: the wick is the thin line, the body is the block"><path d="M32 6v88" stroke="#B8A4FF" stroke-width="3" stroke-linecap="round"/><rect x="18" y="30" width="28" height="40" rx="6" fill="#F2EBDC"/></svg>
+          <ul>
+            <li><span class="dot" style="background:#B8A4FF"></span><strong>The wick</strong> shows where price tried to go and was pushed back. Those are the moments of temptation, fear and greed.</li>
+            <li><span class="dot" style="background:#F2EBDC"></span><strong>The body</strong> shows what actually happened.</li>
+          </ul>
+        </div>
+        <p>Your coach is named after that line. Wick's job is to notice those moments in your own trading: the stop you moved, the exit you took too early, the trade that was not in your plan. Then he reminds you, with a wink, to stick to the plan.</p>
+        <p><strong>Wick reviews your process, not your picks.</strong> He never tells you what to buy or sell, and he never changes your trades. He is a helper tool, not investment advice.</p>
+
+        <h2>What we believe</h2>
+        <ul class="bel">
+          <li><strong>Decide before you click.</strong> The best time to plan a trade is before the money is on the line.</li>
+          <li><strong>Be honest after you sell.</strong> One true sentence about a trade teaches more than a hundred charts.</li>
+          <li><strong>Discipline beats prediction.</strong> Nobody knows where the market goes next. You can know whether you followed your rules.</li>
+        </ul>
+
+        <h2>Contact</h2>
+        <p>Questions or ideas? Write to <a href="mailto:dikmanguy1@gmail.com">dikmanguy1@gmail.com</a>.</p>
+        <p class="sm"><a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Use</a> · <a href="accessibility.html">Accessibility statement</a></p>
+      </section>
+
+      <section lang="he" dir="rtl" id="he" class="lang">
+        <div class="hero">
+          <svg width="84" height="140" viewBox="14 2 36 60" role="img" aria-label="Wick, המאמן של TradeInk"><path d="M32 4v10M32 50v10" stroke="#F2EBDC" stroke-width="4" stroke-linecap="round"/><rect x="17" y="13" width="30" height="38" rx="12" fill="#B8A4FF"/><path d="M23.5 30q3.5-4.5 7 0" stroke="#0F2620" stroke-width="2.8" stroke-linecap="round" fill="none"/><circle cx="37" cy="29" r="3" fill="#0F2620"/><path d="M28 38q4 3.5 8 0" stroke="#0F2620" stroke-width="2.6" stroke-linecap="round" fill="none"/></svg>
+          <div><p class="tag">אודות</p><h1>תכתוב את זה.<br>קח אחריות על העסקה.</h1></div>
+        </div>
+
+        <h2>למה דווקא TradeInk?</h2>
+        <p>דיו (Ink) הוא מה שהופך מחשבה לקבועה. תוכנית שקיימת רק בראש יכולה להשתנות בשקט באמצע עסקה. תוכנית שכתובה בדיו מחייבת אותך.</p>
+        <p><strong>ב-TradeInk כותבים כל עסקה:</strong> חמש בדיקות קצרות לפני שלוחצים, והערה כנה אחת אחרי שמוכרים. עם הזמן ההערות האלה מראות לך מה באמת עובד בשבילך, ומה ממשיך לעלות לך כסף.</p>
+
+        <h2>הכירו את Wick, המאמן שלך</h2>
+        <p>לכל נר בגרף יש <strong>פתיל</strong> (Wick באנגלית): הקו הדק שמעל ומתחת לגוף הנר.</p>
+        <div class="card candle">
+          <svg width="96" height="150" viewBox="0 0 64 100" role="img" aria-label="נר: הפתיל הוא הקו הדק, הגוף הוא המלבן"><path d="M32 6v88" stroke="#B8A4FF" stroke-width="3" stroke-linecap="round"/><rect x="18" y="30" width="28" height="40" rx="6" fill="#F2EBDC"/></svg>
+          <ul>
+            <li><span class="dot" style="background:#B8A4FF"></span><strong>הפתיל</strong> מראה לאן המחיר ניסה להגיע ונדחק בחזרה. אלה רגעי הפיתוי, הפחד והחמדנות.</li>
+            <li><span class="dot" style="background:#F2EBDC"></span><strong>הגוף</strong> מראה מה קרה בפועל.</li>
+          </ul>
+        </div>
+        <p>המאמן נקרא על שם הקו הזה. התפקיד של Wick הוא לזהות את הרגעים האלה במסחר שלך: הסטופ שהזזת, היציאה המוקדמת מדי, העסקה שלא הייתה בתוכנית. ואז הוא מזכיר לך, עם קריצה, להיצמד לתוכנית.</p>
+        <p><strong>Wick בודק את התהליך שלך, לא את הבחירות שלך.</strong> הוא אף פעם לא אומר לך מה לקנות או למכור, והוא לא משנה את העסקאות שלך. הוא כלי עזר, לא ייעוץ השקעות.</p>
+
+        <h2>במה אנחנו מאמינים</h2>
+        <ul class="bel">
+          <li><strong>מחליטים לפני שלוחצים.</strong> הזמן הכי טוב לתכנן עסקה הוא לפני שהכסף על השולחן.</li>
+          <li><strong>כנים אחרי שמוכרים.</strong> משפט אמיתי אחד על עסקה מלמד יותר ממאה גרפים.</li>
+          <li><strong>משמעת מנצחת תחזיות.</strong> אף אחד לא יודע לאן השוק ילך. אבל אתה יכול לדעת אם עמדת בחוקים שלך.</li>
+        </ul>
+
+        <h2>יצירת קשר</h2>
+        <p>שאלות או רעיונות? כתבו ל-<a href="mailto:dikmanguy1@gmail.com">dikmanguy1@gmail.com</a>.</p>
+        <p class="sm"><a href="privacy.html">מדיניות פרטיות</a> · <a href="terms.html">תנאי שימוש</a> · <a href="accessibility.html">הצהרת נגישות</a> · <a href="#en" lang="en" dir="ltr">English</a></p>
+      </section>
+    </main>
+  </body>
+</html>

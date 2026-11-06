@@ -26,6 +26,11 @@ const LANG = (() => {
 })();
 // Hebrew dictionary for exact texts (filled by he.js and later files).
 const HE = window.HE_EXT || {};
+// The About page opens on its Hebrew part for Hebrew users.
+if (LANG === "he")
+  document
+    .querySelectorAll('a[href="about.html"]')
+    .forEach(a => a.setAttribute("href", "about.html#he"));
 // Hebrew rules for texts that contain numbers.
 const HR = [
   [

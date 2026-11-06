@@ -786,5 +786,6 @@ window.HE_EXT = {
   "Live price": "מחיר חי",
   "Type price": "להקליד מחיר",
   "All columns": "כל העמודות",
-  "Fewer columns": "פחות עמודות"
+  "Fewer columns": "פחות עמודות",
+  "About": "אודות"
 };
