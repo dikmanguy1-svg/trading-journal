@@ -163,14 +163,14 @@ a {
   height: calc(100vh - 20px);
   border-radius: 30px;
   background:
-    radial-gradient(55% 50% at 50% 42%, rgba(184, 164, 255, 0.24), transparent 72%), #131a33;
+    radial-gradient(55% 50% at 50% 42%, rgba(184, 164, 255, 0.24), transparent 72%), #0f2620;
   color: #f2ebdc;
   --ink: #f2ebdc;
   --rgb: 242, 235, 220;
   --mut: rgba(242, 235, 220, 0.74);
   --line: rgba(242, 235, 220, 0.16);
-  --card: #1b2342;
-  --in: #161d39;
+  --card: #173229;
+  --in: #122b24;
   --hl: #c9baff;
   --pen: #b8a4ff;
   --ph: #cdbfff;
@@ -179,7 +179,7 @@ a {
 }
 :root:not(.th-l) .w-dark #ls1 .ls-stage {
   background:
-    radial-gradient(55% 50% at 50% 42%, rgba(184, 164, 255, 0.24), transparent 72%), #0d1226;
+    radial-gradient(55% 50% at 50% 42%, rgba(184, 164, 255, 0.24), transparent 72%), #0a1d18;
   border: 1px solid rgba(242, 235, 220, 0.08);
 }
 .w-dark #ls1 .ls-hero::before {

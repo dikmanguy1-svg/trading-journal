@@ -7,7 +7,7 @@
  * All js/*.js files share one global scope and run in the order index.html lists them.
  */
 
-// Theme: "l" light, "d" dark (ink blue) or "i" Forest green (unlocked at level 10; saved on this device).
+// Theme: "l" light, "d" dark or "i" Ink (unlocked at level 10; saved on this device).
 var TH = (() => {
   try {
     const v = localStorage.getItem("tj_theme");
@@ -23,11 +23,7 @@ function thApply() {
   const b = $("th");
   if (b)
     b.textContent =
-      TH === "l"
-        ? "Dark"
-        : TH === "d" && typeof inkOk === "function" && inkOk()
-          ? "Forest"
-          : "Light";
+      TH === "l" ? "Dark" : TH === "d" && typeof inkOk === "function" && inkOk() ? "Ink" : "Light";
   try {
     localStorage.setItem("tj_theme", TH);
   } catch (e) {}
