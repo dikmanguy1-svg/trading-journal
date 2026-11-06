@@ -536,6 +536,29 @@ html:has(.ls.w-compact) {
 #mnu {
   display: none;
 }
+/* About link in the top bar, looks like the buttons next to it. */
+a.tlk {
+  display: inline-flex;
+  align-items: center;
+  font:
+    700 13px/1.2 Figtree,
+    Heebo,
+    system-ui,
+    sans-serif;
+  color: var(--ink);
+  text-decoration: none;
+  border: 1.5px solid rgba(var(--rgb), 0.45);
+  border-radius: 999px;
+  padding: 5px 14px;
+  transition: background 0.15s;
+}
+a.tlk:hover {
+  background: rgba(var(--rgb), 0.1);
+}
+a.tlk:focus-visible {
+  outline: 2px solid var(--hl);
+  outline-offset: 2px;
+}
 .trm {
   display: contents;
 }
@@ -567,11 +590,15 @@ html:has(.ls.w-compact) {
     min-width: 220px;
     box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.45);
   }
-  .tr.open .trm button {
+  .tr.open .trm button,
+  .tr.open .trm a.tlk {
     justify-content: center;
   }
   .tr.open .trm button[hidden] {
     display: none;
+  }
+  .tr.open .trm a.tlk {
+    padding: 9px 14px;
   }
 }
 .hsnap {
