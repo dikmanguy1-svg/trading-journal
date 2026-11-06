@@ -398,22 +398,55 @@ main {
   font-size: 13.5px;
   color: var(--mut);
 }
+/* The logo: Wick peeks over the name block, hands on the edge, head a little tilted. */
 .brand {
+  position: relative;
+  display: inline-block;
+  padding-top: 26px;
   font-family: "Young Serif", "Frank Ruhl Libre", Georgia, serif;
   font-size: 21px;
   letter-spacing: 0.005em;
-  display: flex;
-  align-items: center;
-  gap: 9px;
+  line-height: 1;
 }
-/* Wick, the logo, next to the name. */
 .bmk {
-  width: 19px;
-  height: 32px;
-  flex: none;
+  position: absolute;
+  top: 0;
+  inset-inline-start: 15px;
+  width: 30px;
+  height: 50px;
+  color: var(--ink);
+  transform: rotate(-8deg);
+  transform-origin: 50% 100%;
 }
-.brand b {
-  color: var(--hl);
+.bnm {
+  position: relative;
+  z-index: 1;
+  display: block;
+  background: var(--ink);
+  color: var(--card);
+  border-radius: 9px;
+  padding: 9px 15px 7px;
+}
+.bnm b {
+  color: #7c5ce6;
+  font-weight: 400;
+}
+:root.th-l .bnm b {
+  color: #b8a4ff;
+}
+.bhd {
+  position: absolute;
+  z-index: 2;
+  top: 23px;
+  inset-inline-start: 15px;
+  width: 7px;
+  height: 5px;
+  border-radius: 5px;
+  background: #b8a4ff;
+  box-shadow: 0 0 0 1px var(--ink);
+}
+.bhd.bhr {
+  inset-inline-start: 37px;
 }
 #sv {
   font-size: 13px;
