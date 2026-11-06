@@ -1,5 +1,5 @@
 /*
- * 19-start.js — part of the Trading.Journal app script.
+ * 19-start.js — part of the TradeInk app script.
  *
  * Start-up. Loaded last: everything above must already be defined.
  * Loads saved data, draws the page, starts Firebase, theme, accessibility, language,

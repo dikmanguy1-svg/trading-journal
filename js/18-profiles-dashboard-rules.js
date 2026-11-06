@@ -1,5 +1,5 @@
 /*
- * 18-profiles-dashboard-rules.js — part of the Trading.Journal app script.
+ * 18-profiles-dashboard-rules.js — part of the TradeInk app script.
  *
  * Profiles, dashboard blocks and personal rules.
  * - PROF: which tabs and dashboard blocks each profile (day / swing / long-term) gets.

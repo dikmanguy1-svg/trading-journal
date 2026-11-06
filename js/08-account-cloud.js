@@ -1,5 +1,5 @@
 /*
- * 08-account-cloud.js — part of the Trading.Journal app script.
+ * 08-account-cloud.js — part of the TradeInk app script.
  *
  * This device, backups and the user's cloud account.
  * - load(): reads data saved on this device.
@@ -164,7 +164,7 @@ function mkRender() {
     return;
   }
   b.innerHTML =
-    '<div class="card mkc"><h3>Stay in the loop?</h3><label class="chk"><input type="checkbox" id="mkc"> I agree to receive updates and offers about Trading.Journal by email. I can unsubscribe at any time.</label><p><button id="mks">Save</button> <button id="mkn" class="ghost">No thanks</button></p></div>';
+    '<div class="card mkc"><h3>Stay in the loop?</h3><label class="chk"><input type="checkbox" id="mkc"> I agree to receive updates and offers about TradeInk by email. I can unsubscribe at any time.</label><p><button id="mks">Save</button> <button id="mkn" class="ghost">No thanks</button></p></div>';
   const put = async c => {
     try {
       const d = {

@@ -1,5 +1,5 @@
 /*
- * 15-landing-intro.js — part of the Trading.Journal app script.
+ * 15-landing-intro.js — part of the TradeInk app script.
  *
  * Landing page, part 1 (for visitors who are not logged in).
  * - lsChart(): the small candle chart. Phone menu (☰) open/close.

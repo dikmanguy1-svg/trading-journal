@@ -1,5 +1,5 @@
 /*
- * 13-mobile-cards.js — part of the Trading.Journal app script.
+ * 13-mobile-cards.js — part of the TradeInk app script.
  *
  * Phone layout: cards instead of wide tables.
  * - wlCards(): the watchlist as cards. jCards(): the trade journal as cards.

@@ -1,5 +1,5 @@
 /*
- * 07-calendar.js — part of the Trading.Journal app script.
+ * 07-calendar.js — part of the TradeInk app script.
  *
  * CAL: the custom date picker (centered window, Hebrew and English).
  * Replaces the browser's own date picker for date fields.

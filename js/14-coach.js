@@ -1,5 +1,5 @@
 /*
- * 14-coach.js — part of the Trading.Journal app script.
+ * 14-coach.js — part of the TradeInk app script.
  *
  * The AI coach.
  * - Talks to our server (CO_URL, on Cloudflare), which checks the login and asks the AI.

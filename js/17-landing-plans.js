@@ -1,5 +1,5 @@
 /*
- * 17-landing-plans.js — part of the Trading.Journal app script.
+ * 17-landing-plans.js — part of the TradeInk app script.
  *
  * Landing page, part 2.
  * - PLANP: plan prices (USD on the English site, ILS on the Hebrew site).
@@ -182,7 +182,7 @@ function lsHTML() {
 <div class="ls-ch" id="ls4"><div class="ls-stage"><div class="ls-grid"><div class="ls-tx"><div class="ls-k">Over time</div><h2>Watch your<br>edge appear.</h2><p class="ls-lead">Every entry adds to the picture: win rate, average R, your best setups.</p></div>
 <div class="ls-panel ls-pn">${lsChart()}<div class="ls-ax" aria-hidden="true"><span>Day 1</span><span>Today</span></div><p class="ls-quote" id="lsq">Progress starts the day you start tracking.</p></div></div></div></div>
 </div>${lsPlans(he)}
-${WLON ? `<form id="wl" class="card wl" novalidate><h2>Not ready yet? Join the waitlist</h2><p class="mut">Leave your email and we will keep you posted about new features and launch offers.</p><label class="vh" for="wle">Email</label><input type="email" id="wle" maxlength="254" autocomplete="email" placeholder="you@example.com"><label class="chk"><input type="checkbox" id="wlc"> I agree to receive updates and offers about Trading.Journal by email. I can unsubscribe at any time.</label><button class="cta" type="submit">Join the waitlist</button><p id="wlm" class="mut sm" role="status"></p></form>` : ""}</section>`;
+${WLON ? `<form id="wl" class="card wl" novalidate><h2>Not ready yet? Join the waitlist</h2><p class="mut">Leave your email and we will keep you posted about new features and launch offers.</p><label class="vh" for="wle">Email</label><input type="email" id="wle" maxlength="254" autocomplete="email" placeholder="you@example.com"><label class="chk"><input type="checkbox" id="wlc"> I agree to receive updates and offers about TradeInk by email. I can unsubscribe at any time.</label><button class="cta" type="submit">Join the waitlist</button><p id="wlm" class="mut sm" role="status"></p></form>` : ""}</section>`;
 }
 // Landing animation timers and durations.
 const LSA = {},

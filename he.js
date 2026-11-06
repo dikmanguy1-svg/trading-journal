@@ -121,8 +121,8 @@ window.HE_EXT = {
   "Leave your email and we will keep you posted about new features and launch offers.":
     "השאר אימייל ונעדכן אותך על פיצ'רים חדשים והטבות השקה.",
   "Email": "אימייל",
-  "I agree to receive updates and offers about Trading.Journal by email. I can unsubscribe at any time.":
-    "אני מסכים לקבל באימייל עדכונים והצעות על Trading.Journal. אפשר להסיר את עצמי בכל עת.",
+  "I agree to receive updates and offers about TradeInk by email. I can unsubscribe at any time.":
+    "אני מסכים לקבל באימייל עדכונים והצעות על TradeInk. אפשר להסיר את עצמי בכל עת.",
   "Join the waitlist": "הצטרף לרשימת ההמתנה",
   "Please enter a valid email.": "נא להזין כתובת אימייל תקינה.",
   "Please tick the box to agree to receive updates.": "נא לסמן את התיבה כדי להסכים לקבל עדכונים.",
@@ -136,8 +136,8 @@ window.HE_EXT = {
   "Could not save. Try again.": "לא הצלחנו לשמור. נסה שוב.",
   "Trade with a plan. Keep a journal that actually gets filled.":
     "סחר לפי תוכנית. יומן מסחר שבאמת ממלאים.",
-  "Trading.Journal turns record-keeping into a daily habit: log trades, answer a short daily check, and see your real results as a swing or day trader.":
-    "Trading.Journal הופך את תיעוד המסחר להרגל יומי: רושמים עסקאות, עונים על בדיקה יומית קצרה ורואים את התוצאות האמיתיות שלך כסוחר סווינג או סוחר יומי.",
+  "TradeInk turns record-keeping into a daily habit: log trades, answer a short daily check, and see your real results as a swing or day trader.":
+    "TradeInk הופך את תיעוד המסחר להרגל יומי: רושמים עסקאות, עונים על בדיקה יומית קצרה ורואים את התוצאות האמיתיות שלך כסוחר סווינג או סוחר יומי.",
   "Start free with Google": "התחל בחינם עם גוגל",
   "Free to start. Private by design: only you can see your journal.":
     "התחלה בחינם. פרטי מעיקרו: רק אתה רואה את היומן שלך.",
@@ -157,8 +157,8 @@ window.HE_EXT = {
   "Sign in with your Google account.": "נכנסים עם חשבון גוגל.",
   "Choose your trading style and tools.": "בוחרים סגנון מסחר וכלים.",
   "Log your trades and watch your edge appear.": "רושמים עסקאות ורואים את היתרון שלך מתגבש.",
-  "Trading.Journal is a personal record-keeping tool, not investment advice.":
-    "Trading.Journal הוא כלי אישי לתיעוד בלבד ואינו ייעוץ השקעות.",
+  "TradeInk is a personal record-keeping tool, not investment advice.":
+    "TradeInk הוא כלי אישי לתיעוד בלבד ואינו ייעוץ השקעות.",
   "Skip to content": "דלג לתוכן",
   "Download my data": "הורדת הנתונים שלי",
   "Sign up / Log in": "הרשמה / התחברות",
@@ -257,8 +257,8 @@ window.HE_EXT = {
   "Import backup": "ייבוא גיבוי",
   "Your journal is saved to your account when logged in. Export a backup now and then.":
     "היומן נשמר בחשבון שלך כשאתה מחובר. כדאי לייצא גיבוי מדי פעם.",
-  "trading.journal is a personal record-keeping tool, not investment advice. Prices come from Finnhub and may be delayed or unavailable. Nothing here is a recommendation to buy or sell, and trading involves risk of loss. Prices are provided as-is with no guarantee of accuracy. When you log in, your journal, name and email are stored in your private account with Google Firebase and are not shared with anyone else; without logging in nothing is saved. Google Fonts and Finnhub receive ordinary web requests (your IP address, plus ticker symbols when loading prices). Use at your own risk.":
-    "trading.journal הוא כלי לתיעוד אישי ואינו ייעוץ השקעות. המחירים מגיעים מ-Finnhub ועלולים להתעכב או להיות לא זמינים. שום דבר כאן אינו המלצה לקנות או למכור, ומסחר כרוך בסיכון להפסד. המחירים ניתנים כפי שהם, ללא אחריות לדיוקם. כשאתה מתחבר, היומן, השם והאימייל שלך נשמרים בחשבון פרטי ב-Google Firebase ואינם משותפים עם אחרים; בלי התחברות לא נשמר דבר. Google Fonts ו-Finnhub מקבלים בקשות אינטרנט רגילות (כתובת ה-IP שלך וסמלי המניות בטעינת מחירים). השימוש באחריותך.",
+  "TradeInk is a personal record-keeping tool, not investment advice. Prices come from Finnhub and may be delayed or unavailable. Nothing here is a recommendation to buy or sell, and trading involves risk of loss. Prices are provided as-is with no guarantee of accuracy. When you log in, your journal, name and email are stored in your private account with Google Firebase and are not shared with anyone else; without logging in nothing is saved. Google Fonts and Finnhub receive ordinary web requests (your IP address, plus ticker symbols when loading prices). Use at your own risk.":
+    "TradeInk הוא כלי לתיעוד אישי ואינו ייעוץ השקעות. המחירים מגיעים מ-Finnhub ועלולים להתעכב או להיות לא זמינים. שום דבר כאן אינו המלצה לקנות או למכור, ומסחר כרוך בסיכון להפסד. המחירים ניתנים כפי שהם, ללא אחריות לדיוקם. כשאתה מתחבר, היומן, השם והאימייל שלך נשמרים בחשבון פרטי ב-Google Firebase ואינם משותפים עם אחרים; בלי התחברות לא נשמר דבר. Google Fonts ו-Finnhub מקבלים בקשות אינטרנט רגילות (כתובת ה-IP שלך וסמלי המניות בטעינת מחירים). השימוש באחריותך.",
   "Sections": "חלקי האתר",
   "Paste your Finnhub key here": "הדבק כאן את מפתח Finnhub",
   "Finnhub API key": "מפתח Finnhub",

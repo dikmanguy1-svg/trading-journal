@@ -1,5 +1,5 @@
 /*
- * 18b-tab-hero.js — part of the Trading.Journal app script.
+ * 18b-tab-hero.js — part of the TradeInk app script.
  *
  * The top of the page (headline, line under it, button, small live fact) changes with the open tab.
  * - TABH: the texts per tab. The Dashboard keeps the profile headline (HERO in 06-views-events.js).

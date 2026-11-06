@@ -1,4 +1,4 @@
-# Trading.Journal
+# TradeInk
 
 A trading journal for swing traders, day traders and long-term investors.
 Live site: https://dikmanguy1-svg.github.io/trading-journal/

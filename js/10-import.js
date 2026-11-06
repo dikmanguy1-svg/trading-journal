@@ -1,5 +1,5 @@
 /*
- * 10-import.js — part of the Trading.Journal app script.
+ * 10-import.js — part of the TradeInk app script.
  *
  * Importing trades from a file (CSV or Excel .xlsx).
  * - csvRows(): reads CSV text into rows.

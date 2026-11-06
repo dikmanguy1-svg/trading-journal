@@ -1,5 +1,5 @@
 /*
- * 04-questions-state-calc.js — part of the Trading.Journal app script.
+ * 04-questions-state-calc.js — part of the TradeInk app script.
  *
  * Question editor, tab list, saving and trade math.
  * - qblock(): one Yes/No question list with its edit mode.

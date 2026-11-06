@@ -1,5 +1,5 @@
 /*
- * 05-prices.js — part of the Trading.Journal app script.
+ * 05-prices.js — part of the TradeInk app script.
  *
  * Live prices from Finnhub.
  * - FKS: the Finnhub key (temporary: it is public; a small server should hold it later).

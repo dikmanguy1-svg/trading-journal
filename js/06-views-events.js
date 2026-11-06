@@ -1,5 +1,5 @@
 /*
- * 06-views-events.js — part of the Trading.Journal app script.
+ * 06-views-events.js — part of the TradeInk app script.
  *
  * Rendering and the main event handlers.
  * - HERO: headline text per profile. heroSet() updates the top of the page.

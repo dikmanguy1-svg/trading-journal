@@ -1,5 +1,5 @@
 /*
- * 11-firebase-init.js — part of the Trading.Journal app script.
+ * 11-firebase-init.js — part of the TradeInk app script.
  *
  * fbInit(): loads Firebase (sign-in with Google and Firestore) from Google's servers
  * and connects the Sign up / Log in button.

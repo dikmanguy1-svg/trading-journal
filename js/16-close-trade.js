@@ -1,5 +1,5 @@
 /*
- * 16-close-trade.js — part of the Trading.Journal app script.
+ * 16-close-trade.js — part of the TradeInk app script.
  *
  * The "close trade" window: exit price, how it ended (target / stop /
  * breakeven / manual), reason, mood and lessons.

@@ -1,5 +1,5 @@
 /*
- * 01-core.js — part of the Trading.Journal app script.
+ * 01-core.js — part of the TradeInk app script.
  *
  * Core helpers and default data. Loaded first.
  * - Frame guard: hides the page if another site shows it inside a frame (anti-clickjacking).

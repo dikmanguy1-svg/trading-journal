@@ -1,5 +1,5 @@
 /*
- * 09-theme-accessibility.js — part of the Trading.Journal app script.
+ * 09-theme-accessibility.js — part of the TradeInk app script.
  *
  * Light / dark theme and the Accessibility menu
  * (text size, high contrast, underline links, reduce motion).

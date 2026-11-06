@@ -1,5 +1,5 @@
 /*
- * 03-language.js — part of the Trading.Journal app script.
+ * 03-language.js — part of the TradeInk app script.
  *
  * Hebrew / English translation.
  * - LANG: current language (from ?lang= or saved choice).

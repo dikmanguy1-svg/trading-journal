@@ -1,5 +1,5 @@
 /*
- * 12-long-term.js — part of the Trading.Journal app script.
+ * 12-long-term.js — part of the TradeInk app script.
  *
  * Long-term portfolio (indexes, funds and stocks held for the long run).
  * - Holdings with monthly/weekly deposits, live prices, totals and allocation.

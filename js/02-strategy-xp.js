@@ -1,5 +1,5 @@
 /*
- * 02-strategy-xp.js — part of the Trading.Journal app script.
+ * 02-strategy-xp.js — part of the TradeInk app script.
  *
  * Strategy page and gamification (XP, levels, streak, badges).
  * - buildQ() turns the chosen style + tools into the Daily pulse / Stock screening questions.

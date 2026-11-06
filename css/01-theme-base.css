@@ -1,5 +1,5 @@
 /*
- * 01-theme-base.css — part of the Trading.Journal styles.
+ * 01-theme-base.css — part of the TradeInk styles.
  *
  * Colors (dark and light theme variables), page background, base layout, accessibility
  * modes (text size, high contrast, underline, reduce motion), import screen and landing basics.
@@ -402,6 +402,15 @@ main {
   font-family: "Young Serif", "Frank Ruhl Libre", Georgia, serif;
   font-size: 21px;
   letter-spacing: 0.005em;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+/* Wick, the logo, next to the name. */
+.bmk {
+  width: 19px;
+  height: 32px;
+  flex: none;
 }
 .brand b {
   color: var(--hl);
