@@ -1,0 +1,141 @@
+/*
+ * 07-trade-cards.css — part of the Trading.Journal styles.
+ *
+ * Trade and watchlist cards on phones.
+ *
+ * The css/*.css files are loaded in order by index.html. Order matters: later rules win.
+ */
+
+/* UX-B: trade cards on phones (remove to undo) */
+.jcards {
+  display: none;
+}
+@media (max-width: 640px) {
+  .jwrap {
+    display: none !important;
+  }
+  .jcards {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+}
+.jc {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 14px;
+}
+.jch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.jch input.dpk {
+  width: 128px;
+  flex: none;
+  padding: 8px 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.jch b {
+  font-size: 18px;
+  cursor: pointer;
+}
+.jdir {
+  color: var(--mut);
+  font-size: 14px;
+}
+.jpl {
+  margin-inline-start: auto;
+  font-weight: 700;
+  font-size: 18px;
+  unicode-bidi: plaintext;
+}
+.jc .rbox {
+  width: auto;
+  margin-top: 10px;
+  font-size: 14px;
+}
+.jg {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+.jg2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.jg label,
+.jfull {
+  font-size: 12.5px;
+  color: var(--mut);
+  display: block;
+  min-width: 0;
+}
+.jg input {
+  margin-top: 3px;
+  padding: 8px 8px;
+  font-size: 15px;
+  min-height: 40px;
+}
+.jro {
+  display: block;
+  margin-top: 3px;
+  padding: 9px 0;
+  font-size: 15px;
+  color: var(--ink);
+}
+.jmore {
+  margin-top: 8px;
+}
+.jmore summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--mut);
+  padding: 10px 0;
+  min-height: 40px;
+}
+.jkv {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 14px;
+  font-size: 14px;
+}
+.jkv div {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  border-bottom: 1px solid var(--line);
+  padding: 4px 0;
+}
+.jkv span {
+  color: var(--mut);
+}
+.jfull {
+  margin-top: 10px;
+}
+.jfull select {
+  margin-top: 3px;
+}
+.jnotes label {
+  display: block;
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--mut);
+}
+.jact {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+.jact button {
+  min-height: 40px;
+}
+@media (max-width: 360px) {
+  .jg {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

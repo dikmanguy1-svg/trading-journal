@@ -1,0 +1,239 @@
+/*
+ * 05-long-term-panel.css — part of the Trading.Journal styles.
+ *
+ * The long-term portfolio side panel.
+ *
+ * The css/*.css files are loaded in order by index.html. Order matters: later rules win.
+ */
+
+.ltov {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 900;
+}
+.ltd {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  inset-inline-end: 0;
+  width: 400px;
+  max-width: 100%;
+  background: var(--paper);
+  color: var(--ink);
+  border-inline-start: 1px solid var(--line);
+  z-index: 901;
+  overflow: auto;
+  padding: 18px 18px calc(28px + env(safe-area-inset-bottom, 0px));
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+}
+html.lto {
+  overflow: hidden;
+}
+.lthd {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.lthd h2 {
+  margin: 0;
+  font-size: 20px;
+}
+.ltt {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.ltk {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.ltk .k:last-child {
+  grid-column: 1/-1;
+}
+.ltk .k b {
+  font-size: 21px;
+}
+.ltn {
+  unicode-bidi: isolate;
+  direction: ltr;
+  display: inline-block;
+}
+.lth2 {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+}
+.ltd .ltr1 {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  background: none;
+  color: var(--ink);
+  padding: 2px 0;
+  border: 0;
+  font-weight: 700;
+  font-size: 15px;
+  text-align: start;
+  border-radius: 6px;
+  box-shadow: none;
+}
+.ltr2 {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--mut);
+  margin-top: 4px;
+}
+.ltbody {
+  margin-top: 10px;
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+}
+.ltbody h3 {
+  font-size: 15px;
+  margin: 14px 0 6px;
+}
+.ltg2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.ltg2 label {
+  font-size: 13px;
+  color: var(--mut);
+  display: block;
+}
+.ltg2 input,
+.ltg2 select {
+  margin-top: 3px;
+}
+.ltd .ltchk {
+  grid-column: 1/-1;
+  margin: 4px 0;
+  display: flex;
+}
+.ltd .ltp {
+  margin: 8px 0;
+  text-align: start;
+  font-size: 13px;
+  line-height: 1.45;
+}
+.ltg2 .ltp {
+  grid-column: 1/-1;
+  margin: 0;
+}
+.ltd table.ltl {
+  min-width: 0;
+  width: 100%;
+  table-layout: fixed;
+  font-size: 13px;
+}
+.ltd .ltl th,
+.ltd .ltl td {
+  padding: 4px 3px;
+  text-align: start;
+  white-space: nowrap;
+}
+.ltl th:first-child {
+  width: 31%;
+}
+.ltl th:last-child {
+  width: 34px;
+}
+.ltd .ltl input,
+.ltd .ltl input[type="number"] {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 5px 5px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 8px;
+  text-align: start;
+}
+.ltd .ltdel {
+  padding: 4px 8px;
+}
+.ltdue {
+  border: 1.5px dashed var(--ac);
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin: 0 0 10px;
+}
+.ltdue p {
+  margin: 10px 0 0;
+}
+.ltdm {
+  margin: 4px 0 8px;
+}
+.ltbtn {
+  border: 1.5px solid var(--line) !important;
+  color: var(--ink) !important;
+}
+.ltd .ltrm {
+  color: var(--r) !important;
+}
+.ltwarn {
+  font-size: 13px;
+  border-inline-start: 3px solid var(--ac);
+  padding: 8px 12px;
+  background: var(--card);
+  border-radius: 8px;
+  margin-top: 12px;
+}
+.ltsvg {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 6px 0;
+}
+.ltlg {
+  font-size: 12.5px;
+  color: var(--mut);
+  margin: 4px 0;
+}
+.ltsw {
+  display: inline-block;
+  width: 14px;
+  height: 3px;
+  vertical-align: middle;
+  border-radius: 2px;
+}
+.ltsd {
+  background: repeating-linear-gradient(90deg, var(--mut) 0 5px, transparent 5px 9px);
+}
+.ltrow .lthd h2 {
+  font-size: 18px;
+}
+.ltd .ltmsg {
+  color: var(--r);
+  margin: 6px 0;
+}
+.ltg2f {
+  grid-column: 1/-1;
+  margin: 2px 0 0;
+}
+#ltb.ltdot::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--r);
+  display: inline-block;
+}
+@media (max-width: 640px) {
+  .ltd {
+    width: 100%;
+    border: 0;
+  }
+}

@@ -1,0 +1,83 @@
+/*
+ * 06-phone-header.css — part of the Trading.Journal styles.
+ *
+ * Phone header and tab bar.
+ *
+ * The css/*.css files are loaded in order by index.html. Order matters: later rules win.
+ */
+
+/* UX-A: phone header and tab bar (remove this block to undo) */
+@media (max-width: 640px) {
+  body:not(.lo) .hero {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    margin: 14px 0 12px;
+  }
+  body:not(.lo) .hero h1 {
+    font-size: 30px;
+    line-height: 1.12;
+    margin: 0;
+    letter-spacing: -0.005em;
+  }
+  body:not(.lo) .hero p,
+  body:not(.lo) .hero .cta {
+    display: none;
+  }
+  #hs {
+    width: auto;
+    flex: none;
+    display: flex;
+    align-items: baseline;
+    flex-wrap: nowrap;
+    gap: 8px;
+    padding: 10px 14px;
+    box-shadow: 0 14px 40px -22px rgba(184, 164, 255, 0.6);
+  }
+  #hs small {
+    display: inline;
+    margin: 0;
+  }
+  #hs > b {
+    display: inline;
+    font-size: 20px;
+  }
+  #hs > em {
+    display: inline;
+    margin: 0;
+  }
+  #hs div {
+    display: none;
+  }
+  #hs div.hsa {
+    display: flex;
+    gap: 6px;
+    margin-inline-start: auto;
+    border: 0;
+    padding: 0;
+    white-space: nowrap;
+  }
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin: 0 -18px 18px;
+    padding: 8px 18px;
+    background: var(--navbg, var(--paper));
+  }
+  nav::-webkit-scrollbar {
+    display: none;
+  }
+  nav button,
+  nav button.gh {
+    flex: none;
+    white-space: nowrap;
+  }
+  .ay-c nav {
+    background: #000;
+  }
+}

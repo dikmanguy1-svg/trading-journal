@@ -1,0 +1,120 @@
+/*
+ * 03-interface-layer.css — part of the Trading.Journal styles.
+ *
+ * Interface layer: touch feedback, floating tab bar, card shadows, window animations,
+ * plus reduced-transparency / high-contrast / reduced-motion versions.
+ *
+ * The css/*.css files are loaded in order by index.html. Order matters: later rules win.
+ */
+
+/* APPLE: fluid-interface layer (remove this block + apl* JS to undo) */
+button,
+.chip,
+[data-t],
+[role="button"] {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+button:active,
+.chip:active,
+.pchip:active {
+  transform: scale(0.97);
+  transition: transform 0.1s ease-out;
+}
+h1,
+.hero h1,
+.ls-hero h1 {
+  letter-spacing: -0.025em;
+}
+h2 {
+  letter-spacing: -0.012em;
+}
+.ls h2 {
+  letter-spacing: -0.022em;
+}
+small,
+.sm,
+.mut.sm {
+  letter-spacing: 0.01em;
+}
+nav {
+  position: sticky;
+  top: 10px;
+  z-index: 30;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--navbg, var(--paper)) 70%, transparent);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: 0 10px 30px -18px rgba(15, 38, 32, 0.35);
+}
+:root.th-l .card {
+  box-shadow:
+    0 1px 2px rgba(15, 38, 32, 0.04),
+    0 10px 28px -16px rgba(15, 38, 32, 0.16);
+}
+#toast {
+  transition:
+    opacity 0.2s ease-out,
+    transform 0.38s cubic-bezier(0.32, 0.72, 0, 1);
+  transform: translate(-50%, 14px) scale(0.96);
+}
+#toast.on {
+  transform: translate(-50%, 0) scale(1);
+}
+.cow {
+  transform-origin: 100% 100%;
+  animation: aplIn 0.34s cubic-bezier(0.32, 0.72, 0, 1);
+}
+[dir="rtl"] .cow {
+  transform-origin: 0 100%;
+}
+@keyframes aplIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  nav {
+    background: var(--navbg, var(--paper));
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+@media (prefers-contrast: more) {
+  nav {
+    background: var(--paper);
+    border-color: var(--ink);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cow {
+    animation: none;
+  }
+  button:active {
+    transform: none;
+  }
+}
+.ay-m .cow {
+  animation: none;
+}
+.ay-c nav {
+  background: #000;
+  backdrop-filter: none;
+}
+@media (max-width: 640px) {
+  nav {
+    top: 0;
+    border-radius: 0;
+    border-width: 0 0 1px;
+    margin: 0 -18px 18px;
+    padding: 8px 18px;
+    box-shadow: none;
+  }
+}

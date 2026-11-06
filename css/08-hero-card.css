@@ -1,0 +1,49 @@
+/*
+ * 08-hero-card.css — part of the Trading.Journal styles.
+ *
+ * The small candle card at the top of the app.
+ *
+ * The css/*.css files are loaded in order by index.html. Order matters: later rules win.
+ */
+
+/* Hero candle card */
+.hq {
+  flex: 0 1 320px;
+  align-self: center;
+  margin-top: 30px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 18px 18px 16px;
+  text-align: start;
+}
+.hq svg {
+  width: 100%;
+  height: 140px;
+  display: block;
+}
+.hq .ax {
+  display: flex;
+  justify-content: space-between;
+  font:
+    600 12px Figtree,
+    system-ui,
+    sans-serif;
+  color: var(--mut);
+  margin-top: 6px;
+  direction: ltr;
+}
+.hq p {
+  margin: 14px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  font-family: "Young Serif", Georgia, serif;
+  font-size: 20px;
+  line-height: 1.3;
+  color: var(--ink);
+}
+@media (max-width: 900px) {
+  .hq {
+    display: none;
+  }
+}
