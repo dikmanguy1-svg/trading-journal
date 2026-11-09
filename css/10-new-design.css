@@ -1,0 +1,230 @@
+/*
+ * 10-new-design.css — part of the TradeInk styles.
+ *
+ * The 60/30/10 design (9.11): green page (60%), white cards (30%), purple accents (10%).
+ * Computer: green side menu, big title on green, white cards and tables.
+ * Phone: green top, then a white sheet with the content.
+ * Applies to the dark themes (green, and Ink from level 10). The light theme stays as it was.
+ * To go back to the old look: remove this file's <link> from index.html (or git branch before-new-design).
+ *
+ * The css/*.css files are loaded in order by index.html. Order matters: later rules win.
+ */
+
+/* ---- White surfaces: dark text and colors that read on white ---- */
+:root:not(.th-l):not(.ay-c) :is(.card, .nd-w, #hs, .ls-steps > .ls-ch, .plc) {
+  --ink: #0f2620;
+  --rgb: 15, 38, 32;
+  --mut: rgba(15, 38, 32, 0.7);
+  --line: rgba(15, 38, 32, 0.12);
+  --card: #ffffff;
+  --in: #f5f7f6;
+  --g: #1d7a4c;
+  --r: #b3261e;
+  --gb: rgba(29, 122, 76, 0.1);
+  --rb: rgba(179, 38, 30, 0.08);
+  --hl: #5a3fc0;
+  --pen: #7c5ce6;
+  --ph: #6f58d8;
+  color-scheme: light;
+  color: var(--ink);
+}
+:root:not(.th-l):not(.ay-c) .card {
+  background: #ffffff;
+  border-color: transparent;
+  border-radius: 22px;
+  box-shadow: 0 12px 30px -22px rgba(0, 0, 0, 0.45);
+}
+/* The numbers next to the big title are a white card too. */
+:root:not(.th-l):not(.ay-c) #hs {
+  background: #ffffff;
+  border-color: transparent;
+  border-top: 3px solid #b8a4ff;
+}
+/* The tab you are on is purple. */
+:root:not(.th-l):not(.ay-c) #nav button.on {
+  background: #b8a4ff;
+  color: #0f2620;
+  border-color: #b8a4ff;
+}
+/* Cards inside cards stay quiet. */
+:root:not(.th-l):not(.ay-c) .card .card {
+  background: var(--in);
+  box-shadow: none;
+}
+/* The logo name block is white. */
+:root:not(.th-l):not(.ay-c) .bnm {
+  background: #ffffff;
+  color: #0f2620;
+}
+:root:not(.th-l):not(.ay-c) .bhd {
+  box-shadow: 0 0 0 1px #ffffff;
+}
+
+/* ---- Computer: green side menu ---- */
+@media (min-width: 1100px) {
+  :root:not(.th-l):not(.ay-c) body:not(.lo) main {
+    max-width: 1320px;
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    column-gap: 32px;
+    align-items: start;
+  }
+  :root:not(.th-l):not(.ay-c) body:not(.lo) main > * {
+    grid-column: 2;
+    min-width: 0;
+  }
+  :root:not(.th-l):not(.ay-c) body:not(.lo) main > .top {
+    grid-column: 1 / -1;
+    margin-bottom: 18px;
+  }
+  :root:not(.th-l):not(.ay-c) body:not(.lo) main > #nav {
+    grid-column: 1;
+    grid-row: 2 / span 40;
+    position: sticky;
+    top: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    overflow: visible;
+  }
+  :root:not(.th-l):not(.ay-c) body:not(.lo) #nav button,
+  :root:not(.th-l):not(.ay-c) body:not(.lo) #nav button.gh {
+    width: 100%;
+    justify-content: flex-start;
+    text-align: start;
+    border: 0;
+    border-radius: 999px;
+    padding: 12px 18px;
+    background: transparent;
+    color: rgba(var(--rgb), 0.86);
+    font-weight: 600;
+  }
+  :root:not(.th-l):not(.ay-c) body:not(.lo) #nav button:hover {
+    background: rgba(var(--rgb), 0.08);
+    color: var(--ink);
+  }
+  :root:not(.th-l):not(.ay-c) body:not(.lo) #nav button.on {
+    background: #b8a4ff;
+    color: #0f2620;
+    font-weight: 700;
+  }
+  :root:not(.th-l):not(.ay-c) body:not(.lo) .hero h1 {
+    font-size: clamp(44px, 4.6vw, 62px);
+    line-height: 1.02;
+  }
+}
+
+/* ---- Phone: green top, white sheet below ---- */
+@media (max-width: 640px) {
+  :root:not(.th-l):not(.ay-c) body:not(.lo) :is(#v, #v ~ *) {
+    --ink: #0f2620;
+    --rgb: 15, 38, 32;
+    --mut: rgba(15, 38, 32, 0.7);
+    --line: rgba(15, 38, 32, 0.12);
+    --card: #ffffff;
+    --in: #f5f7f6;
+    --g: #1d7a4c;
+    --r: #b3261e;
+    --gb: rgba(29, 122, 76, 0.1);
+    --rb: rgba(179, 38, 30, 0.08);
+    --hl: #5a3fc0;
+    --pen: #7c5ce6;
+    --ph: #6f58d8;
+    color-scheme: light;
+    color: var(--ink);
+    background: #ffffff;
+    margin-left: -18px !important;
+    margin-right: -18px !important;
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+    max-width: none !important;
+  }
+  :root:not(.th-l):not(.ay-c) body:not(.lo) #v {
+    border-radius: 28px 28px 0 0;
+    margin-bottom: 0 !important;
+    padding-bottom: 12px;
+    padding-top: 22px;
+    min-height: 60vh;
+  }
+  :root:not(.th-l):not(.ay-c) body:not(.lo) #v ~ * {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  :root:not(.th-l):not(.ay-c) body:not(.lo) main {
+    padding-bottom: 0;
+  }
+  :root:not(.th-l):not(.ay-c) body:not(.lo) #v ~ *:last-of-type {
+    padding-bottom: 64px;
+  }
+  /* In the sheet, cards become plain sections with a line between them. */
+  :root:not(.th-l):not(.ay-c) body:not(.lo) :is(#v, #v ~ *) .card {
+    background: transparent;
+    box-shadow: none;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    border-radius: 0;
+    padding: 18px 0;
+    margin: 0;
+  }
+  :root:not(.th-l):not(.ay-c) body:not(.lo) :is(#v, #v ~ *) .card:last-child {
+    border-bottom: 0;
+  }
+  :root:not(.th-l):not(.ay-c) body:not(.lo) #nav {
+    margin-bottom: 0;
+    background: var(--navbg, var(--paper));
+    border: 0;
+  }
+}
+
+/* ---- Landing page: green page, white step cards and plan cards ---- */
+:root:not(.th-l):not(.ay-c) .w-dark #ls1 .ls-stage {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+:root:not(.th-l):not(.ay-c) .ls-steps > .ls-ch {
+  background: #ffffff;
+  border-radius: 26px;
+  padding: 26px;
+  box-shadow: 0 12px 30px -22px rgba(0, 0, 0, 0.45);
+}
+:root:not(.th-l):not(.ay-c) .ls-steps .ls-stage {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+:root:not(.th-l):not(.ay-c) .ls-steps .ls-k {
+  color: #5a3fc0;
+}
+:root:not(.th-l):not(.ay-c) .ls-steps .ls-panel {
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+  padding: 14px 0 0;
+}
+:root:not(.th-l):not(.ay-c) .plc {
+  background: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 12px 30px -22px rgba(0, 0, 0, 0.45);
+}
+:root:not(.th-l):not(.ay-c) .plc.rec {
+  border: 3px solid #b8a4ff;
+}
+:root:not(.th-l):not(.ay-c) .plsw {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: transparent;
+}
+:root:not(.th-l):not(.ay-c) .plsw button.on {
+  background: #ffffff;
+  color: #0f2620;
+}
