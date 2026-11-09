@@ -769,7 +769,7 @@ button.cochip.off:hover{background:rgba(var(--rgb),.08)}
 .cohelp{margin:0;font-size:11.5px;color:var(--mut)}
 .covh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .cow.drag .cofoot{outline:2px dashed var(--hl);outline-offset:-4px}
-.coc{background:var(--in);border:1px solid var(--line);border-radius:16px;padding:14px;font-size:14px}.coc h3{margin:0;font-family:"Young Serif","Frank Ruhl Libre",Georgia,serif;font-weight:400;font-size:19px}.coc ul{padding-inline-start:20px;margin:10px 0 12px}.coc li{margin-bottom:6px}.coc .coav{width:64px;height:64px}
+.coc{background:var(--in);border:1px solid var(--line);border-radius:16px;padding:14px;font-size:14px}.coc h3{margin:0;font-family:"Young Serif","Suez One",Georgia,serif;font-weight:400;font-size:19px}.coc ul{padding-inline-start:20px;margin:10px 0 12px}.coc li{margin-bottom:6px}.coc .coav{width:64px;height:64px}
 .coask{display:inline-flex;align-items:center;gap:6px;padding:3px 12px 3px 3px!important}
 [dir=rtl] .coask{padding:3px 3px 3px 12px!important}
 .coask .coav{width:28px;height:28px}

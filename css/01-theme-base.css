@@ -340,7 +340,7 @@ tr.ix td {
   padding: 34px 8px 22px;
 }
 .land h1 {
-  font-family: "Young Serif", "Frank Ruhl Libre", Georgia, serif;
+  font-family: "Young Serif", "Suez One", Georgia, serif;
   font-size: clamp(26px, 5vw, 42px);
   line-height: 1.2;
   margin: 0 auto 14px;
@@ -412,7 +412,7 @@ main {
   position: relative;
   display: inline-block;
   padding-top: 26px;
-  font-family: "Young Serif", "Frank Ruhl Libre", Georgia, serif;
+  font-family: "Young Serif", "Suez One", Georgia, serif;
   font-size: 21px;
   letter-spacing: 0.005em;
   line-height: 1;
@@ -474,10 +474,10 @@ main {
   margin-top: 6px;
 }
 
-/* Hebrew: Young Serif and Figtree have no Hebrew letters. Hebrew text uses Frank Ruhl Libre (headings, bold)
+/* Hebrew: Young Serif and Figtree have no Hebrew letters. Hebrew text uses Suez One (headings; chosen 9.11)
    and Heebo (body), loaded from Google Fonts (Hebrew letters only are downloaded on Hebrew pages).
-   font-synthesis:none keeps the Latin digits in Young Serif regular while Hebrew gets the bold face. */
+   Suez One has one weight, so headings stay regular and font-synthesis:none stops a fake bold. */
 html[lang="he"] :is(h1, h2, h3, .hq p, .plp b, #hs > b, .hqbig b, .ls-quote) {
-  font-weight: 700;
+  font-weight: 400;
   font-synthesis: none;
 }

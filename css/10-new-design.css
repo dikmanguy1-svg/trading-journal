@@ -11,7 +11,7 @@
  */
 
 /* ---- White surfaces: dark text and colors that read on white ---- */
-:root:not(.th-l):not(.ay-c) :is(.card, .nd-w, #hs, .ls-steps > .ls-ch, .plc) {
+:root:not(.th-l):not(.ay-c) :is(.card, .nd-w, #hs, .ls-steps > .ls-ch, .plc, .jc) {
   --ink: #0f2620;
   --rgb: 15, 38, 32;
   --mut: rgba(15, 38, 32, 0.7);
@@ -121,9 +121,17 @@
   }
 }
 
-/* ---- Phone: green top, white sheet below ---- */
+/* ---- Phone: green top, white sheet below ----
+   The Trade journal keeps separate cards (white cards on green), like before. */
 @media (max-width: 640px) {
-  :root:not(.th-l):not(.ay-c) body:not(.lo) :is(#v, #v ~ *) {
+  :root:not(.th-l):not(.ay-c) .jc {
+    background: #ffffff;
+    border-color: transparent;
+    box-shadow: 0 12px 30px -22px rgba(0, 0, 0, 0.45);
+  }
+}
+@media (max-width: 640px) {
+  :root:not(.th-l):not(.ay-c) body:not(.lo) :is(#v:not(:has(.jcards)), #v:not(:has(.jcards)) ~ *) {
     --ink: #0f2620;
     --rgb: 15, 38, 32;
     --mut: rgba(15, 38, 32, 0.7);
@@ -146,14 +154,14 @@
     padding-right: 18px !important;
     max-width: none !important;
   }
-  :root:not(.th-l):not(.ay-c) body:not(.lo) #v {
+  :root:not(.th-l):not(.ay-c) body:not(.lo) #v:not(:has(.jcards)) {
     border-radius: 28px 28px 0 0;
     margin-bottom: 0 !important;
     padding-bottom: 12px;
     padding-top: 22px;
     min-height: 60vh;
   }
-  :root:not(.th-l):not(.ay-c) body:not(.lo) #v ~ * {
+  :root:not(.th-l):not(.ay-c) body:not(.lo) #v:not(:has(.jcards)) ~ * {
     margin-top: 0 !important;
     margin-bottom: 0 !important;
     padding-top: 10px;
@@ -162,11 +170,14 @@
   :root:not(.th-l):not(.ay-c) body:not(.lo) main {
     padding-bottom: 0;
   }
-  :root:not(.th-l):not(.ay-c) body:not(.lo) #v ~ *:last-of-type {
+  :root:not(.th-l):not(.ay-c) body:not(.lo) #v:not(:has(.jcards)) ~ *:last-of-type {
     padding-bottom: 64px;
   }
   /* In the sheet, cards become plain sections with a line between them. */
-  :root:not(.th-l):not(.ay-c) body:not(.lo) :is(#v, #v ~ *) .card {
+  :root:not(.th-l):not(.ay-c)
+    body:not(.lo)
+    :is(#v:not(:has(.jcards)), #v:not(:has(.jcards)) ~ *)
+    .card {
     background: transparent;
     box-shadow: none;
     border: 0;
@@ -175,7 +186,10 @@
     padding: 18px 0;
     margin: 0;
   }
-  :root:not(.th-l):not(.ay-c) body:not(.lo) :is(#v, #v ~ *) .card:last-child {
+  :root:not(.th-l):not(.ay-c)
+    body:not(.lo)
+    :is(#v:not(:has(.jcards)), #v:not(:has(.jcards)) ~ *)
+    .card:last-child {
     border-bottom: 0;
   }
   :root:not(.th-l):not(.ay-c) body:not(.lo) #nav {
