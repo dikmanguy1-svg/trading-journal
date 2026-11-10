@@ -139,7 +139,12 @@ async function smaStep() {
     await pause(1100);
   }
 }
-// Load live prices from Finnhub for open trades and the watchlist.
+// Redraw with the prices loaded so far (not while the user is typing in a field).
+function pxShow() {
+  const a = document.activeElement;
+  if (!a || !/INPUT|SELECT|TEXTAREA/.test(a.tagName)) view();
+}
+// Load live prices from Finnhub for long-term holdings, open trades and the watchlist.
 async function getPx() {
   if (!FK || S.keyBad) return;
   // Already loading: run once more right after, so new holdings (e.g. after login) are not missed.
@@ -161,6 +166,7 @@ async function getPx() {
     sd = smaDue();
   if (!todo.length && (!sd.length || smaBusy)) return;
   pxBusy = true;
+  const key = new Set([...lts, ...opn]);
   let ok = 0,
     bad = 0,
     rt = 0;
@@ -204,6 +210,9 @@ async function getPx() {
       bad++;
       S.pxT[t] = Date.now();
     }
+    // Long-term holdings and open trades load first. Once they are in, show the new totals
+    // right away, without waiting for the watchlist prices.
+    if (key.has(t) && !key.has(todo[i + 1])) pxShow();
     await pause(1100);
   }
   pxBusy = false;
