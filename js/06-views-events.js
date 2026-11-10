@@ -86,7 +86,13 @@ function view() {
     // A finished check starts fresh: a rejected screening clears when you leave it,
     // and the daily pulse clears on a new day.
     let ch = pulseDay();
-    if (scrFrom === "scr" && tab !== "scr" && scrDone() && !scrOK()) {
+    // A finished screening clears when you leave it. If it passed, the ticker moves to the
+    // risk calculator and the calculator remembers that this ticker passed.
+    if (scrFrom === "scr" && tab !== "scr" && scrDone()) {
+      if (scrOK() && S.scr.t) {
+        if (!S.calc.t) S.calc.t = S.scr.t;
+        S.calc.ok = S.scr.t;
+      }
       scrNew();
       ch = true;
     }
@@ -172,7 +178,7 @@ function view() {
     r
       ? `<div class="res"><div><span>Risk per share</span><b>${$f(r.rps, 2)}</b></div><div><span>Potential profit per share</span><b>${$f(r.pps, 2)}</b></div><div><span>Shares ${r.mode === "alloc" ? "(by fixed allocation)" : r.mode === "amount" ? "(from your amount)" : "(your number)"}</span><b>${r.sh}</b></div><div><span>Position cost</span><b>${$f(r.cost, 2)}</b></div><div><span>Free cash after this trade</span><b class="${r.cashAfter < 0 ? "neg" : ""}">${$f(r.cashAfter, 2)}</b></div><div><span>% of account</span><b>${(r.pct * 100).toFixed(1)}%</b></div><div><span>$ risk in the trade</span><b>${$f(r.rk, 2)}</b></div><div><span>% of account at risk</span><b>${(r.rkp * 100).toFixed(2)}%</b></div><div><span>Risk:reward</span><b>1:${r.R.toFixed(2)}</b></div><div><span>Potential profit at target</span><b>${$f(r.prof, 2)}</b></div></div>
   <div class="status ${r.ok ? "ok" : "no"}">${!r.valid ? "Stop and target must be on the correct sides of entry" : r.ok ? "Trade approved" : "Rejected: R:R below minimum or $ risk above the cap"}</div>
-  ${!pulseOK() || !scrOK() ? `<p class="neg">Steps 1 and 2 are not fully approved yet.</p>` : ""}
+  ${!pulseOK() || !(scrOK() || (c.ok && c.ok === String(c.t || "").toUpperCase())) ? `<p class="neg">Steps 1 and 2 are not fully approved yet.</p>` : ""}
   ${r.ok ? `<h2 style="margin-top:14px">Broker order ticket</h2><div class="res"><div><span>Entry order</span><b>${$f(r.e, 2)}</b></div><div><span>Shares</span><b>${r.sh}</b></div><div><span>Stop-loss order</span><b>${$f(r.s, 2)}</b></div><div><span>Target order</span><b>${$f(r.tg, 2)}</b></div></div><p class="mut">Enter all three orders at the broker right after approval.</p><button data-a="tj">Add to trade journal</button>` : ""}`
       : `<p class="mut">Enter entry, stop and target prices to see the calculation.</p>`
   }</div></div>`;

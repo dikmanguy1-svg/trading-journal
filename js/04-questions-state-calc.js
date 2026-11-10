@@ -34,6 +34,7 @@ function fixA(id) {
 }
 // Finished checks start fresh (10.11).
 // Screening: a new empty screening (no ticker, no answers).
+// A passed or rejected screening clears when you leave the tab (js/06 view()).
 function scrNew() {
   S.scr = { t: "", a: Array(QS().length).fill(null) };
 }
@@ -351,7 +352,8 @@ function clean(d) {
       tg: t(n(d.calc?.tg) ?? "", 20),
       th: t(d.calc?.th, 2000),
       amt: t(n(d.calc?.amt) ?? "", 20),
-      shs: t(n(d.calc?.shs) ?? "", 20)
+      shs: t(n(d.calc?.shs) ?? "", 20),
+      ok: t(d.calc?.ok, 10).toUpperCase()
     },
     trades: (Array.isArray(d.trades) ? d.trades : [])
       .slice(0, 5000)
