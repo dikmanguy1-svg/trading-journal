@@ -63,7 +63,7 @@ function lsChart() {
       col = c >= o ? "var(--g)" : "var(--r)",
       t = y(Math.max(o, c)),
       b = y(Math.min(o, c));
-    s += `<g class="ls-cd"><line x1="${x}" x2="${x}" y1="${y(h)}" y2="${y(l)}" stroke="${col}" stroke-width="2" stroke-linecap="round"/><rect x="${x - bw / 2}" y="${t}" width="${bw}" height="${Math.max(b - t, 2)}" rx="2" fill="${col}"/></g>`;
+    s += `<g class="ls-cd" style="--i:${i}"><line x1="${x}" x2="${x}" y1="${y(h)}" y2="${y(l)}" stroke="${col}" stroke-width="2" stroke-linecap="round"/><rect x="${x - bw / 2}" y="${t}" width="${bw}" height="${Math.max(b - t, 2)}" rx="2" fill="${col}"/></g>`;
   });
   return `<svg class="ls-chart" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true" focusable="false">${s}</svg>`;
 }

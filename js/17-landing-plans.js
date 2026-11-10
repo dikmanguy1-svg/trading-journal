@@ -388,10 +388,10 @@ function lsFrame() {
     });
   });
   const p4 = rm ? 1 : lsAuto("ls4"),
-    cd = root.querySelectorAll(".ls-cd"),
-    nc = Math.round(Math.min(1, p4 * 1.15) * cd.length),
     qo = rm || p4 > 0.85;
-  lsSet("nc", nc, () => cd.forEach((c, i) => c.classList.toggle("on", i < nc)));
+  // Candles: once step 3 starts, the browser plays them one by one (CSS delays). Never reversed.
+  const ch = root.querySelector(".ls-chart");
+  if (ch && (rm || p4 > 0)) ch.classList.add("go");
   lsSet("q", qo, () => {
     const q = $("lsq");
     if (q) q.classList.toggle("on", qo);

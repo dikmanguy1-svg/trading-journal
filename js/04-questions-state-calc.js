@@ -32,6 +32,22 @@ function fixA(id) {
   if (id === "pulse") S.pulse = Array(QP().length).fill(null);
   else S.scr.a = Array(QS().length).fill(null);
 }
+// Finished checks start fresh (10.11).
+// Screening: a new empty screening (no ticker, no answers).
+function scrNew() {
+  S.scr = { t: "", a: Array(QS().length).fill(null) };
+}
+// Screening is done: every question has an answer.
+const scrDone = () => S.scr.a.every(x => x);
+// Daily pulse: the answers are for one day. On a new day they clear.
+function pulseDay() {
+  if (!S.pd || S.pd === dkey(new Date())) return false;
+  S.pulse = Array(QP().length).fill(null);
+  S.pd = "";
+  return true;
+}
+// The tab shown last time view() ran, to see when the user leaves the screening.
+let scrFrom = null;
 // HTML of a Yes/No question list, with its edit mode.
 function qblock(key) {
   const P = key === "pulse",
@@ -322,6 +338,7 @@ function clean(d) {
     g: Array.isArray(d.g) ? d.g.filter(x => /^\d{4}-\d{2}-\d{2}$/.test(String(x))).slice(-400) : [],
     bd: Array.isArray(d.bd) ? d.bd.map(x => t(x, 20)).slice(0, 30) : null,
     pulse: Array.from({ length: (q1 || PQ).length }, (_, i) => yn(d.pulse, i)),
+    pd: /^\d{4}-\d{2}-\d{2}$/.test(String(d.pd || "")) ? d.pd : "",
     scr: {
       t: t(d.scr?.t, 10).toUpperCase(),
       a: Array.from({ length: (q2 || SQ).length }, (_, i) => yn(d.scr?.a, i))

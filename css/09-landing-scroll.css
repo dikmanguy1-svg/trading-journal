@@ -289,16 +289,36 @@ html:has(.ls) {
   height: 220px;
   display: block;
 }
+/* Candles grow up one after another, played by the browser once step 3 starts (smooth, never reversed). */
 .ls-cd {
   opacity: 0;
-  transform: translateY(8px);
-  transition:
-    opacity 0.4s ease,
-    transform 0.4s ease;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
 }
-.ls-cd.on {
+.go .ls-cd {
+  animation: lsCd 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: calc(var(--i, 0) * 0.32s + 0.15s);
+}
+@keyframes lsCd {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scaleY(0.35);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.ay-m .ls-cd,
+html:has(.ay-m) .ls-cd {
+  animation: none !important;
   opacity: 1;
-  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ls-cd {
+    animation: none !important;
+    opacity: 1;
+  }
 }
 .ls-ax {
   display: flex;

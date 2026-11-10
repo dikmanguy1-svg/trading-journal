@@ -82,6 +82,17 @@ let aplTab = null;
 // Draw the open tab into #v. Renders every tab; called after every change.
 function view() {
   ltSync();
+  {
+    // A finished check starts fresh: a rejected screening clears when you leave it,
+    // and the daily pulse clears on a new day.
+    let ch = pulseDay();
+    if (scrFrom === "scr" && tab !== "scr" && scrDone() && !scrOK()) {
+      scrNew();
+      ch = true;
+    }
+    scrFrom = tab;
+    if (ch) save();
+  }
   heroSet();
   const aplFrom = aplTab;
   aplTab = tab;
@@ -716,6 +727,7 @@ document.addEventListener("change", e => {
       L[i] = v.trim().slice(0, 200) || L[i];
     } else if (k === "pulse") {
       S.pulse[i] = v || null;
+      S.pd = dkey(new Date());
       if (S.pulse.every(x => x)) {
         const dk = dkey(new Date());
         S.g = S.g || [];
@@ -806,6 +818,8 @@ document.addEventListener("submit", e => {
     th: v.th,
     x: null
   });
+  // The screening is finished once the stock is in the journal.
+  if (scrDone()) scrNew();
   save();
   view();
 });
@@ -822,6 +836,8 @@ document.addEventListener("submit", e => {
     tg: num(v.tg),
     p: num(v.p)
   });
+  // The screening is finished once the stock is on the watchlist.
+  if (scrDone()) scrNew();
   save();
   view();
 });

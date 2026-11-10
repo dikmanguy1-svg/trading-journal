@@ -62,6 +62,7 @@ const SQ = [
 let S = {
   set: { pf: 10000, al: 0.1, mr: 0.01, rr: 2 },
   pulse: Array(6).fill(null),
+  pd: "",
   scr: { t: "", a: Array(9).fill(null) },
   calc: { t: "", dir: "Long", e: "", s: "", tg: "" },
   trades: [],
