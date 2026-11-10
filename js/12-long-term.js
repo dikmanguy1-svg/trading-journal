@@ -446,6 +446,8 @@ document.addEventListener("change", e => {
       .toUpperCase()
       .replace(/[^A-Z0-9.\-]/g, "")
       .slice(0, 10);
+    // The screening is finished once the stock is a long-term holding.
+    if (h.t && scrDone()) scrNew();
     delete ltMsg[h.id];
     save();
     view();
