@@ -139,10 +139,12 @@ async function smaStep() {
     await pause(1100);
   }
 }
-// Redraw with the prices loaded so far (not while the user is typing in a field).
+// Redraw with the prices loaded so far. While the user is typing in a field (any tab,
+// e.g. Strategy), only the P&L box at the top is redrawn, so the field is not lost.
 function pxShow() {
   const a = document.activeElement;
   if (!a || !/INPUT|SELECT|TEXTAREA/.test(a.tagName)) view();
+  else hs();
 }
 // Load live prices from Finnhub for long-term holdings, open trades and the watchlist.
 async function getPx() {
@@ -232,7 +234,6 @@ async function getPx() {
           : "");
   el.textContent = pxMsg;
   smaRun();
-  const a = document.activeElement;
-  if (!a || !/INPUT|SELECT|TEXTAREA/.test(a.tagName)) view();
+  pxShow();
   if (pxAgain) getPx();
 }

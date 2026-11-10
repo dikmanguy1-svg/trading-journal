@@ -306,9 +306,7 @@ const ltMsg = {};
 let ltBusy = false;
 // Redraw without losing the field being typed in.
 function ltSoft() {
-  const a = document.activeElement;
-  if (a && /INPUT|SELECT|TEXTAREA/.test(a.tagName)) return;
-  view();
+  pxShow();
 }
 // Load live prices for holdings.
 async function ltFetch(list) {
