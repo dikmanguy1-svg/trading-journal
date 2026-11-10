@@ -11,6 +11,8 @@
 
 // Price loading state.
 let pxBusy = false,
+  // getPx() was asked to run while it was busy.
+  pxAgain = false,
   pxMsg = "";
 // Wait n milliseconds.
 const pause = ms => new Promise(z => setTimeout(z, ms));
@@ -139,15 +141,23 @@ async function smaStep() {
 }
 // Load live prices from Finnhub for open trades and the watchlist.
 async function getPx() {
-  if (!FK || S.keyBad || pxBusy) return;
+  if (!FK || S.keyBad) return;
+  // Already loading: run once more right after, so new holdings (e.g. after login) are not missed.
+  if (pxBusy) return void (pxAgain = true);
+  pxAgain = false;
   const el = $("pxs"),
     open = mktOpen(),
     age = open ? 18e4 : 216e5;
+  // Long-term holdings first: they change the total P&L. They are refreshed every 30 minutes
+  // (like the long-term panel), so the total is right without opening the panel.
   const opn = S.trades.filter(t => t.x == null).map(t => t.t),
-    need = [...new Set([...opn, ...S.wl.map(w => w.t), ...ltSyms()])].filter(Boolean);
+    lts = ltSyms(),
+    need = [...new Set([...lts, ...opn, ...S.wl.map(w => w.t)])].filter(Boolean);
   S.px = S.px || {};
   S.pxT = S.pxT || {};
-  const todo = need.filter(t => !S.pxT[t] || Date.now() - S.pxT[t] > age),
+  const todo = need.filter(
+      t => !S.pxT[t] || Date.now() - S.pxT[t] > (lts.includes(t) ? Math.min(age, 18e5) : age)
+    ),
     sd = smaDue();
   if (!todo.length && (!sd.length || smaBusy)) return;
   pxBusy = true;
@@ -215,4 +225,5 @@ async function getPx() {
   smaRun();
   const a = document.activeElement;
   if (!a || !/INPUT|SELECT|TEXTAREA/.test(a.tagName)) view();
+  if (pxAgain) getPx();
 }
