@@ -103,14 +103,16 @@ const STY = {
   trend: "Trend following",
   brk: "Breakout / momentum",
   pull: "Pullback (buy the dip)",
-  earn: "Earnings and news"
+  earn: "Earnings and news",
+  fund: "Fundamental / value"
 };
 // The screening question each style adds (swing).
 const STQ = {
   trend: "Weekly uptrend: higher highs and higher lows?",
   brk: "Is the stock breaking out of a clear base on above-average volume?",
   pull: "Is the stock pulling back to support within an established uptrend?",
-  earn: "Is the next earnings date known, and does my trade plan fit around it?"
+  earn: "Is the next earnings date known, and does my trade plan fit around it?",
+  fund: "Do I understand how the company makes money, and why it is worth more than today's price?"
 };
 // Tools (swing): name and the screening question each tool adds.
 const TL = {
@@ -192,13 +194,13 @@ const TLX = {
       "Fibonacci levels",
       "Is my entry near a meaningful Fibonacci retracement or extension level?"
     ],
-    macd: ["MACD", "Is MACD confirming the move (bullish cross or a rising histogram)?"],
-    inst: ["Institutional ownership", "Is institutional ownership strong and rising?"],
-    fund: ["Earnings growth", "Are earnings and revenue growing at a healthy rate?"]
+    macd: ["MACD", "Is MACD confirming the move (bullish cross or a rising histogram)?"]
   }
 };
 // All tools for a trader type.
-const toolsFor = t => ({ ...TL, ...(TLX[t] || {}) });
+// Fundamental tools (js/18d) are for swing traders and investors, not for day traders.
+const techFor = t => ({ ...TL, ...(TLX[t] || {}) }),
+  toolsFor = t => ({ ...techFor(t), ...(t === "day" ? {} : FTL) });
 // Day-trader versions of the tool questions.
 const TLD = {
   ma: [

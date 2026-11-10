@@ -166,13 +166,14 @@ function strPage() {
 <p style="margin:16px 0 4px;font-weight:600">How do you trade?</p><div class="chips">${Object.entries(
       STY
     )
+      .filter(([k]) => !(k === "fund" && st.type === "day"))
       .map(
         ([k, v]) =>
           `<button class="chip${st.style === k ? " on" : ""}" data-a="sty" data-id="${k}" aria-pressed="${st.style === k}">${v}</button>`
       )
       .join("")}</div>
-<p style="margin:16px 0 4px;font-weight:600">Which tools do you use?</p><p class="mut" style="margin:0 0 6px;font-size:13.5px">Pick the ones that matter most. Stock screening is kept to 9 questions, and tools are used in the order you pick them.</p><div class="chips">${Object.entries(
-      toolsFor(st.type)
+<p style="margin:16px 0 4px;font-weight:600">Which tools do you use?</p><p class="mut" style="margin:0 0 6px;font-size:13.5px">Pick the ones that matter most. Stock screening is kept to 9 questions, and tools are used in the order you pick them.</p><p class="mut" style="margin:0 0 6px;font-size:13.5px;font-weight:600">Technical</p><div class="chips">${Object.entries(
+      techFor(st.type)
     )
       .map(
         ([k, v]) =>
@@ -180,7 +181,18 @@ function strPage() {
       )
       .join(
         ""
-      )}${(st.custom || []).map((c, i) => `<button class="chip on" data-a="ctr" data-id="${i}" aria-label="Remove ${esc(c.n)}">${esc(c.n)} ✕</button>`).join("")}</div>
+      )}${(st.custom || []).map((c, i) => `<button class="chip on" data-a="ctr" data-id="${i}" aria-label="Remove ${esc(c.n)}">${esc(c.n)} ✕</button>`).join("")}</div>${
+      st.type === "day"
+        ? ""
+        : `<p class="mut" style="margin:12px 0 6px;font-size:13.5px;font-weight:600">Fundamental</p><div class="chips">${Object.entries(
+            FTL
+          )
+            .map(
+              ([k, v]) =>
+                `<button class="chip${st.tools.includes(k) ? " on" : ""}" data-a="stt" data-id="${k}" aria-pressed="${st.tools.includes(k)}">${v[0]}</button>`
+            )
+            .join("")}</div>`
+    }
 <p style="margin:16px 0 4px;font-weight:600">Add your own tool</p><div class="f cus" style="grid-template-columns:minmax(140px,1fr) minmax(220px,3fr) auto;align-items:end"><label>Tool name<input id="cn" maxlength="30" placeholder="For example: Anchored VWAP"></label><label>Question to ask yourself (answer Yes or No)<input id="cq" maxlength="200" placeholder="For example: Is the price holding above the anchored VWAP?"></label><div><button class="gh" data-a="cta">Add tool</button></div></div>
 <p style="margin-top:18px"><button class="cta" data-a="sb">Build my questions</button></p>${S.qp || S.qs ? `<p class="mut">Your questions are ready. Review or edit them: <button class="gh sm" data-t="pulse">Daily pulse</button> <button class="gh sm" data-t="scr">Stock screening</button></p>` : ""}</div>` +
     rulesCard() +

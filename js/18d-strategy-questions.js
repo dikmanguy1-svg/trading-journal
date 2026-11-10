@@ -7,11 +7,53 @@
  *   breakout-day volume, pullback + volume asks about volume drying up, and so on).
  * - stNums(): the risk/reward and stop questions use your own numbers from the settings.
  * - stLT(): if you are also a long-term investor (and not a day trader), two long-term questions.
+ * - FTL: fundamental tools (10.11), picked like the technical tools; you can mix both kinds.
+ *   Thresholds come from common investor checklists (CAN SLIM, Peter Lynch, value investing).
  * Every question here has a Hebrew version in he.js (the numbered ones in HR, js/03).
  *
  * All js/*.js files share one global scope and run in the order index.html lists them.
  */
 
+// Fundamental tools: name and the screening question each adds. For swing traders and investors.
+// "fund" and "inst" were swing tools before; the keys stay so saved choices keep working.
+const FTL = {
+  pe: [
+    "P/E and PEG",
+    "Is the valuation reasonable: P/E in line with peers and its own history, and PEG (P/E divided by growth) around 1 or lower?"
+  ],
+  mos: [
+    "Margin of safety",
+    "Is the price at least 20% below the fair value I worked out in advance?"
+  ],
+  fcf: ["Free cash flow", "Is free cash flow positive and growing over the last 3 years?"],
+  roe: ["Return on capital", "Is return on equity (or on invested capital) above 15%?"],
+  debt: [
+    "Debt",
+    "Is debt under control (debt to equity below about 1, and interest easily covered by profit)?"
+  ],
+  mrg: ["Profit margins", "Are profit margins stable or rising, and good compared with peers?"],
+  fund: [
+    "EPS growth",
+    "Did earnings per share grow at least 25% in the last quarter (vs. a year ago), and about 25% a year over the last 3 years?"
+  ],
+  rev: ["Revenue growth", "Is revenue growing steadily, year after year?"],
+  ins: [
+    "Insider buying",
+    "Are company insiders buying shares with their own money (and not selling heavily)?"
+  ],
+  inst: [
+    "Institutional ownership",
+    "Is the number of institutions (funds) holding the stock rising?"
+  ],
+  moat: [
+    "Competitive edge",
+    "Does the company have a lasting edge over competitors (brand, network, switching costs)?"
+  ],
+  div: [
+    "Dividend",
+    "Is the dividend steady, with a payout that leaves a cushion (not most of the profit)?"
+  ]
+};
 // Swing: [style][tool] = the tool's question for that style.
 const CQ = {
   trend: {
@@ -91,6 +133,12 @@ const stN = v => String(+(+v).toFixed(2));
 function stNums() {
   const rr = S.set && S.set.rr > 0 ? stN(S.set.rr) : "2",
     mr = S.set && S.set.mr > 0 ? stN(S.set.mr * 100) : "1";
+  // A long-term investor (only) gets a position-size question instead of the stop-loss question.
+  if (ltOnly())
+    return {
+      rr: "Is my target at least " + rr + " times my risk (my minimum risk/reward)?",
+      stop: "Does this position keep my portfolio diversified (no single stock too big a part of it)?"
+    };
   return {
     rr: "Is my target at least " + rr + " times my risk (my minimum risk/reward)?",
     stop:
@@ -99,11 +147,17 @@ function stNums() {
       "% of my account?"
   };
 }
-// Long-term questions for someone who is also a long-term investor (not for day traders).
+// Long-term questions for a swing trader who is also a long-term investor (not for day traders).
 function stLT(day) {
-  if (day || !(S.prof || []).includes("lt")) return [];
-  return [
-    "Is it clear to me before buying whether this is a swing trade or a long-term holding (and I will not turn a losing swing trade into a long-term one)?",
-    "Is the business itself healthy (profitable or with a clear path to profit, and debt under control)?"
+  const P = S.prof || [];
+  if (day || !P.includes("lt") || !P.includes("swing")) return [];
+  const q = [
+    "Is it clear to me before buying whether this is a swing trade or a long-term holding (and I will not turn a losing swing trade into a long-term one)?"
   ];
+  // The business-health question is left out when fundamental tools already ask about it.
+  if (!S.st.tools.some(k => FTL[k]))
+    q.push(
+      "Is the business itself healthy (profitable or with a clear path to profit, and debt under control)?"
+    );
+  return q;
 }

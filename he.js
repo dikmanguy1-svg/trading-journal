@@ -883,5 +883,46 @@ window.HE_EXT = {
   "Is the business itself healthy (profitable or with a clear path to profit, and debt under control)?":
     "העסק עצמו בריא (רווחי או עם דרך ברורה לרווח, והחוב בשליטה)?",
   "No stop": "אין סטופ",
-  "live": "חי"
+  "live": "חי",
+  "Fundamental / value": "פנדמנטלי / ערך",
+  "Do I understand how the company makes money, and why it is worth more than today's price?":
+    "אני מבין איך החברה מרוויחה כסף, ולמה היא שווה יותר מהמחיר של היום?",
+  "Technical": "טכני",
+  "Fundamental": "פנדמנטלי",
+  "P/E and PEG": "מכפיל רווח ו-PEG",
+  "Is the valuation reasonable: P/E in line with peers and its own history, and PEG (P/E divided by growth) around 1 or lower?":
+    "השווי סביר: מכפיל הרווח דומה למתחרות ולהיסטוריה של המניה, ו-PEG (מכפיל רווח חלקי צמיחה) בסביבות 1 או פחות?",
+  "Margin of safety": "מרווח ביטחון",
+  "Is the price at least 20% below the fair value I worked out in advance?":
+    "המחיר נמוך לפחות ב-20% מהשווי ההוגן שחישבתי מראש?",
+  "Free cash flow": "תזרים מזומנים חופשי",
+  "Is free cash flow positive and growing over the last 3 years?":
+    "תזרים המזומנים החופשי חיובי וגדל ב-3 השנים האחרונות?",
+  "Return on capital": "תשואה על ההון",
+  "Is return on equity (or on invested capital) above 15%?":
+    "התשואה על ההון העצמי (או על ההון המושקע) מעל 15%?",
+  "Debt": "חוב",
+  "Is debt under control (debt to equity below about 1, and interest easily covered by profit)?":
+    "החוב בשליטה (חוב להון מתחת לבערך 1, והרווח מכסה בקלות את הריבית)?",
+  "Profit margins": "שולי רווח",
+  "Are profit margins stable or rising, and good compared with peers?":
+    "שולי הרווח יציבים או עולים, וטובים בהשוואה למתחרות?",
+  "EPS growth": "צמיחת רווח למניה",
+  "Did earnings per share grow at least 25% in the last quarter (vs. a year ago), and about 25% a year over the last 3 years?":
+    "הרווח למניה צמח לפחות 25% ברבעון האחרון (לעומת אשתקד), ובערך 25% בשנה ב-3 השנים האחרונות?",
+  "Revenue growth": "צמיחת הכנסות",
+  "Is revenue growing steadily, year after year?": "ההכנסות צומחות בעקביות, שנה אחרי שנה?",
+  "Insider buying": "קניות בעלי עניין",
+  "Are company insiders buying shares with their own money (and not selling heavily)?":
+    "בעלי עניין בחברה קונים מניות בכסף שלהם (ולא מוכרים בכמויות)?",
+  "Is the number of institutions (funds) holding the stock rising?":
+    "מספר הגופים המוסדיים (קרנות) שמחזיקים במניה עולה?",
+  "Competitive edge": "יתרון תחרותי",
+  "Does the company have a lasting edge over competitors (brand, network, switching costs)?":
+    "לחברה יש יתרון מתמשך על המתחרות (מותג, רשת, עלות מעבר גבוהה ללקוחות)?",
+  "Dividend": "דיבידנד",
+  "Is the dividend steady, with a payout that leaves a cushion (not most of the profit)?":
+    "הדיבידנד יציב, וחלוקה שמשאירה מרווח (לא רוב הרווח)?",
+  "Does this position keep my portfolio diversified (no single stock too big a part of it)?":
+    "הפוזיציה הזאת שומרת על פיזור בתיק (אף מניה לא תופסת חלק גדול מדי)?"
 };
