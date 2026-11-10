@@ -36,7 +36,14 @@ function fixA(id) {
 // Screening: a new empty screening (no ticker, no answers).
 // A passed or rejected screening clears when you leave the tab (js/06 view()).
 function scrNew() {
-  S.scr = { t: "", a: Array(QS().length).fill(null) };
+  S.scr = { t: "", a: Array(QS().length).fill(null), d: "" };
+}
+// A screening left from an earlier day (unfinished, or saved before 10.11) starts fresh.
+function scrDay() {
+  const s = S.scr;
+  if (!s || (!s.t && !s.a.some(x => x)) || s.d === dkey(new Date())) return false;
+  scrNew();
+  return true;
 }
 // Screening is done: every question has an answer.
 const scrDone = () => S.scr.a.every(x => x);
@@ -113,6 +120,20 @@ const aR = t => {
   const p = pnl(t),
     r = risk(t);
   return p == null || !r ? null : p / r;
+};
+// R for the Trade journal rows: closed trades, and open trades at the live price.
+const aRL = t => {
+  const p = pnl(t) ?? fl(t),
+    r = risk(t);
+  return p == null || !r ? null : p / r;
+};
+// R cell text: "–" without a stop (no risk to measure), live R for open trades.
+const rCell = t => {
+  if (!risk(t)) return t.s == null ? '<span class="mut">No stop</span>' : "–";
+  const R = aRL(t);
+  return R == null
+    ? "–"
+    : R.toFixed(2) + "R" + (t.x == null ? ' <small class="mut">live</small>' : "");
 };
 // HTML rows of Yes/No buttons for a question list.
 function yn(arr, qs, key) {
@@ -342,7 +363,8 @@ function clean(d) {
     pd: /^\d{4}-\d{2}-\d{2}$/.test(String(d.pd || "")) ? d.pd : "",
     scr: {
       t: t(d.scr?.t, 10).toUpperCase(),
-      a: Array.from({ length: (q2 || SQ).length }, (_, i) => yn(d.scr?.a, i))
+      a: Array.from({ length: (q2 || SQ).length }, (_, i) => yn(d.scr?.a, i)),
+      d: /^\d{4}-\d{2}-\d{2}$/.test(String(d.scr?.d || "")) ? d.scr.d : ""
     },
     calc: {
       t: t(d.calc?.t, 10).toUpperCase(),

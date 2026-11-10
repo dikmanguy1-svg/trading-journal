@@ -881,5 +881,7 @@ window.HE_EXT = {
   "Is it clear to me before buying whether this is a swing trade or a long-term holding (and I will not turn a losing swing trade into a long-term one)?":
     "ברור לי לפני הקנייה אם זו עסקת סווינג או החזקה לטווח ארוך (ולא אהפוך עסקת סווינג מפסידה להחזקה ארוכה)?",
   "Is the business itself healthy (profitable or with a clear path to profit, and debt under control)?":
-    "העסק עצמו בריא (רווחי או עם דרך ברורה לרווח, והחוב בשליטה)?"
+    "העסק עצמו בריא (רווחי או עם דרך ברורה לרווח, והחוב בשליטה)?",
+  "No stop": "אין סטופ",
+  "live": "חי"
 };
