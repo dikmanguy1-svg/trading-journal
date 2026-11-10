@@ -81,6 +81,10 @@ function heroSet() {
 let aplTab = null;
 // Draw the open tab into #v. Renders every tab; called after every change.
 function view() {
+  // The P&L box first, so new prices show on every tab even if drawing the tab below fails.
+  try {
+    hs();
+  } catch (e) {}
   ltSync();
   {
     // A finished check starts fresh: a rejected screening clears when you leave it,
