@@ -34,6 +34,15 @@ if (LANG === "he")
 // Hebrew rules for texts that contain numbers.
 const HR = [
   [
+    /^Is my target at least ([\d.]+) times my risk \(my minimum risk\/reward\)\?$/,
+    x => "היעד שלי לפחות פי " + x[1] + " מהסיכון (יחס הסיכון/סיכוי המינימלי שלי)?"
+  ],
+  [
+    /^Can I set a logical stop-loss in advance, so that if it is hit I lose no more than ([\d.]+)% of my account\?$/,
+    x =>
+      "אפשר לקבוע מראש סטופ-לוס הגיוני, כך שאם הוא נפגע אני מפסיד לא יותר מ-" + x[1] + "% מהחשבון?"
+  ],
+  [
     /^Answer all (\d+) questions \((\d+) answered\)$/,
     x => "ענה על כל " + x[1] + " השאלות (" + x[2] + " נענו)"
   ],

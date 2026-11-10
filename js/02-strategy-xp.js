@@ -24,11 +24,14 @@ function toast(m) {
 // Most questions allowed in one list.
 const MAXQ = 9;
 // Build the Daily pulse and Stock screening questions from the chosen style and tools.
+// Tool questions are written for your style, and the numbers come from your settings (js/18d).
 function buildQ() {
   const st = S.st,
     D = st.type === "day",
     TS = toolsFor(st.type),
-    stop = "A logical stop-loss level can be set in advance?",
+    N = stNums(),
+    lt = stLT(D),
+    stop = N.stop,
     pq = [PQ[0]];
   const head = [];
   if (D)
@@ -46,18 +49,20 @@ function buildQ() {
   st.tools
     .filter(k => TS[k])
     .forEach(k => {
+      // Earnings style already asks about earnings, so the earnings tool adds nothing.
+      if (st.style === "earn" && k === "earn") return;
       const dd = D && TLD[k],
-        sc = dd ? dd[0] : TS[k][1],
+        sc = stQ(st.style, k, D) || (k === "rr" ? N.rr : dd ? dd[0] : TS[k][1]),
         pu = dd && TS[k][2] && dd[1] ? dd[1] : TS[k][2];
       if (sc) tq.push(sc);
       if (pu) pq.push(pu);
     });
   const cu = (st.custom || []).map(c => c.q);
-  let room = MAXQ - 1 - head.length;
+  let room = MAXQ - 1 - head.length - lt.length;
   const cuK = cu.slice(0, Math.max(0, room));
   room -= cuK.length;
   const tqK = tq.slice(0, Math.max(0, room));
-  S.qs = [...new Set([...head, ...tqK, ...cuK, stop])];
+  S.qs = [...new Set([...head, ...tqK, ...cuK, ...lt, stop])];
   S.qp = [...new Set([...pq, PQ[PQ.length - 2], PQ[PQ.length - 1]])];
   fixA("pulse");
   fixA("scr");

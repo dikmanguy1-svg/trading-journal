@@ -802,5 +802,84 @@ window.HE_EXT = {
   "Champion": "אלוף",
   "Titan": "טיטאן",
   "Legend": "אגדה",
-  "Consistent": "עקבי"
+  "Consistent": "עקבי",
+  "Is price above a rising 50-day moving average, with the 50-day above the 200-day?":
+    "המחיר מעל ממוצע 50 יום עולה, וממוצע ה-50 מעל ממוצע ה-200?",
+  "Is volume higher on up days than on down days in recent weeks?":
+    "בשבועות האחרונים הווליום גבוה יותר בימי עלייה מאשר בימי ירידה?",
+  "Is the stock's relative strength making new highs along with the trend?":
+    "החוזק היחסי של המניה עושה שיאים חדשים יחד עם המגמה?",
+  "Is the stock's sector in an uptrend too (above its own 50-day moving average)?":
+    "גם הסקטור של המניה במגמת עלייה (מעל ממוצע 50 יום שלו)?",
+  "Is the trend clean, and the stock not stretched far above its 50-day moving average?":
+    "המגמה נקייה, והמניה לא מתוחה רחוק מעל ממוצע 50 יום?",
+  "Is my entry close to the rising trend support (20 or 50-day moving average, or a recent low)?":
+    "הכניסה שלי קרובה לתמיכת המגמה העולה (ממוצע 20 או 50 יום, או שפל אחרון)?",
+  "Is RSI holding above 40 to 50 in the trend, without being above 80?":
+    "ה-RSI מחזיק מעל 40 עד 50 במגמה, בלי להיות מעל 80?",
+  "Is the weekly chart in a clear uptrend too?": "גם הגרף השבועי במגמת עלייה ברורה?",
+  "Is price holding above the rising trend line?": "המחיר מחזיק מעל קו המגמה העולה?",
+  "Is MACD above zero, confirming the trend?": "ה-MACD מעל אפס ומאשר את המגמה?",
+  "Is the base forming above a rising 50-day moving average?": "הבסיס נבנה מעל ממוצע 50 יום עולה?",
+  "Is volume on the breakout day at least 1.5 times the 50-day average?":
+    "הווליום ביום הפריצה גבוה לפחות פי 1.5 מהממוצע של 50 יום?",
+  "Did relative strength reach a new high before or together with the breakout?":
+    "החוזק היחסי הגיע לשיא חדש לפני הפריצה או יחד איתה?",
+  "Are other stocks in the same sector breaking out too?": "גם מניות אחרות באותו סקטור פורצות?",
+  "Is the base at least 3 weeks long and tight, not wide and loose?":
+    "הבסיס באורך 3 שבועות לפחות והדוק, לא רחב ורופף?",
+  "Is the stock clearing a clear resistance level, with my stop just under the breakout point?":
+    "המניה עוברת רמת התנגדות ברורה, והסטופ שלי ממש מתחת לנקודת הפריצה?",
+  "Is RSI rising above 60 on the breakout, without being above 80?":
+    "ה-RSI עולה מעל 60 בפריצה, בלי להיות מעל 80?",
+  "Is this a real breakout and not an earnings gap I am chasing, with no earnings in the next 5 trading days?":
+    "זו פריצה אמיתית ולא פער דוחות שאני רודף אחריו, ואין דוחות ב-5 ימי המסחר הקרובים?",
+  "Is price breaking above a clear down trend line or the top of the base?":
+    "המחיר פורץ מעל קו מגמה יורד ברור או מעל ראש הבסיס?",
+  "Is MACD turning up together with the breakout?": "ה-MACD מתהפך למעלה יחד עם הפריצה?",
+  "Has price pulled back to the rising 20 or 50-day moving average and held it?":
+    "המחיר תיקן לממוצע 20 או 50 יום העולה והחזיק בו?",
+  "Is volume drying up on the pullback (lighter than on the way up)?":
+    "הווליום מתייבש בתיקון (נמוך יותר מאשר בעלייה)?",
+  "Is the stock holding up better than the market during the pullback?":
+    "המניה מחזיקה טוב יותר מהשוק בזמן התיקון?",
+  "Is the pullback orderly (small candles, no heavy selling)?":
+    "התיקון מסודר (נרות קטנים, בלי מכירות כבדות)?",
+  "Is the pullback holding a clear support level, with my stop just below it?":
+    "התיקון מחזיק ברמת תמיכה ברורה, והסטופ שלי ממש מתחתיה?",
+  "Has RSI cooled to about 40 to 50 and started to turn up?":
+    "ה-RSI התקרר לבערך 40 עד 50 והתחיל לעלות?",
+  "Is the pullback stopping near the 38% to 62% Fibonacci retracement?":
+    "התיקון נעצר ליד תיקון פיבונאצ'י של 38% עד 62%?",
+  "Is price bouncing off the rising trend line?": "המחיר קופץ מקו המגמה העולה?",
+  "Is MACD turning back up after the pullback?": "ה-MACD חוזר לעלות אחרי התיקון?",
+  "Is volume after the news at least 2 times normal?": "הווליום אחרי החדשות לפחות פי 2 מהרגיל?",
+  "Is the stock stronger than its sector after the news?":
+    "המניה חזקה יותר מהסקטור שלה אחרי החדשות?",
+  "Is the stock holding its post-earnings gap, not filling it?":
+    "המניה מחזיקה את הפער שאחרי הדוחות, ולא סוגרת אותו?",
+  "Is my stop below the low of the gap day?": "הסטופ שלי מתחת לשפל של יום הפער?",
+  "Did earnings and revenue beat expectations and grow over last year?":
+    "הרווחים וההכנסות עקפו את הציפיות וצמחו לעומת השנה שעברה?",
+  "Is the 9 EMA above the 20 EMA on the 5-minute chart, both rising?":
+    "ה-EMA 9 מעל ה-EMA 20 בגרף 5 דקות, ושניהם עולים?",
+  "Has price stayed above VWAP since the open?": "המחיר נשאר מעל ה-VWAP מאז הפתיחה?",
+  "Is relative volume at least 2 on the breakout candle?": "הווליום היחסי לפחות 2 בנר הפריצה?",
+  "Is price breaking the opening range high (or low for shorts) on volume?":
+    "המחיר פורץ את גבוה טווח הפתיחה (או הנמוך, בשורט) עם ווליום?",
+  "Is the breakout happening above VWAP?": "הפריצה קורית מעל ה-VWAP?",
+  "Is the stock clearing the pre-market high or the previous day's high?":
+    "המניה עוברת את גבוה הפרה-מרקט או את הגבוה של אתמול?",
+  "Is the pullback holding VWAP?": "התיקון מחזיק את ה-VWAP?",
+  "Has the pullback reached the 9 or 20 EMA on the 5-minute chart and held it?":
+    "התיקון הגיע ל-EMA 9 או 20 בגרף 5 דקות והחזיק בו?",
+  "Is volume lighter on the pullback than on the push up?":
+    "הווליום נמוך יותר בתיקון מאשר בדחיפה למעלה?",
+  "Is the catalyst fresh today and verified?": "הזרז חדש מהיום ומאומת?",
+  "Is the gap holding above the pre-market low?": "הפער מחזיק מעל הנמוך של הפרה-מרקט?",
+  "Is relative volume at least 3?": "הווליום היחסי לפחות 3?",
+  "Is it clear to me before buying whether this is a swing trade or a long-term holding (and I will not turn a losing swing trade into a long-term one)?":
+    "ברור לי לפני הקנייה אם זו עסקת סווינג או החזקה לטווח ארוך (ולא אהפוך עסקת סווינג מפסידה להחזקה ארוכה)?",
+  "Is the business itself healthy (profitable or with a clear path to profit, and debt under control)?":
+    "העסק עצמו בריא (רווחי או עם דרך ברורה לרווח, והחוב בשליטה)?"
 };
