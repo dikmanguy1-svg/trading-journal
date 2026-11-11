@@ -12,6 +12,8 @@
  * All js/*.js files share one global scope and run in the order index.html lists them.
  */
 
+// The scanner is shown as "Coming soon" until this is true (Guy's decision, 11.11).
+const SCAN_ON = false;
 // Texts in the current language.
 const scL = (en, he) => (LANG === "he" ? he : en);
 
@@ -347,6 +349,8 @@ function scDate(s) {
 
 // The scanner page (the frame; the results are filled by scRes()).
 function scanPage() {
+  if (!SCAN_ON)
+    return `<div class="card scn"><h2>${scL("Weekly scanner", "סורק שבועי")} <span class="soon">${scL("Coming soon", "בקרוב")}</span></h2><p class="mut">${scL("Coming soon: a weekly stock scanner where you write your own criteria.", "בקרוב: סורק מניות שבועי לפי הקריטריונים שתגדיר בעצמך.")}</p></div>`;
   return `<div class="card scn" id="scn">${scInner()}</div>`;
 }
 
@@ -466,7 +470,7 @@ async function scLoad() {
 
 // Called after the tab is drawn.
 function scanAfter() {
-  scLoad();
+  if (SCAN_ON) scLoad();
 }
 
 // Clicks: add / remove a condition, sort, retry.
