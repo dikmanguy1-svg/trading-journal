@@ -17,11 +17,11 @@ const PRN = { day: "Day trader", swing: "Swing trader", lt: "Long-term investor"
 // Tabs and dashboard blocks per profile.
 const PROF = {
   day: {
-    main: ["str", "pulse", "scr", "calc", "jr", "dash"],
+    main: ["str", "pulse", "scr", "calc", "jr", "dash", "scan"],
     dash: ["today", "kpi", "rules", "chart", "lt"]
   },
   swing: {
-    main: ["str", "pulse", "scr", "calc", "jr", "dash", "mon", "wl"],
+    main: ["str", "pulse", "scr", "calc", "jr", "dash", "mon", "wl", "scan"],
     dash: ["kpi", "swing", "chart", "rules", "lt"]
   },
   lt: { main: ["pf", "dash", "wl", "str"], dash: ["inv", "lt", "alloc", "trade"] }
