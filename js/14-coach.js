@@ -379,7 +379,7 @@ async function coApi(q, img, hist) {
   if (!U) throw new Error("Log in to use Wick.");
   const tok = await U.getIdToken();
   const ctl = new AbortController(),
-    tm = setTimeout(() => ctl.abort(), 45000);
+    tm = setTimeout(() => ctl.abort(), 60000);
   let r;
   try {
     r = await fetch(CO_URL, {

@@ -13,11 +13,11 @@
 | שם | סוג | ערך |
 |---|---|---|
 | `GEMINI_API_KEY` | Secret | המפתח מ-Google AI Studio |
-| `GEMINI_MODEL` | Variable | שם המודל מ-AI Studio |
+| `GEMINI_MODEL` | Variable | `gemini-flash-lite-latest` (דגמי 2.5 מחזירים 404) |
 | `FIREBASE_PROJECT` | Variable | `trading-journal-58021` |
 | `ALLOWED_UIDS` | Variable | ה-User UID שלך מ-Firebase (ריק = אף אחד) |
 | `ALLOWED_ORIGINS` | Variable | `https://dikmanguy1-svg.github.io` |
-| `MAX_MSG` / `MAX_IMG` / `MAX_GLOBAL` | Variable | `20` / `5` / `200` |
+| `MAX_MSG` / `MAX_IMG` / `MAX_GLOBAL` | Variable | `30` / `8` / `400` (לא יותר מ-450: מגבלת KV חינמית) |
 | `USAGE` | KV binding | מרחב KV בשם `coach-usage` |
 
 ## מעבר ל-Claude לפני שיווק
