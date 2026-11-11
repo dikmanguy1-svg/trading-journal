@@ -673,6 +673,7 @@ window.HE_EXT = {
   "CSV import from your broker": "ייבוא CSV מהברוקר",
   "Full cost of indiscipline breakdown": "פירוט מלא של מחיר חוסר המשמעת",
   "Wick, the AI coach": "Wick, מאמן ה-AI",
+  "Weekly stock scanner with your own criteria": "סורק מניות שבועי לפי הקריטריונים שלך",
   "Long-term holdings": "החזקות לטווח ארוך",
   "Fixed monthly deposit": "הפקדה חודשית קבועה",
   "Compound interest calculator": "מחשבון ריבית דריבית",

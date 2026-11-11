@@ -71,7 +71,8 @@ function lsPlans(he) {
           "Full history",
           "CSV import from your broker",
           ["Full cost of indiscipline breakdown", 1],
-          ["Wick, the AI coach", 1]
+          ["Wick, the AI coach", 1],
+          ["Weekly stock scanner with your own criteria", 1]
         ]
       },
       {
