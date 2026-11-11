@@ -165,6 +165,7 @@ function view() {
   }
   let h = "";
   if (tab === "str") h = strPage();
+  if (tab === "scan") h = scanPage();
   if (tab === "pf") {
     ltOpen = false;
     h = `<div class="card pfp"><div id="ltpg">${ltPageHTML()}</div></div>`;
@@ -393,6 +394,7 @@ function view() {
       h += `<div class="stp">${pv ? `<button class="gh" data-t="${pv[0]}"><small class="ar">&larr;</small> <small>Back</small> <b>${pv[1]}</b></button>` : "<span></span>"}${nx ? `<button class="cta" data-t="${nx[0]}"><small>Next page</small> <b>${nx[1]}</b> <small class="ar">&rarr;</small></button>` : ""}</div>`;
   }
   $("v").innerHTML = h;
+  if (tab === "scan") scanAfter();
   hs();
   gamify();
   getPx();

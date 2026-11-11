@@ -424,6 +424,17 @@ function clean(d) {
       }))
       .filter(r => r.t),
     lt: ltClean(d.lt),
+    // Weekly scanner: the user's own conditions and sort (js/18e-scanner.js).
+    scan: (() => {
+      const s = d.scan && typeof d.scan === "object" ? d.scan : {};
+      return {
+        c: (Array.isArray(s.c) ? s.c : [])
+          .slice(0, 20)
+          .map(x => ({ f: t(x?.f, 20), op: t(x?.op, 2), v: t(x?.v, 40) })),
+        sk: t(s.sk, 20),
+        sd: s.sd === -1 ? -1 : 1
+      };
+    })(),
     px: {},
     pxT: {},
     sma: {},

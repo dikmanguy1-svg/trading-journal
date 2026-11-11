@@ -189,3 +189,13 @@
     display: none;
   }
 }
+/* "Illustration" tag on the demo chart (legal: the rising chart is not real data). */
+.hq .hqil {
+  display: inline-block;
+  font-size: 12px;
+  color: var(--mut);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 1px 9px;
+  margin-bottom: 6px;
+}

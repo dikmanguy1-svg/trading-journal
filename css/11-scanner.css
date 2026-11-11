@@ -1,0 +1,125 @@
+/* 11-scanner.css — the weekly scanner tab (js/18e-scanner.js). Neutral look on purpose: no highlights or ranking colors. */
+.scn .sch {
+  margin: 16px 0 8px;
+  font-size: 16px;
+}
+.scn .sccs {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.scn .scc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.scn .scl select,
+.scn .scl input {
+  min-width: 0;
+  max-width: 100%;
+}
+.scn .scl input {
+  width: 120px;
+}
+.scn .scd {
+  margin: 0 0 6px;
+}
+.scn .scg {
+  margin: 14px 0;
+}
+.scn .scg dl {
+  margin: 8px 0 0;
+}
+.scn .scg dt {
+  font-weight: 600;
+  margin-top: 8px;
+}
+.scn .scg dd {
+  margin: 2px 0 0;
+  color: var(--mut);
+}
+.scn .scleg {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin: 16px 0 6px;
+}
+.scn table.sct {
+  min-width: 520px;
+}
+.scn table.sct th,
+.scn table.sct td {
+  text-align: start;
+}
+.scn .scs {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+.scn .scs:focus-visible {
+  outline: 2px solid var(--ac);
+  outline-offset: 2px;
+}
+@media (max-width: 640px) {
+  /* Room for the round Wick button: it never sits over the text or the last result. */
+  .scn {
+    padding-bottom: 88px;
+  }
+  .scn .scleg {
+    padding-inline-end: 64px;
+  }
+  /* Results as one card per stock (no sideways cut-off). The header row stays as sort buttons. */
+  .scn table.sct,
+  .scn table.sct tbody {
+    display: block;
+    min-width: 0;
+  }
+  .scn table.sct thead tr {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 14px;
+    padding-bottom: 6px;
+  }
+  .scn table.sct thead th {
+    border: 0;
+    padding: 4px 0;
+  }
+  .scn table.sct thead th.scsrc {
+    display: none;
+  }
+  .scn table.sct tbody tr {
+    display: block;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 8px 12px;
+    margin-top: 8px;
+  }
+  .scn table.sct td {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    border: 0;
+    padding: 4px 0;
+    white-space: normal;
+  }
+  .scn table.sct td.scn1 {
+    display: block;
+  }
+  .scn table.sct td[data-l]::before {
+    content: attr(data-l);
+    color: var(--mut);
+  }
+  .scn .scc select {
+    flex: 1 1 100%;
+  }
+  .scn .scl {
+    flex: 1 1 100%;
+  }
+  .scn .scl input {
+    width: 100%;
+  }
+}
