@@ -1,5 +1,8 @@
 # Deploys the Wick server (worker/) to Cloudflare when it changes on main.
-# Needs two repository secrets: CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID.
+# Needs two secrets: CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID.
+# Security: the job uses the GitHub environment "production". Keep the secrets in that environment
+# and allow only the main branch to use it (Settings → Environments → production → Deployment branches).
+# Outside tools are pinned to an exact commit (SHA), so a changed tag cannot run new code with our keys.
 name: Deploy Wick server
 on:
   push:
@@ -11,9 +14,12 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: production
     steps:
-      - uses: actions/checkout@v4
-      - uses: cloudflare/wrangler-action@v3
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

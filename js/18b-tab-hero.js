@@ -218,7 +218,7 @@ function hqBody(t) {
         0,
         4
       )
-        .map((q, i) => `<div>${hqMark(A[i])}<span>${hqCut(tr(q), 44)}</span></div>`)
+        .map((q, i) => `<div>${hqMark(A[i])}<span>${esc(hqCut(tr(q), 44))}</span></div>`)
         .join("")}</div>`,
       t === "pulse" ? "A No today saves money tomorrow." : "Every answer Yes, or wait."
     ];

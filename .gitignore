@@ -1,0 +1,9 @@
+# Python build leftovers
+__pycache__/
+*.pyc
+# Local tools and editors
+node_modules/
+.DS_Store
+# Personal data must never be committed
+my-data-backup.json
+*.backup.json

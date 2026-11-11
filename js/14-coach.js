@@ -253,8 +253,13 @@ function coCtx() {
         .map(k => (tl[k] || [k])[0])
         .concat((st.custom || []).map(c => c.n || ""))
         .filter(Boolean),
-      screeningQuestions: (typeof QS === "function" ? QS() : []).map(q => coCut(q, 200)).slice(0, 12),
-      myRules: (S.rules || []).map(r => coCut(r && r.t, 200)).filter(Boolean).slice(0, 10)
+      screeningQuestions: (typeof QS === "function" ? QS() : [])
+        .map(q => coCut(q, 200))
+        .slice(0, 12),
+      myRules: (S.rules || [])
+        .map(r => coCut(r && r.t, 200))
+        .filter(Boolean)
+        .slice(0, 10)
     };
   if (!coOff.rk)
     o.rules = {
@@ -407,6 +412,8 @@ async function coApi(q, img, hist) {
   }
   if (r.status === 401 || r.status === 403)
     throw new Error("Wick is not available for this account.");
+  // 451: the server does not offer Wick in this country yet (EU, EEA, UK, Switzerland).
+  if (r.status === 451) throw new Error("Wick is not available in your country yet.");
   if (r.status === 429) throw new Error("You reached today's limit. Try again tomorrow.");
   if (r.status === 503) throw new Error("Wick is busy right now. Try again in a minute.");
   if (r.status === 413) throw new Error("That image is too large. Use a smaller screenshot.");
@@ -964,7 +971,8 @@ Object.assign(HE, {
   "I am 18 or older and I agree": "אני בן 18 ומעלה ומסכים",
   "While we test, Wick is not offered to people in the EU, EEA, UK or Switzerland.":
     "בתקופת הניסוי, Wick לא מוצע לתושבי האיחוד האירופי, ה-EEA, בריטניה ושווייץ.",
-  "Wick is a test feature. It may change, pause or stop at any time.": "Wick הוא תכונה בניסוי. הוא עשוי להשתנות, להיעצר או להיסגר בכל רגע.",
+  "Wick is a test feature. It may change, pause or stop at any time.":
+    "Wick הוא תכונה בניסוי. הוא עשוי להשתנות, להיעצר או להיסגר בכל רגע.",
   "Read the terms of use": "קרא את תנאי השימוש",
   "I am 18 or older and I agree to the terms": "אני בן 18 ומעלה ומסכים לתנאים",
   "Not now": "לא עכשיו",
@@ -1004,6 +1012,7 @@ Object.assign(HE, {
   "Could not reach Wick. Check your connection and try again.":
     "אין חיבור ל-Wick. בדוק את החיבור ונסה שוב.",
   "Wick is not available for this account.": "Wick לא זמין לחשבון הזה.",
+  "Wick is not available in your country yet.": "Wick עדיין לא זמין במדינה שלך.",
   "You reached today's limit. Try again tomorrow.": "הגעת למגבלה של היום. נסה שוב מחר.",
   "Wick could not answer right now. Try again later.":
     "Wick לא הצליח לענות כרגע. נסה שוב מאוחר יותר."
