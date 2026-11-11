@@ -80,10 +80,11 @@ function lsPlans(he) {
         t: "Everything, in one place.",
         lead: "Everything in Disciplined and Patient, plus:",
         f: [
-          "Unlimited trades and checks",
-          "All trading and long-term tools",
+          "All trading tools from Disciplined, no limits",
+          "All long-term tools from Patient",
           ["Full cost of indiscipline breakdown", 1],
-          ["More messages to Wick", 1],
+          ["Wick, the AI coach, with more messages", 1],
+          ["Weekly stock scanner with your own criteria", 1],
           ["Broker auto-sync", 1]
         ]
       }

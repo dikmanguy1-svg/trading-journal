@@ -680,6 +680,9 @@ window.HE_EXT = {
   "CSV import": "ייבוא CSV",
   "Disciplined and Patient together": "ממושמע וסבלני ביחד",
   "More messages to Wick": "יותר הודעות ל-Wick",
+  "All trading tools from Disciplined, no limits": "כל כלי המסחר של ממושמע, ללא הגבלה",
+  "All long-term tools from Patient": "כל כלי הטווח הארוך של סבלני",
+  "Wick, the AI coach, with more messages": "Wick, מאמן ה-AI, עם יותר הודעות",
   "14-day free trial on every plan.": "14 ימי ניסיון חינם לכל התוכניות.",
   "The first 50 people to join get 6 months free, then 50% off for as long as their subscription stays active.":
     "50 המצטרפים הראשונים מקבלים חצי שנה חינם, ואחר כך 50% הנחה כל עוד המנוי שלהם פעיל.",
