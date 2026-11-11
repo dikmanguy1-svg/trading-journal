@@ -1,0 +1,14 @@
+# Cloudflare Worker for Wick (deployed by .github/workflows/deploy-worker.yml).
+# Secrets (GEMINI_API_KEY) and text variables set in the Cloudflare dashboard are kept.
+name = "trading-coach"
+main = "worker.js"
+compatibility_date = "2026-10-30"
+workers_dev = true
+keep_vars = true
+
+[[kv_namespaces]]
+binding = "USAGE"
+id = "578d0ebc417640eea6a1f32132d45797"
+
+[observability]
+enabled = true
