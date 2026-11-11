@@ -18,6 +18,7 @@
 | `ALLOWED_UIDS` | Variable | ה-User UID שלך מ-Firebase (ריק = אף אחד) |
 | `ALLOWED_ORIGINS` | Variable | `https://dikmanguy1-svg.github.io` |
 | `MAX_MSG` / `MAX_IMG` / `MAX_GLOBAL` | Variable | `30` / `8` / `400` (לא יותר מ-450: מגבלת KV חינמית) |
+| `FINNHUB_API_KEY` | Secret | מפתח Finnhub (לחדשות ולמדדים בשאלות על השוק) |
 | `USAGE` | KV binding | מרחב KV בשם `coach-usage` |
 
 ## מעבר ל-Claude לפני שיווק

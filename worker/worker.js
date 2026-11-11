@@ -25,6 +25,7 @@ How to answer:
 - Greetings or small talk ("hi", "how are you", "thanks"): reply in one or two friendly sentences, do NOT analyze trades, and offer two or three things you can check (for example early exits, stops, rules they broke).
 - A question about you or about how to use the journal: answer it briefly.
 - A request to review trades, rules or a chart: review using the DATA, with specific trades and dates.
+- A question about the market or the news: summarize what is happening using MARKET (how the index ETFs moved today and the main headlines, naming the source and time). Keep it factual and neutral: what happened, not what will happen. If it fits, add one short line on how this relates to the user's own plan or open trades (for example a reminder to check their stops), without telling them what to do. If MARKET is missing, say you do not have live market news right now. End every market or news answer with this line on its own: in Hebrew "זו לא המלצה לפעולה." / in English "This is not a recommendation to act."
 - Never repeat an earlier answer from the conversation. If they ask again, add something new or ask what they want to look at.
 - Length: short. For a review, up to 5 bullet points with **bold** key phrases, then at most one reflective question. Otherwise plain short sentences.
 
@@ -135,11 +136,41 @@ async function addUse(env, uid, use, img) {
   ]);
 }
 
+/* ---------- market brief (Finnhub, only for market/news questions) ---------- */
+const MARKET_Q = /\b(market|markets|news|today|spy|qqq|s&p|nasdaq|dow|fed|cpi|inflation|rates?|economy|earnings season|index|indices)\b|שוק|חדשות|היום|מדד|נאסד|דאו|פד|ריבית|אינפלצי|כלכל|וול סטריט/i;
+let BRIEF = null, BRIEF_UNTIL = 0;
+async function marketBrief(env) {
+  if (!env.FINNHUB_API_KEY) return null;
+  if (BRIEF && Date.now() < BRIEF_UNTIL) return BRIEF;
+  const get = async path => {
+    const r = await fetch("https://finnhub.io/api/v1/" + path, { headers: { "X-Finnhub-Token": env.FINNHUB_API_KEY } });
+    if (!r.ok) throw new Error("finnhub " + r.status);
+    return r.json();
+  };
+  try {
+    const [news, ...q] = await Promise.all([get("news?category=general"), get("quote?symbol=SPY"), get("quote?symbol=QQQ"), get("quote?symbol=DIA")]);
+    const idx = ["SPY (S&P 500)", "QQQ (Nasdaq 100)", "DIA (Dow)"].map((n, i) => ({ etf: n, price: q[i] && q[i].c, changePct: q[i] && q[i].dp }));
+    const headlines = (Array.isArray(news) ? news : []).slice(0, 12).map(n => ({
+      time: new Date((n.datetime || 0) * 1000).toISOString().slice(0, 16).replace("T", " ") + " UTC",
+      source: String(n.source || "").slice(0, 40),
+      headline: String(n.headline || "").slice(0, 200),
+      summary: String(n.summary || "").slice(0, 300),
+    }));
+    BRIEF = { asOf: new Date().toISOString().slice(0, 16).replace("T", " ") + " UTC", indexEtfs: idx, headlines };
+    BRIEF_UNTIL = Date.now() + 10 * 60 * 1000;
+    return BRIEF;
+  } catch (e) {
+    console.error("market brief error", String(e.message).slice(0, 60));
+    return null;
+  }
+}
+
 /* ---------- the model (swap this function to change provider) ---------- */
 async function callModel(env, inp) {
   if (!env.GEMINI_API_KEY || !env.GEMINI_MODEL) throw Object.assign(new Error("not configured"), { code: 503 });
   const contents = inp.hist.map(h => ({ role: h.role === "coach" ? "model" : "user", parts: [{ text: h.text }] }));
-  const parts = [{ text: `DATA (journal data, use only if relevant): ${inp.ctxStr}\n\nlang: ${inp.lang}\nUSER MESSAGE: ${inp.q || "(see the attached chart)"}` }];
+  const mk = inp.market ? `MARKET (live headlines and index ETFs from Finnhub): ${JSON.stringify(inp.market)}\n\n` : "";
+  const parts = [{ text: `${mk}DATA (journal data, use only if relevant): ${inp.ctxStr}\n\nlang: ${inp.lang}\nUSER MESSAGE: ${inp.q || "(see the attached chart)"}` }];
   if (inp.img) parts.push({ inline_data: { mime_type: inp.img.mime, data: inp.img.data } });
   contents.push({ role: "user", parts });
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(env.GEMINI_MODEL)}:generateContent`;
@@ -193,6 +224,7 @@ export default {
     }
 
     let a;
+    if (inp.q && MARKET_Q.test(inp.q)) inp.market = await marketBrief(env);
     try { a = await callModel(env, inp); }
     catch (e) { console.error("coach model error", e.code || 502, String(e.message).slice(0, 80)); return json(e.code || 502, { e: "model" }, ch); }
 
