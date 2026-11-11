@@ -140,7 +140,7 @@ function yn(arr, qs, key) {
   return qs
     .map(
       (q, i) =>
-        `<div class="row"><span class="mut">${i + 1}</span><span>${esc(q)}</span><select aria-label="Answer ${i + 1}" data-k="${key}" data-i="${i}"><option value="">Choose</option><option${arr[i] === "Yes" ? " selected" : ""}>Yes</option><option${arr[i] === "No" ? " selected" : ""}>No</option></select></div>`
+        `<div class="row"><span class="mut">${i + 1}</span><span id="q${key}${i}">${esc(q)}</span><select aria-labelledby="q${key}${i}" data-k="${key}" data-i="${i}"><option value="">Choose</option><option${arr[i] === "Yes" ? " selected" : ""}>Yes</option><option${arr[i] === "No" ? " selected" : ""}>No</option></select></div>`
     )
     .join("");
 }

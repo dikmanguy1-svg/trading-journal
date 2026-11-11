@@ -140,8 +140,9 @@ window.HE_EXT = {
   "TradeInk turns record-keeping into a daily habit: log trades, answer a short daily check, and see your real results as a swing or day trader.":
     "TradeInk הופך את תיעוד המסחר להרגל יומי: רושמים עסקאות, עונים על בדיקה יומית קצרה ורואים את התוצאות האמיתיות שלך כסוחר סווינג או סוחר יומי.",
   "Start free with Google": "התחל בחינם עם גוגל",
-  "Free to start. Private by design: only you can see your journal.":
-    "התחלה בחינם. פרטי מעיקרו: רק אתה רואה את היומן שלך.",
+  "Example figures, not real results.": "נתוני דוגמה, לא תוצאות אמיתיות.",
+  "Free to start. Your journal is private: other users cannot see it.": "התחלה בחינם. היומן שלך פרטי: משתמשים אחרים לא יכולים לראות אותו.",
+  "Illustration, not real results.": "המחשה, לא תוצאות אמיתיות.",
   "Trade journal": "יומן עסקאות",
   "Log every entry and exit with your reasons. Open positions show the live price and P&L automatically.":
     "רושמים כל כניסה ויציאה עם הסיבות שלך. פוזיציות פתוחות מציגות מחיר חי ורווח/הפסד אוטומטית.",
@@ -258,8 +259,8 @@ window.HE_EXT = {
   "Import backup": "ייבוא גיבוי",
   "Your journal is saved to your account when logged in. Export a backup now and then.":
     "היומן נשמר בחשבון שלך כשאתה מחובר. כדאי לייצא גיבוי מדי פעם.",
-  "TradeInk is a personal record-keeping tool, not investment advice. Prices come from Finnhub and may be delayed or unavailable. Nothing here is a recommendation to buy or sell, and trading involves risk of loss. Prices are provided as-is with no guarantee of accuracy. When you log in, your journal, name and email are stored in your private account with Google Firebase and are not shared with anyone else; without logging in nothing is saved. Google Fonts and Finnhub receive ordinary web requests (your IP address, plus ticker symbols when loading prices). Use at your own risk.":
-    "TradeInk הוא כלי לתיעוד אישי ואינו ייעוץ השקעות. המחירים מגיעים מ-Finnhub ועלולים להתעכב או להיות לא זמינים. שום דבר כאן אינו המלצה לקנות או למכור, ומסחר כרוך בסיכון להפסד. המחירים ניתנים כפי שהם, ללא אחריות לדיוקם. כשאתה מתחבר, היומן, השם והאימייל שלך נשמרים בחשבון פרטי ב-Google Firebase ואינם משותפים עם אחרים; בלי התחברות לא נשמר דבר. Google Fonts ו-Finnhub מקבלים בקשות אינטרנט רגילות (כתובת ה-IP שלך וסמלי המניות בטעינת מחירים). השימוש באחריותך.",
+  "TradeInk is a personal record-keeping tool, not investment advice. Prices come from Finnhub and may be delayed or unavailable. Nothing here is a recommendation to buy, sell or hold, and trading involves risk of loss. When you log in, your journal is stored in your private account with Google Firebase; other users cannot see it. What is shared with service providers, including Wick, is explained in the Privacy Policy. Use at your own risk.":
+    "TradeInk הוא כלי לתיעוד אישי ואינו ייעוץ השקעות. המחירים מגיעים מ-Finnhub ועלולים להתעכב או להיות לא זמינים. שום דבר כאן אינו המלצה לקנות, למכור או להחזיק, ומסחר כרוך בסיכון להפסד. כשמתחברים, היומן נשמר בחשבון הפרטי שלך ב-Google Firebase; משתמשים אחרים לא יכולים לראות אותו. מה משותף עם ספקי שירות, כולל Wick, מוסבר במדיניות הפרטיות. השימוש באחריותך.",
   "Sections": "חלקי האתר",
   "Paste your Finnhub key here": "הדבק כאן את מפתח Finnhub",
   "Finnhub API key": "מפתח Finnhub",
@@ -638,7 +639,8 @@ window.HE_EXT = {
   "Ready: go ahead with your plan": "מוכן: אפשר להמשיך לפי התוכנית",
   "Not now: wait and check again": "לא עכשיו: לחכות ולבדוק שוב",
   "Before you buy a stock or fund": "לפני שקונים מניה או קרן",
-  "Passes: it fits your plan": "עובר: זה מתאים לתוכנית שלך",
+  "All your answers are “Yes”: it matches your own plan": "כל התשובות שלך הן “כן”: זה תואם את התוכנית שלך",
+  "All your criteria are met: continue to step 3, risk calculator": "כל הקריטריונים שלך מתקיימים: ממשיכים לשלב 3, מחשבון סיכונים",
   "Not yet: every answer should be “Yes”": "עדיין לא: כל התשובות צריכות להיות “כן”",
   "Show more trades": "הצג עוד עסקאות",
   "Showing": "מוצגות",
@@ -684,9 +686,11 @@ window.HE_EXT = {
   "All long-term tools from Patient": "כל כלי הטווח הארוך של סבלני",
   "Wick, the AI coach, with more messages": "Wick, מאמן ה-AI, עם יותר הודעות",
   "14-day free trial on every plan.": "14 ימי ניסיון חינם לכל התוכניות.",
+  "Paid plans are not on sale yet. Planned for launch:": "התוכניות בתשלום עדיין לא נמכרות. מתוכנן להשקה:",
+  "a 14-day free trial on every plan.": "14 ימי ניסיון חינם לכל התוכניות.",
   "The first 50 people to join get 6 months free, then 50% off for as long as their subscription stays active.":
     "50 המצטרפים הראשונים מקבלים חצי שנה חינם, ואחר כך 50% הנחה כל עוד המנוי שלהם פעיל.",
-  "Prices may change before launch.": "המחירים עשויים להשתנות לפני ההשקה.",
+  "Prices and offers may change before launch. The final price, including any tax, will be shown before you pay.": "המחירים וההטבות עשויים להשתנות לפני ההשקה. המחיר הסופי, כולל מסים אם חלים, יוצג לפני התשלום.",
   "/ year": "לשנה",
   "Monthly": "חודשי",
   "Yearly": "שנתי",
@@ -697,7 +701,6 @@ window.HE_EXT = {
   "Everything in Disciplined and Patient, plus:": "כל מה שיש בממושמע ובסבלני, ועוד:",
   "All trading and long-term tools": "כל כלי המסחר והטווח הארוך",
   "Broker auto-sync": "חיבור אוטומטי לברוקר",
-  "Start 14-day free trial": "התחילו 14 ימי ניסיון",
   "See all features ▾": "כל התכונות ▾",
   "Show less ▴": "פחות ▴",
   "Menu": "תפריט",
