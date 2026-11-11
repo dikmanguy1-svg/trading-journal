@@ -415,15 +415,17 @@ function view() {
 function hs() {
   const cl = S.trades.filter(t => t.x != null),
     P = cl.map(pnl),
-    net = P.reduce((a, b) => a + b, 0),
     w = P.filter(x => x > 0).length;
+  // Open trades count at the live price (11.11), like long-term holdings:
+  // Trading P&L = closed trades + open trades now; Account and Invested are at market value.
+  const q = S.trades.map(fl).filter(x => x != null),
+    fl2 = q.length ? q.reduce((a, b) => a + b, 0) : null,
+    net = P.reduce((a, b) => a + b, 0) + (fl2 || 0);
   const LT = ltD().h.length ? ltTot() : null,
     ltv = LT ? LT.val : 0,
-    tA = acct() + (LT ? LT.pl : 0),
-    tI = inv() + ltv;
+    tA = acct() + (fl2 || 0) + (LT ? LT.pl : 0),
+    tI = inv() + (fl2 || 0) + ltv;
   const ac = `<div class="hsa"><span>Account</span><b>${$f(tA)}</b></div><div><span>Invested</span><b>${$f(tI)} <small>${((tI / tA) * 100).toFixed(0)}%</small></b></div>${LT ? `<div><span>Long-term value</span><b>${$f(ltv)}</b></div>` : ""}<div><span>Free cash</span><b class="${cash() < 0 ? "neg" : ""}">${$f(cash())}</b></div>`;
-  const q = S.trades.map(fl).filter(x => x != null),
-    fl2 = q.length ? q.reduce((a, b) => a + b, 0) : null;
   const tot = net + (LT ? LT.pl : 0),
     pc = (tot / (S.set.pf || 1)) * 100,
     cls = tot > 0 ? "pos" : tot < 0 ? "neg" : "",
