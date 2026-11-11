@@ -12,3 +12,7 @@ id = "578d0ebc417640eea6a1f32132d45797"
 
 [observability]
 enabled = true
+
+# Who may use Wick: "*" = every signed-in user. To limit again, list Firebase UIDs, comma separated.
+[vars]
+ALLOWED_UIDS = "*"

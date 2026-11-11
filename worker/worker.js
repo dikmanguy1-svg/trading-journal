@@ -2,7 +2,7 @@
  * Trading Journal – AI coach server (Cloudflare Worker).
  * No keys in this file. Everything secret is set in the Cloudflare dashboard:
  *   Secret   GEMINI_API_KEY   – the Gemini key (later: ANTHROPIC_API_KEY)
- *   Variable ALLOWED_UIDS     – Firebase user IDs allowed to use the coach, comma separated (empty = nobody)
+ *   Variable ALLOWED_UIDS     – Firebase user IDs allowed to use the coach, comma separated; "*" = every signed-in user; empty = nobody
  *   Variable ALLOWED_ORIGINS  – sites allowed to call this server, comma separated
  *   Variable FIREBASE_PROJECT – Firebase project id (trading-journal-58021)
  *   Variable GEMINI_MODEL     – model name from Google AI Studio
@@ -175,7 +175,8 @@ export default {
     let uid = null;
     try { uid = await verifyIdToken(tok, env.FIREBASE_PROJECT); } catch { return json(503, { e: "keys" }, ch); }
     if (!uid) return json(401, { e: "auth" }, ch);
-    if (!list(env.ALLOWED_UIDS).includes(uid)) return json(403, { e: "not allowed" }, ch);
+    const allow = list(env.ALLOWED_UIDS);
+    if (!allow.includes("*") && !allow.includes(uid)) return json(403, { e: "not allowed" }, ch);
 
     let raw;
     try { raw = await req.text(); } catch { return json(400, { e: "body" }, ch); }

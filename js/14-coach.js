@@ -611,9 +611,9 @@ function coRender() {
 <li>It is a helper tool, not investment advice. It can be wrong, and the decisions are yours.</li>
 <li>To answer, only your question, the data you choose under "Wick sees" and your chart are sent to the AI provider. Not your name or email.</li>
 <li>While we test, the AI provider (Google Gemini, free tier) may use what is sent to improve its models, and people there may read it. Do not send anything sensitive.</li>
-<li>Do not upload screenshots with account numbers or personal details.</li><li>Wick is for users aged 18 and over.</li></ul>
+<li>Do not upload screenshots with account numbers or personal details.</li><li>Wick is for users aged 18 and over.</li><li>While we test, Wick is not offered to people in the EU, EEA, UK or Switzerland.</li></ul>
 <p><a href="privacy.html" target="_blank" rel="noopener">Read the privacy policy</a></p>
-<div class="bk"><button data-co="ok">I understand and agree</button><button class="gh" data-co="x">Not now</button></div>
+<div class="bk"><button data-co="ok">I am 18 or older and I agree</button><button class="gh" data-co="x">Not now</button></div>
 <p class="mut" style="font-size:12px;margin:10px 0 0">Draft text, to be finalized after a legal review.</p></div></div>`;
     const b = d.querySelector('[data-co="ok"]');
     if (b) b.focus();
@@ -958,6 +958,9 @@ Object.assign(HE, {
   "Wick is for users aged 18 and over.": "Wick מיועד לבני 18 ומעלה.",
   "Read the privacy policy": "קרא את מדיניות הפרטיות",
   "I understand and agree": "הבנתי ומסכים",
+  "I am 18 or older and I agree": "אני בן 18 ומעלה ומסכים",
+  "While we test, Wick is not offered to people in the EU, EEA, UK or Switzerland.":
+    "בתקופת הניסוי, Wick לא מוצע לתושבי האיחוד האירופי, ה-EEA, בריטניה ושווייץ.",
   "Not now": "לא עכשיו",
   "Draft text, to be finalized after a legal review.": "טקסט טיוטה, ייקבע סופית אחרי בדיקה משפטית.",
   "Wick sees:": "Wick רואה:",
