@@ -98,10 +98,10 @@ function lsPlans(he) {
   };
   return `<section class="plans" id="plans" aria-labelledby="plh"><h2 id="plh">Plans and pricing</h2>
  <div class="plsw" role="group" aria-label="Billing period"><button type="button" class="on" data-pl="m" aria-pressed="true">Monthly</button><button type="button" data-pl="y" aria-pressed="false">Yearly</button></div>
- <p class="mut sm plrn">Yearly plans renew automatically. We'll remind you before renewal.</p>
+ <p class="mut sm plrn">Renewal and cancellation terms will be shown before you pay.</p>
  <div class="plg">${P.map(x => `<article class="plc${x.rec ? " rec" : ""}">${x.rec ? `<span class="plb">Recommended</span>` : ""}<h3 data-nt>${NM[x.k][he ? 1 : 0]}</h3><p class="plt">${x.t}</p>${price(x)}<button class="${x.rec ? "cta" : "gh"} plgb" type="button">${pr[x.k] ? "Start 14-day free trial" : "Start free"}</button>${x.lead ? `<p class="pll">${x.lead}</p>` : ""}<ul>${x.f.map((f, i) => (Array.isArray(f) ? `<li${i > 2 ? ' class="plx"' : ""}><span>${f[0]}</span> ${S1}</li>` : `<li${i > 2 ? ' class="plx"' : ""}><span>${f}</span></li>`)).join("")}</ul></article>`).join("")}</div>
  <p class="plall"><button type="button" class="gh sm" data-pla aria-expanded="false"><span class="pl1">See all features ▾</span><span class="pl2">Show less ▴</span></button></p>
- <p class="pln mut"><span>14-day free trial on every plan.</span> <span>The first 50 people to join get 6 months free, then 50% off for good.</span> <span>Prices may change before launch.</span></p></section>`;
+ <p class="pln mut"><span>14-day free trial on every plan.</span> <span>The first 50 people to join get 6 months free, then 50% off for as long as their subscription stays active.</span> <span>Prices may change before launch.</span></p></section>`;
 }
 document.addEventListener("click", e => {
   const a = e.target.closest && e.target.closest("[data-pla]");

@@ -117,6 +117,7 @@ window.HE_EXT = {
   "Chart type": "סוג גרף",
   "Privacy Policy": "מדיניות פרטיות",
   "Terms of Use": "תנאי שימוש",
+  "Disclaimer": "גילוי נאות",
   "Not ready yet? Join the waitlist": "עוד לא מוכן? הצטרף לרשימת ההמתנה",
   "Leave your email and we will keep you posted about new features and launch offers.":
     "השאר אימייל ונעדכן אותך על פיצ'רים חדשים והטבות השקה.",
@@ -359,10 +360,10 @@ window.HE_EXT = {
   "by fixed allocation": "לפי הקצאה קבועה",
   "from your amount": "לפי הסכום שלך",
   "your number": "המספר שלך",
-  "Trade approved": "העסקה מאושרת",
-  "Rejected: R:R below minimum or $ risk above the cap":
-    "נדחה: יחס סיכון-סיכוי מתחת למינימום או סיכון בדולרים מעל התקרה",
-  "Rejected: every criterion must be “Yes”": "נדחה: כל הקריטריונים חייבים להיות “כן”",
+  "Within your risk rules": "בתוך כללי הסיכון שלך",
+  "Outside your risk rules: R:R below your minimum or $ risk above your cap":
+    "מחוץ לכללי הסיכון שלך: יחס סיכון-סיכוי מתחת למינימום שלך או סיכון בדולרים מעל התקרה שלך",
+  "Not all your criteria are met (each must be “Yes”)": "לא כל הקריטריונים שלך מתקיימים (כל אחד צריך להיות “כן”)",
   "Steps 1 and 2 are not fully approved yet.": "שלבים 1 ו-2 עדיין לא אושרו במלואם.",
   "Broker order ticket": "פקודות לברוקר",
   "Entry order": "פקודת כניסה",
@@ -679,15 +680,15 @@ window.HE_EXT = {
   "Disciplined and Patient together": "ממושמע וסבלני ביחד",
   "More messages to Wick": "יותר הודעות ל-Wick",
   "14-day free trial on every plan.": "14 ימי ניסיון חינם לכל התוכניות.",
-  "The first 50 people to join get 6 months free, then 50% off for good.":
-    "50 המצטרפים הראשונים מקבלים חצי שנה חינם, ואחר כך 50% הנחה קבועה.",
+  "The first 50 people to join get 6 months free, then 50% off for as long as their subscription stays active.":
+    "50 המצטרפים הראשונים מקבלים חצי שנה חינם, ואחר כך 50% הנחה כל עוד המנוי שלהם פעיל.",
   "Prices may change before launch.": "המחירים עשויים להשתנות לפני ההשקה.",
   "/ year": "לשנה",
   "Monthly": "חודשי",
   "Yearly": "שנתי",
   "Billing period": "תקופת חיוב",
-  "Yearly plans renew automatically. We'll remind you before renewal.":
-    "התוכנית השנתית מתחדשת אוטומטית. נשלח תזכורת לפני החידוש.",
+  "Renewal and cancellation terms will be shown before you pay.":
+    "תנאי החידוש והביטול יוצגו לפני התשלום.",
   "Everything in Starter, plus:": "כל מה שיש במתחיל, ועוד:",
   "Everything in Disciplined and Patient, plus:": "כל מה שיש בממושמע ובסבלני, ועוד:",
   "All trading and long-term tools": "כל כלי המסחר והטווח הארוך",
