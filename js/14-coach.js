@@ -252,7 +252,9 @@ function coCtx() {
       tools: st.tools
         .map(k => (tl[k] || [k])[0])
         .concat((st.custom || []).map(c => c.n || ""))
-        .filter(Boolean)
+        .filter(Boolean),
+      screeningQuestions: (typeof QS === "function" ? QS() : []).map(q => coCut(q, 200)).slice(0, 12),
+      myRules: (S.rules || []).map(r => coCut(r && r.t, 200)).filter(Boolean).slice(0, 10)
     };
   if (!coOff.rk)
     o.rules = {
@@ -406,6 +408,7 @@ async function coApi(q, img, hist) {
   if (r.status === 401 || r.status === 403)
     throw new Error("Wick is not available for this account.");
   if (r.status === 429) throw new Error("You reached today's limit. Try again tomorrow.");
+  if (r.status === 503) throw new Error("Wick is busy right now. Try again in a minute.");
   if (r.status === 413) throw new Error("That image is too large. Use a smaller screenshot.");
   if (!r.ok) throw new Error("Wick could not answer right now. Try again later.");
   let d;
@@ -997,6 +1000,7 @@ Object.assign(HE, {
   "That image is too large. Use a smaller screenshot.": "התמונה גדולה מדי. נסה צילום מסך קטן יותר.",
   "Could not read that image. Try another file.": "לא הצלחתי לקרוא את התמונה. נסה קובץ אחר.",
   "Wick took too long. Try again.": "Wick לקח יותר מדי זמן. נסה שוב.",
+  "Wick is busy right now. Try again in a minute.": "Wick עמוס כרגע. נסה שוב בעוד דקה.",
   "Could not reach Wick. Check your connection and try again.":
     "אין חיבור ל-Wick. בדוק את החיבור ונסה שוב.",
   "Wick is not available for this account.": "Wick לא זמין לחשבון הזה.",

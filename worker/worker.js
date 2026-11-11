@@ -25,6 +25,7 @@ How to answer:
 - Greetings or small talk ("hi", "how are you", "thanks"): reply in one or two friendly sentences, do NOT analyze trades, and offer two or three things you can check (for example early exits, stops, rules they broke).
 - A question about you or about how to use the journal: answer it briefly.
 - A request to review trades, rules or a chart: review using the DATA, with specific trades and dates.
+- A request to check or review a specific stock: do a RULE CHECK, never a verdict. Go through the user's own rules (strategy, myRules, screeningQuestions, minRR, maxRiskPct) one by one and, for each, state the relevant fact from STOCK FACTS and whether it can be checked: "meets", "does not meet" or "cannot check from the data (ask the user)". Mention the next earnings date and recent headlines if relevant. Never say the stock is a buy, a sell, good, bad, attractive or worth entering, and never give a price target or entry/stop levels. If STOCK FACTS is missing, say you could not get data for that symbol. Suggest uploading a chart for the checks that need one. End with the line "זו לא המלצה לפעולה." in Hebrew or "This is not a recommendation to act." in English.
 - A question about the market or the news: summarize what is happening using MARKET (how the index ETFs moved today and the main headlines, naming the source and time). Keep it factual and neutral: what happened, not what will happen. If it fits, add one short line on how this relates to the user's own plan or open trades (for example a reminder to check their stops), without telling them what to do. If MARKET is missing, say you do not have live market news right now. End every market or news answer with this line on its own: in Hebrew "זו לא המלצה לפעולה." / in English "This is not a recommendation to act."
 - Never repeat an earlier answer from the conversation. If they ask again, add something new or ask what they want to look at.
 - Length: short. For a review, up to 5 bullet points with **bold** key phrases, then at most one reflective question. Otherwise plain short sentences.
@@ -165,12 +166,64 @@ async function marketBrief(env) {
   }
 }
 
+/* ---------- stock facts for "check X against my rules" (Finnhub, facts only) ---------- */
+const NOT_TICKERS = new Set("I A AN AND OR THE MY ME IS IT TO OF IN ON AT FOR RSI ATR EMA SMA MA MACD VWAP CPI FED USA US ETF AI OK PE EPS RR R YTD ATH IPO CEO EU UK".split(" "));
+const STOCK_CACHE = new Map();
+function tickersIn(q) {
+  const out = [];
+  for (const m of String(q || "").matchAll(/(?:^|[^A-Za-z])\$?([A-Z]{1,5})(?![A-Za-z])/g)) {
+    const t = m[1];
+    if (!NOT_TICKERS.has(t) && !out.includes(t)) out.push(t);
+    if (out.length === 2) break;
+  }
+  return out;
+}
+async function stockFacts(env, sym) {
+  if (!env.FINNHUB_API_KEY) return null;
+  const hit = STOCK_CACHE.get(sym);
+  if (hit && Date.now() < hit.until) return hit.v;
+  const get = async path => {
+    const r = await fetch("https://finnhub.io/api/v1/" + path, { headers: { "X-Finnhub-Token": env.FINNHUB_API_KEY } });
+    return r.ok ? r.json() : null;
+  };
+  const d = n => new Date(Date.now() + n * 864e5).toISOString().slice(0, 10);
+  try {
+    const [q, prof, met, news, earn] = await Promise.all([
+      get("quote?symbol=" + sym), get("stock/profile2?symbol=" + sym), get("stock/metric?metric=all&symbol=" + sym),
+      get(`company-news?symbol=${sym}&from=${d(-7)}&to=${d(0)}`), get(`calendar/earnings?symbol=${sym}&from=${d(0)}&to=${d(100)}`),
+    ]);
+    if (!q || !q.c) return null;
+    const m = (met && met.metric) || {};
+    const pick = k => (m[k] == null ? null : m[k]);
+    const v = {
+      symbol: sym, name: prof && prof.name, industry: prof && prof.finnhubIndustry,
+      price: q.c, changePctToday: q.dp, dayHigh: q.h, dayLow: q.l, prevClose: q.pc,
+      marketCapMillions: prof && prof.marketCapitalization,
+      high52w: pick("52WeekHigh"), low52w: pick("52WeekLow"),
+      pctFrom52wHigh: pick("52WeekHigh") ? +((q.c / m["52WeekHigh"] - 1) * 100).toFixed(1) : null,
+      return13wPct: pick("13WeekPriceReturnDaily"), return26wPct: pick("26WeekPriceReturnDaily"),
+      avgVolume10dMillions: pick("10DayAverageTradingVolume"), beta: pick("beta"),
+      peTTM: pick("peTTM") ?? pick("peBasicExclExtraTTM"), epsGrowthTTMYoy: pick("epsGrowthTTMYoy"), revenueGrowthTTMYoy: pick("revenueGrowthTTMYoy"),
+      debtToEquity: pick("totalDebt/totalEquityQuarterly"),
+      nextEarnings: earn && earn.earningsCalendar && earn.earningsCalendar.length ? earn.earningsCalendar[earn.earningsCalendar.length - 1].date : null,
+      newsLast7d: (Array.isArray(news) ? news : []).slice(0, 5).map(n => ({ time: new Date((n.datetime || 0) * 1000).toISOString().slice(0, 10), source: String(n.source || "").slice(0, 40), headline: String(n.headline || "").slice(0, 200) })),
+      notAvailable: "moving averages, RSI, ATR and chart patterns (no daily candles on this data plan; the user can upload a chart image)",
+    };
+    STOCK_CACHE.set(sym, { v, until: Date.now() + 10 * 60 * 1000 });
+    return v;
+  } catch (e) {
+    console.error("stock facts error", sym, String(e.message).slice(0, 60));
+    return null;
+  }
+}
+
 /* ---------- the model (swap this function to change provider) ---------- */
 async function callModel(env, inp) {
   if (!env.GEMINI_API_KEY || !env.GEMINI_MODEL) throw Object.assign(new Error("not configured"), { code: 503 });
   const contents = inp.hist.map(h => ({ role: h.role === "coach" ? "model" : "user", parts: [{ text: h.text }] }));
   const mk = inp.market ? `MARKET (live headlines and index ETFs from Finnhub): ${JSON.stringify(inp.market)}\n\n` : "";
-  const parts = [{ text: `${mk}DATA (journal data, use only if relevant): ${inp.ctxStr}\n\nlang: ${inp.lang}\nUSER MESSAGE: ${inp.q || "(see the attached chart)"}` }];
+  const sk = inp.stocks && inp.stocks.length ? `STOCK FACTS (Finnhub, for a rule check): ${JSON.stringify(inp.stocks)}\n\n` : "";
+  const parts = [{ text: `${mk}${sk}DATA (journal data, use only if relevant): ${inp.ctxStr}\n\nlang: ${inp.lang}\nUSER MESSAGE: ${inp.q || "(see the attached chart)"}` }];
   if (inp.img) parts.push({ inline_data: { mime_type: inp.img.mime, data: inp.img.data } });
   contents.push({ role: "user", parts });
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(env.GEMINI_MODEL)}:generateContent`;
@@ -183,10 +236,14 @@ async function callModel(env, inp) {
       generationConfig: { maxOutputTokens: 900, temperature: 0.4 },
     }),
   });
-  if (!r.ok) throw Object.assign(new Error("model " + r.status), { code: r.status === 429 ? 503 : 502 });
+  if (!r.ok) {
+    let why = "";
+    try { const j = await r.json(); why = String((j.error && (j.error.status + " " + j.error.message)) || "").slice(0, 160); } catch {}
+    throw Object.assign(new Error("model " + r.status + " " + why), { code: r.status === 429 || r.status === 503 ? 503 : 502 });
+  }
   const d = await r.json();
   const text = (((d.candidates || [])[0] || {}).content || {}).parts?.map(p => p.text || "").join("").trim();
-  if (!text) throw Object.assign(new Error("empty"), { code: 502 });
+  if (!text) throw Object.assign(new Error("empty " + String((((d.candidates || [])[0] || {}).finishReason) || (d.promptFeedback && d.promptFeedback.blockReason) || "")), { code: 502 });
   return text.slice(0, 6000);
 }
 
@@ -225,8 +282,10 @@ export default {
 
     let a;
     if (inp.q && MARKET_Q.test(inp.q)) inp.market = await marketBrief(env);
+    const syms = tickersIn(inp.q);
+    if (syms.length) inp.stocks = (await Promise.all(syms.map(s => stockFacts(env, s)))).filter(Boolean);
     try { a = await callModel(env, inp); }
-    catch (e) { console.error("coach model error", e.code || 502, String(e.message).slice(0, 80)); return json(e.code || 502, { e: "model" }, ch); }
+    catch (e) { console.error("coach model error", e.code || 502, String(e.message).slice(0, 200)); return json(e.code || 502, { e: "model" }, ch); }
 
     await addUse(env, uid, use, !!inp.img);
     return json(200, { a, left: { m: maxM - use.m - 1, i: maxI - use.i - (inp.img ? 1 : 0) } }, ch);
