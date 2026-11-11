@@ -54,7 +54,7 @@ function cors(origin, env) {
   const ok = list(env.ALLOWED_ORIGINS).includes(origin);
   return ok ? {
     "Access-Control-Allow-Origin": origin,
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type, Authorization",
     "Access-Control-Max-Age": "600",
     "Vary": "Origin",
@@ -255,6 +255,14 @@ export default {
     const ch = cors(origin, env);
     if (req.method === "OPTIONS") return ch ? new Response(null, { status: 204, headers: ch }) : new Response(null, { status: 403 });
     if (!ch) return json(403, { e: "origin" });
+    if (req.method === "GET" && new URL(req.url).pathname === "/scan") {
+      let su = null;
+      try { su = await verifyIdToken((req.headers.get("Authorization") || "").replace(/^Bearer\s+/i, ""), env.FIREBASE_PROJECT); } catch { return json(503, { e: "keys" }, ch); }
+      if (!su) return json(401, { e: "auth" }, ch);
+      const data = await env.USAGE.get("scan:latest");
+      if (!data) return json(404, { e: "no scan yet" }, ch);
+      return new Response(data, { status: 200, headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "private, max-age=3600", ...ch } });
+    }
     if (req.method !== "POST") return json(405, { e: "method" }, ch);
 
     const len = Number(req.headers.get("Content-Length") || 0);
