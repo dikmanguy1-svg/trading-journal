@@ -54,7 +54,7 @@ function coBump(img) {
 // The user accepted the coach notice.
 function coOk() {
   try {
-    return localStorage.getItem("tj_co_ok") === "1";
+    return localStorage.getItem("tj_co_ok") === "2";
   } catch (e) {
     return false;
   }
@@ -611,9 +611,9 @@ function coRender() {
 <li>It is a helper tool, not investment advice. It can be wrong, and the decisions are yours.</li>
 <li>To answer, only your question, the data you choose under "Wick sees" and your chart are sent to the AI provider. Not your name or email.</li>
 <li>While we test, the AI provider (Google Gemini, free tier) may use what is sent to improve its models, and people there may read it. Do not send anything sensitive.</li>
-<li>Do not upload screenshots with account numbers or personal details.</li><li>Wick is for users aged 18 and over.</li><li>While we test, Wick is not offered to people in the EU, EEA, UK or Switzerland.</li></ul>
-<p><a href="privacy.html" target="_blank" rel="noopener">Read the privacy policy</a></p>
-<div class="bk"><button data-co="ok">I am 18 or older and I agree</button><button class="gh" data-co="x">Not now</button></div>
+<li>Do not upload screenshots with account numbers or personal details.</li><li>Wick is for users aged 18 and over.</li><li>While we test, Wick is not offered to people in the EU, EEA, UK or Switzerland.</li><li>Wick is a test feature. It may change, pause or stop at any time.</li></ul>
+<p><a href="privacy.html" target="_blank" rel="noopener">Read the privacy policy</a></p><p><a href="terms.html" target="_blank" rel="noopener">Read the terms of use</a></p>
+<div class="bk"><button data-co="ok">I am 18 or older and I agree to the terms</button><button class="gh" data-co="x">Not now</button></div>
 <p class="mut" style="font-size:12px;margin:10px 0 0">Draft text, to be finalized after a legal review.</p></div></div>`;
     const b = d.querySelector('[data-co="ok"]');
     if (b) b.focus();
@@ -824,7 +824,7 @@ document.addEventListener("click", e => {
   if (a === "x") return coShow(false);
   if (a === "ok") {
     try {
-      localStorage.setItem("tj_co_ok", "1");
+      localStorage.setItem("tj_co_ok", "2") /* "2" = consent text of 11.11.2026 */;
     } catch (e) {}
     coGreet();
     coRender();
@@ -961,6 +961,9 @@ Object.assign(HE, {
   "I am 18 or older and I agree": "אני בן 18 ומעלה ומסכים",
   "While we test, Wick is not offered to people in the EU, EEA, UK or Switzerland.":
     "בתקופת הניסוי, Wick לא מוצע לתושבי האיחוד האירופי, ה-EEA, בריטניה ושווייץ.",
+  "Wick is a test feature. It may change, pause or stop at any time.": "Wick הוא תכונה בניסוי. הוא עשוי להשתנות, להיעצר או להיסגר בכל רגע.",
+  "Read the terms of use": "קרא את תנאי השימוש",
+  "I am 18 or older and I agree to the terms": "אני בן 18 ומעלה ומסכים לתנאים",
   "Not now": "לא עכשיו",
   "Draft text, to be finalized after a legal review.": "טקסט טיוטה, ייקבע סופית אחרי בדיקה משפטית.",
   "Wick sees:": "Wick רואה:",
