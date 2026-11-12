@@ -4,7 +4,7 @@
  * The sign-in window (12.11): log in or create an account with email and password,
  * or continue with Google. "Remember me", "Forgot password?" and show/hide password.
  * js/11 opens it from the Log in / Sign up buttons (fbm = the loaded Firebase parts).
- * Looks: css/12-login.css. Email sign-in must be turned on in the Firebase console
+ * Looks: css/12-login.css (green top, soft cream sheet, like the site). Email sign-in must be turned on in the Firebase console
  * (Authentication > Sign-in method > Email/Password).
  *
  * All js/*.js files share one global scope and run in the order index.html lists them.
@@ -53,7 +53,7 @@ function lgDraw() {
 <div class="lgtop"><button type="button" class="lglang" id="lglang">${LANG === "he" ? "English" : "עברית"}</button><span class="lgbrand" data-nt>${coAv("pleased", 30)}<b>Trade<i>.</i>Ink</b></span><button type="button" class="lgx" data-lgx aria-label="Close">×</button></div>
 <h2 id="lgh">${up ? "Create your account" : "Welcome back"}</h2>
 <p class="lgsub">${up ? "Start your trading journal. It takes a minute." : "Log in to see your journal."}</p>
-<form id="lgf" novalidate>
+<div class="lgsh"><form id="lgf" novalidate>
  <label class="lgfld">${LGI.mail}<span class="vh">Email</span><input id="lge" type="email" autocomplete="email" inputmode="email" placeholder="Enter your email" required value="${esc(em)}"></label>
  <label class="lgfld">${LGI.lock}<span class="vh">Password</span><input id="lgp" type="password" autocomplete="${up ? "new-password" : "current-password"}" placeholder="${up ? "Choose a password (6+ characters)" : "Enter your password"}" required minlength="6"><button type="button" class="lgeye" id="lgeye" aria-label="Show password" aria-pressed="false">${LGI.eye}</button></label>
  <div class="lgrow"><label class="lgrem"><input type="checkbox" id="lgr" checked> <span>Remember me</span></label>${up ? "" : '<button type="button" class="lglink" id="lgfg">Forgot password?</button>'}</div>
@@ -64,7 +64,7 @@ function lgDraw() {
 <button type="button" class="lggo" id="lggo">${LGI.g}<span>Continue with Google</span></button>
 <p class="lgsw">${up ? "Already have an account?" : "Don't have an account?"} <button type="button" class="lglink" id="lgsw">${up ? "Log in" : "Create an account"}</button></p>
 <p class="lgfine">By continuing you agree to our terms: <a href="terms.html">Terms of Use</a> · <a href="privacy.html">Privacy Policy</a></p>
-</div>`;
+</div></div>`;
   lgWire();
   setTimeout(() => {
     const i = $(em ? "lgp" : "lge");
