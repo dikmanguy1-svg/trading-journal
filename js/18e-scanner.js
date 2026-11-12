@@ -207,8 +207,8 @@ const SCF = [
     "F",
     "c",
     "",
-    "Market cap is the share price times the number of shares. The sizes follow the usual market split: mega over $200B, large $10B to $200B, mid $2B to $10B, small under $2B.",
-    "שווי שוק הוא מחיר המניה כפול מספר המניות. הגדלים לפי החלוקה המקובלת בשוק: ענקית מעל 200 מיליארד $, גדולה 10 עד 200 מיליארד $, בינונית 2 עד 10 מיליארד $, קטנה מתחת ל-2 מיליארד $."
+    "Market cap is the share price times the number of shares. Sizes: mega over $200B, large $10B to $200B, mid $2B to $10B, small under $2B. This is the usual market split; the exact limits vary a little between sources. Only sizes that have stocks in our list this week are shown.",
+    "שווי שוק הוא מחיר המניה כפול מספר המניות. הגדלים: ענקית מעל 200 מיליארד $, גדולה 10 עד 200 מיליארד $, בינונית 2 עד 10 מיליארד $, קטנה מתחת ל-2 מיליארד $. זו חלוקה מקובלת בשוק, והגבולות משתנים מעט בין מקורות. מוצגים רק גדלים שיש בהם מניות ברשימה שלנו השבוע."
   ],
   [
     "pe",
