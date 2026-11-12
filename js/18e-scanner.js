@@ -12,8 +12,8 @@
  * All js/*.js files share one global scope and run in the order index.html lists them.
  */
 
-// The scanner is shown as "Coming soon" until this is true (Guy's decision, 11.11).
-const SCAN_ON = false;
+// The scanner is shown as "Coming soon" while this is false (turned on by Guy, 12.11).
+const SCAN_ON = true;
 // Texts in the current language.
 const scL = (en, he) => (LANG === "he" ? he : en);
 
