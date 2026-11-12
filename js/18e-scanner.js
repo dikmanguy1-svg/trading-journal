@@ -201,14 +201,14 @@ const SCF = [
     "אותו דבר, ב-12 חודשים."
   ],
   [
-    "capB",
-    "Market cap ($ billions)",
-    "שווי שוק (מיליארד $)",
+    "size",
+    "Company size (market cap)",
+    "גודל חברה (שווי שוק)",
     "F",
-    "n",
-    "B",
-    "Share price times the number of shares, in billions of dollars.",
-    "מחיר המניה כפול מספר המניות, במיליארדי דולרים."
+    "c",
+    "",
+    "Market cap is the share price times the number of shares. The sizes follow the usual market split: mega over $200B, large $10B to $200B, mid $2B to $10B, small under $2B.",
+    "שווי שוק הוא מחיר המניה כפול מספר המניות. הגדלים לפי החלוקה המקובלת בשוק: ענקית מעל 200 מיליארד $, גדולה 10 עד 200 מיליארד $, בינונית 2 עד 10 מיליארד $, קטנה מתחת ל-2 מיליארד $."
   ],
   [
     "pe",
@@ -274,6 +274,18 @@ const SCF = [
 const SCFK = Object.fromEntries(SCF.map(f => [f[0], f]));
 const SCSRC = { M: "Massive", F: "Finnhub" };
 
+// Company size groups (the usual market split) and their names.
+const SCSIZE = ["mega", "large", "mid", "small"];
+function scSizeL(v) {
+  const m = {
+    mega: ["Mega (over $200B)", "ענקית (מעל 200 מיליארד $)"],
+    large: ["Large ($10B to $200B)", "גדולה (10 עד 200 מיליארד $)"],
+    mid: ["Mid ($2B to $10B)", "בינונית (2 עד 10 מיליארד $)"],
+    small: ["Small (under $2B)", "קטנה (מתחת ל-2 מיליארד $)"]
+  }[v];
+  return m ? scL(m[0], m[1]) : esc(v);
+}
+
 // The loaded weekly data: st = idle / load / ok / none (not built yet) / err.
 const SCD = { st: "idle", d: null };
 
@@ -286,7 +298,7 @@ function scS() {
 
 // The value of one measure for one stock (null when there is no data).
 function scVal(r, k) {
-  if (k === "capB") return r.capM == null ? null : r.capM / 1000;
+  if (k === "size") return r.capM == null ? null : r.capM >= 200000 ? "mega" : r.capM >= 10000 ? "large" : r.capM >= 2000 ? "mid" : "small";
   if (k === "earnDays") {
     if (!r.nextEarnings) return null;
     const d = Math.round(
@@ -303,6 +315,7 @@ function scVal(r, k) {
 function scFmt(v, f) {
   if (v == null) return "—";
   if (f[4] === "b") return v ? scL("Yes", "כן") : scL("No", "לא");
+  if (f[0] === "size") return scSizeL(v);
   if (f[4] === "c") return esc(v);
   const u = f[5],
     n =
@@ -357,7 +370,13 @@ function scanPage() {
 // Conditions editor + results.
 function scInner() {
   const s = scS(),
-    inds = SCD.d ? [...new Set(SCD.d.rows.map(r => r.industry).filter(Boolean))].sort() : [],
+    // Choices for choice fields: only values that exist in this week's data.
+    opts = k => {
+      if (!SCD.d) return [];
+      const have = new Set(SCD.d.rows.map(r => scVal(r, k)).filter(Boolean));
+      if (k === "size") return SCSIZE.filter(x => have.has(x)).map(x => [x, scSizeL(x)]);
+      return [...have].sort().map(x => [x, x]);
+    },
     row = (c, i) => {
       const f = SCFK[c.f];
       let h = `<div class="scc"><label class="scl"><span class="vh">${scL("Measure", "מדד")}</span><select data-sc="f" data-i="${i}" aria-label="${scL("Measure", "מדד")}"><option value="">${scL("Choose a measure", "בחר מדד")}</option>${SCF.map(x => `<option value="${x[0]}"${x[0] === c.f ? " selected" : ""}>${scL(x[1], x[2])}</option>`).join("")}</select></label>`;
@@ -366,7 +385,7 @@ function scInner() {
       if (f && f[4] === "b")
         h += `<label class="scl"><span class="vh">${scL("Value", "ערך")}</span><select data-sc="v" data-i="${i}" aria-label="${scL("Value", "ערך")}"><option value="">${scL("Choose", "בחר")}</option><option value="yes"${c.v === "yes" ? " selected" : ""}>${scL("Yes", "כן")}</option><option value="no"${c.v === "no" ? " selected" : ""}>${scL("No", "לא")}</option></select></label>`;
       if (f && f[4] === "c")
-        h += `<label class="scl"><span class="vh">${scL("Value", "ערך")}</span><select data-sc="v" data-i="${i}" aria-label="${scL("Value", "ערך")}"><option value="">${scL("Choose", "בחר")}</option>${inds.map(x => `<option value="${esc(x)}"${x === c.v ? " selected" : ""}>${esc(x)}</option>`).join("")}</select></label>`;
+        h += `<label class="scl"><span class="vh">${scL("Value", "ערך")}</span><select data-sc="v" data-i="${i}" aria-label="${scL("Value", "ערך")}"><option value="">${scL("Choose", "בחר")}</option>${opts(c.f).map(([x, lab]) => `<option value="${esc(x)}"${x === c.v ? " selected" : ""}>${esc(lab)}</option>`).join("")}</select></label>`;
       h += `<button type="button" class="gh sm" data-sca="del" data-i="${i}" aria-label="${scL("Remove this condition", "הסר את התנאי")}">✕</button></div>`;
       if (f) h += `<p class="mut sm scd">${scL(f[6], f[7])}</p>`;
       return h;
