@@ -141,7 +141,8 @@ window.HE_EXT = {
     "TradeInk הופך את תיעוד המסחר להרגל יומי: רושמים עסקאות, עונים על בדיקה יומית קצרה ורואים את התוצאות האמיתיות שלך כסוחר סווינג או סוחר יומי.",
   "Start free with Google": "התחל בחינם עם גוגל",
   "Example figures, not real results.": "נתוני דוגמה, לא תוצאות אמיתיות.",
-  "Free to start. Your journal is private: other users cannot see it.": "התחלה בחינם. היומן שלך פרטי: משתמשים אחרים לא יכולים לראות אותו.",
+  "Free to start. Your journal is private: other users cannot see it.":
+    "התחלה בחינם. היומן שלך פרטי: משתמשים אחרים לא יכולים לראות אותו.",
   "Illustration, not real results.": "המחשה, לא תוצאות אמיתיות.",
   "Trade journal": "יומן עסקאות",
   "Log every entry and exit with your reasons. Open positions show the live price and P&L automatically.":
@@ -364,7 +365,8 @@ window.HE_EXT = {
   "Within your risk rules": "בתוך כללי הסיכון שלך",
   "Outside your risk rules: R:R below your minimum or $ risk above your cap":
     "מחוץ לכללי הסיכון שלך: יחס סיכון-סיכוי מתחת למינימום שלך או סיכון בדולרים מעל התקרה שלך",
-  "Not all your criteria are met (each must be “Yes”)": "לא כל הקריטריונים שלך מתקיימים (כל אחד צריך להיות “כן”)",
+  "Not all your criteria are met (each must be “Yes”)":
+    "לא כל הקריטריונים שלך מתקיימים (כל אחד צריך להיות “כן”)",
   "Steps 1 and 2 are not fully approved yet.": "שלבים 1 ו-2 עדיין לא אושרו במלואם.",
   "Broker order ticket": "פקודות לברוקר",
   "Entry order": "פקודת כניסה",
@@ -639,8 +641,10 @@ window.HE_EXT = {
   "Ready: go ahead with your plan": "מוכן: אפשר להמשיך לפי התוכנית",
   "Not now: wait and check again": "לא עכשיו: לחכות ולבדוק שוב",
   "Before you buy a stock or fund": "לפני שקונים מניה או קרן",
-  "All your answers are “Yes”: it matches your own plan": "כל התשובות שלך הן “כן”: זה תואם את התוכנית שלך",
-  "All your criteria are met: continue to step 3, risk calculator": "כל הקריטריונים שלך מתקיימים: ממשיכים לשלב 3, מחשבון סיכונים",
+  "All your answers are “Yes”: it matches your own plan":
+    "כל התשובות שלך הן “כן”: זה תואם את התוכנית שלך",
+  "All your criteria are met: continue to step 3, risk calculator":
+    "כל הקריטריונים שלך מתקיימים: ממשיכים לשלב 3, מחשבון סיכונים",
   "Not yet: every answer should be “Yes”": "עדיין לא: כל התשובות צריכות להיות “כן”",
   "Show more trades": "הצג עוד עסקאות",
   "Showing": "מוצגות",
@@ -686,11 +690,13 @@ window.HE_EXT = {
   "All long-term tools from Patient": "כל כלי הטווח הארוך של סבלני",
   "Wick, the AI coach, with more messages": "Wick, מאמן ה-AI, עם יותר הודעות",
   "14-day free trial on every plan.": "14 ימי ניסיון חינם לכל התוכניות.",
-  "Paid plans are not on sale yet. Planned for launch:": "התוכניות בתשלום עדיין לא נמכרות. מתוכנן להשקה:",
+  "Paid plans are not on sale yet. Planned for launch:":
+    "התוכניות בתשלום עדיין לא נמכרות. מתוכנן להשקה:",
   "a 14-day free trial on every plan.": "14 ימי ניסיון חינם לכל התוכניות.",
   "The first 50 people to join get 6 months free, then 50% off for as long as their subscription stays active.":
     "50 המצטרפים הראשונים מקבלים חצי שנה חינם, ואחר כך 50% הנחה כל עוד המנוי שלהם פעיל.",
-  "Prices and offers may change before launch. The final price, including any tax, will be shown before you pay.": "המחירים וההטבות עשויים להשתנות לפני ההשקה. המחיר הסופי, כולל מסים אם חלים, יוצג לפני התשלום.",
+  "Prices and offers may change before launch. The final price, including any tax, will be shown before you pay.":
+    "המחירים וההטבות עשויים להשתנות לפני ההשקה. המחיר הסופי, כולל מסים אם חלים, יוצג לפני התשלום.",
   "/ year": "לשנה",
   "Monthly": "חודשי",
   "Yearly": "שנתי",
@@ -932,5 +938,38 @@ window.HE_EXT = {
   "Is the dividend steady, with a payout that leaves a cushion (not most of the profit)?":
     "הדיבידנד יציב, וחלוקה שמשאירה מרווח (לא רוב הרווח)?",
   "Does this position keep my portfolio diversified (no single stock too big a part of it)?":
-    "הפוזיציה הזאת שומרת על פיזור בתיק (אף מניה לא תופסת חלק גדול מדי)?"
+    "הפוזיציה הזאת שומרת על פיזור בתיק (אף מניה לא תופסת חלק גדול מדי)?",
+  "Wrong email or password.": "אימייל או סיסמה לא נכונים.",
+  "This email already has an account. Log in instead.": "לאימייל הזה כבר יש חשבון. התחבר במקום.",
+  "The password needs at least 6 characters.": "הסיסמה צריכה לפחות 6 תווים.",
+  "Please enter a valid email address.": "נא להזין כתובת אימייל תקינה.",
+  "Please enter your password.": "נא להזין סיסמה.",
+  "Too many tries. Wait a few minutes and try again.": "יותר מדי ניסיונות. חכה כמה דקות ונסה שוב.",
+  "No connection. Check your internet and try again.": "אין חיבור. בדוק את האינטרנט ונסה שוב.",
+  "Email sign-in is not turned on yet. Use Google for now.":
+    "התחברות עם אימייל עוד לא הופעלה. בינתיים התחבר עם Google.",
+  "Create your account": "יצירת חשבון",
+  "Welcome back": "ברוך שובך",
+  "Start your trading journal. It takes a minute.": "פתח את יומן המסחר שלך. זה לוקח דקה.",
+  "Log in to see your journal.": "התחבר כדי לראות את היומן שלך.",
+  "Enter your email": "הזן את האימייל שלך",
+  "Password": "סיסמה",
+  "Choose a password (6+ characters)": "בחר סיסמה (6 תווים לפחות)",
+  "Enter your password": "הזן את הסיסמה שלך",
+  "Show password": "הצג סיסמה",
+  "Hide password": "הסתר סיסמה",
+  "Remember me": "זכור אותי",
+  "Forgot password?": "שכחת סיסמה?",
+  "Create account": "יצירת חשבון",
+  "Log in": "התחברות",
+  "Or": "או",
+  "Continue with Google": "המשך עם Google",
+  "Already have an account?": "כבר יש לך חשבון?",
+  "Don't have an account?": "אין לך חשבון?",
+  "Create an account": "צור חשבון",
+  "Type your email above, then press Forgot password? again.":
+    'הקלד את האימייל שלך למעלה, ואז לחץ שוב על "שכחת סיסמה?".',
+  "If this email has an account, a reset link is on its way. Check your inbox.":
+    "אם לאימייל הזה יש חשבון, קישור לאיפוס סיסמה בדרך. בדוק את תיבת הדואר.",
+  "By continuing you agree to our terms:": "בהמשך אתה מסכים לתנאים שלנו:"
 };

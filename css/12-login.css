@@ -1,0 +1,326 @@
+/*
+ * 12-login.css — part of the TradeInk styles.
+ *
+ * The sign-in window (js/18e-login.js), 12.11: dark green card with a soft green glow,
+ * rounded fields with icons, a purple "Log in" button and a Google button.
+ * Phone: full screen. Computer: a centered card.
+ *
+ * The css/*.css files are loaded in order by index.html. Order matters: later rules win.
+ */
+body.lg-on {
+  overflow: hidden;
+}
+#lgw {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+}
+.lgov {
+  position: absolute;
+  inset: 0;
+  background: rgba(4, 14, 11, 0.72);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+.lgd {
+  --lgf: #6fdc8c;
+  position: relative;
+  width: min(440px, 100% - 32px);
+  max-height: calc(100% - 32px);
+  overflow: auto;
+  color-scheme: dark;
+  color: #f2ebdc;
+  background:
+    radial-gradient(120% 70% at 0% 0%, rgba(74, 190, 110, 0.55), rgba(74, 190, 110, 0) 60%),
+    radial-gradient(80% 50% at 100% 100%, rgba(184, 164, 255, 0.14), rgba(184, 164, 255, 0) 70%),
+    #08130f;
+  border: 1px solid rgba(242, 235, 220, 0.1);
+  border-radius: 32px;
+  padding: 22px 26px 22px;
+  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.8);
+  font-family: Figtree, Heebo, system-ui, sans-serif;
+  animation: lgIn 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+@keyframes lgIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.98);
+  }
+}
+.lgtop {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 64px;
+}
+.lglang {
+  border: 1px solid rgba(242, 235, 220, 0.18);
+  background: rgba(242, 235, 220, 0.06);
+  color: #f2ebdc;
+  border-radius: 999px;
+  padding: 7px 14px;
+  font:
+    600 14px Figtree,
+    Heebo,
+    sans-serif;
+  cursor: pointer;
+}
+.lgbrand {
+  margin-inline-start: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #b8a4ff;
+}
+.lgbrand b {
+  font:
+    400 20px "Young Serif",
+    "Suez One",
+    Georgia,
+    serif;
+  color: #f2ebdc;
+}
+.lgbrand i {
+  font-style: normal;
+  color: #b8a4ff;
+}
+.lgx {
+  border: 0;
+  background: transparent;
+  color: rgba(242, 235, 220, 0.7);
+  font-size: 26px;
+  line-height: 1;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.lgx:hover {
+  background: rgba(242, 235, 220, 0.08);
+}
+.lgd h2 {
+  font:
+    400 clamp(30px, 7vw, 36px) / 1.1 "Young Serif",
+    "Suez One",
+    Georgia,
+    serif;
+  margin: 0 0 6px;
+  color: #fff;
+}
+[lang="he"] .lgd h2,
+.lgd h2:lang(he) {
+  font-family: "Suez One", Georgia, serif;
+}
+.lgsub {
+  margin: 0 0 22px;
+  color: rgba(242, 235, 220, 0.78);
+}
+.lgfld {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1.5px solid rgba(111, 220, 140, 0.32);
+  background: rgba(242, 235, 220, 0.03);
+  border-radius: 16px;
+  padding: 0 14px;
+  margin-bottom: 12px;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+.lgfld:focus-within {
+  border-color: var(--lgf);
+  box-shadow:
+    0 0 0 4px rgba(111, 220, 140, 0.16),
+    0 0 22px rgba(111, 220, 140, 0.25);
+}
+.lgfld svg {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  fill: none;
+  stroke: rgba(242, 235, 220, 0.8);
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.lgfld input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font:
+    500 16px Figtree,
+    Heebo,
+    sans-serif;
+  padding: 16px 0;
+  outline: none;
+}
+.lgfld input::placeholder {
+  color: rgba(242, 235, 220, 0.55);
+}
+.lgeye {
+  border: 0;
+  background: transparent;
+  padding: 6px;
+  margin-inline-end: -6px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+.lgeye[aria-pressed="true"] svg {
+  stroke: var(--lgf);
+}
+.lgrow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin: 4px 2px 6px;
+  font-size: 14.5px;
+}
+.lgrem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+.lgrem input {
+  width: 18px;
+  height: 18px;
+  accent-color: #6fdc8c;
+}
+.lglink {
+  border: 0;
+  background: transparent;
+  color: #f2ebdc;
+  font:
+    600 14.5px Figtree,
+    Heebo,
+    sans-serif;
+  padding: 4px 2px;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: rgba(184, 164, 255, 0.6);
+  text-underline-offset: 3px;
+}
+.lgmsg {
+  min-height: 1.4em;
+  margin: 6px 2px;
+  font-size: 14.5px;
+  color: #ff9b8f;
+}
+.lgmsg.ok {
+  color: #8fe3a8;
+}
+.lgbtn {
+  width: 100%;
+  border: 0;
+  border-radius: 999px;
+  padding: 17px;
+  font:
+    700 17px Figtree,
+    Heebo,
+    sans-serif;
+  color: #0f2620;
+  background: linear-gradient(100deg, #b8a4ff, #e3dbff);
+  box-shadow: 0 10px 30px -8px rgba(184, 164, 255, 0.65);
+  cursor: pointer;
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s;
+}
+.lgbtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 34px -8px rgba(184, 164, 255, 0.8);
+}
+.lgbtn:disabled,
+.lggo:disabled {
+  opacity: 0.6;
+  cursor: wait;
+  transform: none;
+}
+.lgor {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 18px 0;
+  color: rgba(242, 235, 220, 0.7);
+  font-size: 14px;
+}
+.lgor::before,
+.lgor::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: rgba(242, 235, 220, 0.2);
+}
+.lggo {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1.5px solid rgba(111, 220, 140, 0.32);
+  background: rgba(242, 235, 220, 0.03);
+  color: #fff;
+  border-radius: 16px;
+  padding: 14px;
+  font:
+    600 16px Figtree,
+    Heebo,
+    sans-serif;
+  cursor: pointer;
+}
+.lggo:hover {
+  border-color: var(--lgf);
+}
+.lggo svg {
+  width: 20px;
+  height: 20px;
+}
+.lgsw {
+  text-align: center;
+  margin: 22px 0 4px;
+  color: rgba(242, 235, 220, 0.78);
+}
+.lgfine {
+  text-align: center;
+  margin: 10px 0 0;
+  font-size: 12.5px;
+  color: rgba(242, 235, 220, 0.55);
+}
+.lgfine a {
+  color: rgba(242, 235, 220, 0.8);
+}
+.lgd :focus-visible {
+  outline: 3px solid #b8a4ff;
+  outline-offset: 2px;
+}
+.lgfld input:focus-visible {
+  outline: none;
+}
+/* Phone: the window fills the screen, like an app sign-in screen. */
+@media (max-width: 560px) {
+  .lgd {
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    border-radius: 0;
+    border: 0;
+    padding: max(18px, env(safe-area-inset-top)) 22px max(22px, env(safe-area-inset-bottom));
+    display: flex;
+    flex-direction: column;
+  }
+  .lgtop {
+    margin-bottom: auto;
+    padding-bottom: 40px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lgd {
+    animation: none;
+  }
+}

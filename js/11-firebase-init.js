@@ -1,7 +1,7 @@
 /*
  * 11-firebase-init.js — part of the TradeInk app script.
  *
- * fbInit(): loads Firebase (sign-in with Google and Firestore) from Google's servers
+ * fbInit(): loads Firebase (sign-in with email or Google, and Firestore) from Google's servers
  * and connects the Sign up / Log in button.
  *
  * All js/*.js files share one global scope and run in the order index.html lists them.
@@ -23,8 +23,9 @@ async function fbInit() {
     fbm = { au, fs, auth: au.getAuth(app), db: fs.getFirestore(app) };
     $("au").onclick = async () => {
       try {
+        // Logged in: log out. Otherwise open the sign-in window (email or Google, js/18e).
         if (U) await au.signOut(fbm.auth);
-        else await au.signInWithPopup(fbm.auth, new au.GoogleAuthProvider());
+        else lgOpen();
       } catch (e) {
         $("sv").textContent = "Sign-in did not finish. Try again.";
       }
