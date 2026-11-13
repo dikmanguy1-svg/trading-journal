@@ -19,7 +19,9 @@ const LGE = {
   "auth/user-not-found": "Wrong email or password.",
   "auth/invalid-login-credentials": "Wrong email or password.",
   "auth/email-already-in-use": "This email already has an account. Log in instead.",
-  "auth/weak-password": "The password needs at least 6 characters.",
+  // New accounts need 8+ characters (Firebase password policy, 13.11).
+  "auth/weak-password": "The password needs at least 8 characters.",
+  "auth/password-does-not-meet-requirements": "The password needs at least 8 characters.",
   "auth/invalid-email": "Please enter a valid email address.",
   "auth/missing-password": "Please enter your password.",
   "auth/too-many-requests": "Too many tries. Wait a few minutes and try again.",
@@ -55,7 +57,7 @@ function lgDraw() {
 <p class="lgsub">${up ? "Start your trading journal. It takes a minute." : "Log in to see your journal."}</p>
 <div class="lgsh"><form id="lgf" novalidate>
  <label class="lgfld">${LGI.mail}<span class="vh">Email</span><input id="lge" type="email" autocomplete="email" inputmode="email" placeholder="Enter your email" required value="${esc(em)}"></label>
- <label class="lgfld">${LGI.lock}<span class="vh">Password</span><input id="lgp" type="password" autocomplete="${up ? "new-password" : "current-password"}" placeholder="${up ? "Choose a password (6+ characters)" : "Enter your password"}" required minlength="6"><button type="button" class="lgeye" id="lgeye" aria-label="Show password" aria-pressed="false">${LGI.eye}</button></label>
+ <label class="lgfld">${LGI.lock}<span class="vh">Password</span><input id="lgp" type="password" autocomplete="${up ? "new-password" : "current-password"}" placeholder="${up ? "Choose a password (8+ characters)" : "Enter your password"}" required minlength="${up ? 8 : 6}"><button type="button" class="lgeye" id="lgeye" aria-label="Show password" aria-pressed="false">${LGI.eye}</button></label>
  <div class="lgrow"><label class="lgrem"><input type="checkbox" id="lgr" checked> <span>Remember me</span></label>${up ? "" : '<button type="button" class="lglink" id="lgfg">Forgot password?</button>'}</div>
  <p class="lgmsg" id="lgmsg" role="alert"></p>
  <button type="submit" class="lgbtn" id="lgok">${up ? "Create account" : "Log in"}</button>
@@ -149,6 +151,8 @@ async function lgEmail() {
   const em = $("lge").value.trim(),
     pw = $("lgp").value;
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) return lgMsg("Please enter a valid email address.");
+  // New accounts: 8+ characters. Log in: older accounts may still have 6 or 7.
+  if (LG.mode === "up" && pw.length < 8) return lgMsg("The password needs at least 8 characters.");
   if (pw.length < 6) return lgMsg("The password needs at least 6 characters.");
   lgMsg("");
   lgBusy(true);

@@ -955,6 +955,8 @@ window.HE_EXT = {
   "Enter your email": "הזן את האימייל שלך",
   "Password": "סיסמה",
   "Choose a password (6+ characters)": "בחר סיסמה (6 תווים לפחות)",
+  "Choose a password (8+ characters)": "בחר סיסמה (8 תווים לפחות)",
+  "The password needs at least 8 characters.": "הסיסמה צריכה לפחות 8 תווים.",
   "Enter your password": "הזן את הסיסמה שלך",
   "Show password": "הצג סיסמה",
   "Hide password": "הסתר סיסמה",
