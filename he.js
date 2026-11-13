@@ -971,5 +971,10 @@ window.HE_EXT = {
     'הקלד את האימייל שלך למעלה, ואז לחץ שוב על "שכחת סיסמה?".',
   "If this email has an account, a reset link is on its way. Check your inbox.":
     "אם לאימייל הזה יש חשבון, קישור לאיפוס סיסמה בדרך. בדוק את תיבת הדואר.",
-  "By continuing you agree to our terms:": "בהמשך אתה מסכים לתנאים שלנו:"
+  "By continuing you agree to our terms:": "בהמשך אתה מסכים לתנאים שלנו:",
+  "Weekly stock scanner: 1 scan, up to 5 stocks": "סורק מניות שבועי: סריקה אחת, עד 5 מניות",
+  "Weekly stock scanner: 2 scans, up to 25 stocks": "סורק מניות שבועי: 2 סריקות, עד 25 מניות",
+  "Weekly stock scanner: 5 scans, up to 50 stocks": "סורק מניות שבועי: 5 סריקות, עד 50 מניות",
+  "Weekly stock scanner: unlimited scans, all stocks":
+    "סורק מניות שבועי: סריקות ללא הגבלה, כל המניות"
 };
