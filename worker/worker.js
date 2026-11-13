@@ -8,6 +8,7 @@
  *   Variable GEMINI_MODEL     – model name from Google AI Studio
  *   Variable MAX_MSG, MAX_IMG, MAX_GLOBAL – daily limits (per user, per user, whole site)
  *   KV binding USAGE          – stores the daily counters (only numbers, never content)
+ *   Secret   FINNHUB_API_KEY  – market facts for Wick, and live prices for the journal (GET /px, 13.11)
  * To switch to Claude later: replace callModel() only.
  */
 
@@ -224,6 +225,73 @@ async function stockFacts(env, sym) {
   }
 }
 
+/* ---------- live prices for the journal (13.11) ----------
+ * GET /px?s=AAPL,MSFT  – signed-in users only. Returns { p: {AAPL: 190.1}, old: {...}, miss: [...], busy }.
+ * One shared cache for everyone on this server: the same ticker is asked from Finnhub at most once a
+ * minute while the US market is open, and once in 30 minutes when it is closed. So the browser no longer
+ * needs the public Finnhub key, and users no longer use up one shared limit. Only symbols and prices. */
+const PX = new Map();      // ticker -> { p: price, at: time }
+const PX_WAIT = new Map(); // ticker -> Finnhub request already on its way
+const PX_MAX = 60;         // tickers per request
+const PX_NEW = 40;         // new Finnhub calls per request (Cloudflare allows 50 outside calls per request)
+const PX_RE = /^[A-Z0-9.\-]{1,10}$/;
+// Is the US market open now (New York time, Mon–Fri 9:30–16:00).
+function nyOpen() {
+  try {
+    const f = new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", weekday: "short", hour: "numeric", minute: "numeric", hour12: false }).formatToParts(new Date());
+    const g = k => (f.find(p => p.type === k) || {}).value, x = (+g("hour") % 24) * 60 + +g("minute");
+    return !["Sat", "Sun"].includes(g("weekday")) && x >= 570 && x < 960;
+  } catch { return false; }
+}
+// One price from Finnhub (a second user asking for the same ticker waits for the same answer).
+function pxOne(env, t) {
+  if (PX_WAIT.has(t)) return PX_WAIT.get(t);
+  const job = (async () => {
+    try {
+      const r = await fetch("https://finnhub.io/api/v1/quote?symbol=" + encodeURIComponent(t), { headers: { "X-Finnhub-Token": env.FINNHUB_API_KEY } });
+      if (r.status === 429) return "busy";
+      if (!r.ok) return null;
+      const d = await r.json();
+      if (d && d.c > 0) {
+        if (PX.size > 5000) PX.clear();
+        PX.set(t, { p: d.c, at: Date.now() });
+        return d.c;
+      }
+      return null;
+    } catch { return null; }
+    finally { PX_WAIT.delete(t); }
+  })();
+  PX_WAIT.set(t, job);
+  return job;
+}
+async function prices(req, env, ch) {
+  let su = null;
+  try { su = await verifyIdToken((req.headers.get("Authorization") || "").replace(/^Bearer\s+/i, ""), env.FIREBASE_PROJECT); } catch { return json(503, { e: "keys" }, ch); }
+  if (!su) return json(401, { e: "auth" }, ch);
+  if (!env.FINNHUB_API_KEY) return json(503, { e: "no key" }, ch);
+  const s = [...new Set(String(new URL(req.url).searchParams.get("s") || "").toUpperCase().split(",").map(x => x.trim()).filter(x => PX_RE.test(x)))].slice(0, PX_MAX);
+  if (!s.length) return json(400, { e: "input" }, ch);
+  const ttl = nyOpen() ? 60e3 : 30 * 60e3, now = Date.now(), p = {}, need = [];
+  for (const t of s) {
+    const c = PX.get(t);
+    if (c && now - c.at < ttl) p[t] = c.p;
+    else need.push(t);
+  }
+  const ask = need.slice(0, PX_NEW);
+  let busy = false;
+  // Five at a time; stop when Finnhub says "too many" (the browser asks again soon).
+  for (let i = 0; i < ask.length && !busy; i += 5) {
+    const part = ask.slice(i, i + 5), got = await Promise.all(part.map(t => pxOne(env, t)));
+    got.forEach((v, j) => { if (v === "busy") busy = true; else if (v > 0) p[part[j]] = v; });
+  }
+  // More new tickers than one request may ask for: the rest come on the next request.
+  if (need.length > ask.length) busy = true;
+  // An older price is better than none: send it separately, so the browser shows it but asks again.
+  const old = {};
+  for (const t of need) if (p[t] == null && PX.has(t)) old[t] = PX.get(t).p;
+  return json(200, { p, old, miss: s.filter(t => p[t] == null), busy }, ch);
+}
+
 /* ---------- the model (swap this function to change provider) ---------- */
 async function callModel(env, inp) {
   if (!env.GEMINI_API_KEY || !env.GEMINI_MODEL) throw Object.assign(new Error("not configured"), { code: 503 });
@@ -269,6 +337,7 @@ export default {
       if (!data) return json(404, { e: "no scan yet" }, ch);
       return new Response(data, { status: 200, headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "private, max-age=3600", ...ch } });
     }
+    if (req.method === "GET" && new URL(req.url).pathname === "/px") return prices(req, env, ch);
     if (req.method !== "POST") return json(405, { e: "method" }, ch);
     if (BLOCKED_COUNTRIES.has(String((req.cf && req.cf.country) || "").toUpperCase())) return json(451, { e: "region" }, ch);
 

@@ -317,6 +317,19 @@ async function ltFetch(list) {
     return ltSoft();
   }
   ltBusy = true;
+  // Through our server first (js/05 pxAsk, 13.11); if it cannot be used, straight from Finnhub below.
+  const sv = await pxAsk([...new Set(list.map(h => h.t))]);
+  if (sv) {
+    for (const h of list)
+      ltMsg[h.id] = sv.got.has(h.t)
+        ? ""
+        : sv.busy
+          ? "Too many price requests right now. Try again in a minute."
+          : "Finnhub has no price for this symbol. Enter a manual price.";
+    ltBusy = false;
+    save();
+    return ltSoft();
+  }
   for (let i = 0; i < list.length; i++) {
     const h = list[i];
     ltMsg[h.id] = "Loading price...";

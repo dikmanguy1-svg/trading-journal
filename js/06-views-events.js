@@ -415,6 +415,20 @@ function view() {
   }
 }
 // The small P&L summary box at the top.
+// While some prices are missing, say so next to the totals, so a partial sum is not taken as final (13.11).
+// Counts open trades and long-term holdings with a ticker (a manual price counts as a price).
+function hsPxNote() {
+  const o = S.trades.filter(t => t.x == null && t.t),
+    l = ltD().h.filter(h => h.t),
+    n = o.length + l.length,
+    h = o.filter(t => lp(t) != null).length + l.filter(x => ltPx(x) != null).length;
+  if (!n || h >= n) return "";
+  const he = LANG === "he",
+    v = pxBusy
+      ? (he ? "מעדכן " : "Updating ") + h + "/" + n
+      : (he ? "חסר מחיר ל-" : "Missing for ") + (n - h);
+  return `<div class="hspx" data-nt><span>${he ? "מחירים" : "Prices"}</span><b class="mut">${v}</b></div>`;
+}
 function hs() {
   const cl = S.trades.filter(t => t.x != null),
     P = cl.map(pnl),
@@ -437,7 +451,7 @@ function hs() {
       : "";
   $("hs").innerHTML =
     S.trades.length || LT
-      ? `<small>P&amp;L</small><b class="${cls}">${$f(tot)}</b><em class="${cls}">${(pc > 0 ? "+" : "") + pc.toFixed(2)}%</em>${bk}${ac}<div><span>Win rate</span><b>${cl.length ? Math.round((w / cl.length) * 100) + "%" : "–"}</b></div><div><span>Closed trades</span><b>${cl.length}</b></div><div><span>Open positions</span><b>${S.trades.length - cl.length}</b></div>${fl2 != null ? `<div><span>Open P&amp;L</span><b class="${fl2 > 0 ? "pos" : "neg"}">${$f(fl2)}</b></div>` : ""}`
+      ? `<small>P&amp;L</small><b class="${cls}">${$f(tot)}</b><em class="${cls}">${(pc > 0 ? "+" : "") + pc.toFixed(2)}%</em>${hsPxNote()}${bk}${ac}<div><span>Win rate</span><b>${cl.length ? Math.round((w / cl.length) * 100) + "%" : "–"}</b></div><div><span>Closed trades</span><b>${cl.length}</b></div><div><span>Open positions</span><b>${S.trades.length - cl.length}</b></div>${fl2 != null ? `<div><span>Open P&amp;L</span><b class="${fl2 > 0 ? "pos" : "neg"}">${$f(fl2)}</b></div>` : ""}`
       : `<small>P&amp;L</small><b>–</b><em>&nbsp;</em>${ac}<div><span>Win rate</span><b>–</b></div><div><span>Log a trade to start</span><b></b></div>`;
 }
 document.addEventListener("input", e => {

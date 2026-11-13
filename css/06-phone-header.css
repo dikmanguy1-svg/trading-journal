@@ -57,6 +57,32 @@
     padding: 0;
     white-space: nowrap;
   }
+  /* "Updating 1/2" while prices load (13.11): on the phone a small label on the top edge of the box,
+     so it takes no room from the P&L line. */
+  #hs {
+    position: relative;
+  }
+  #hs div.hspx {
+    display: block;
+    position: absolute;
+    top: -9px;
+    inset-inline-end: 14px;
+    border: 0;
+    padding: 1px 8px;
+    border-radius: 999px;
+    background: var(--card);
+    color: var(--ink);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+    line-height: 1.4;
+    white-space: nowrap;
+  }
+  #hs div.hspx span {
+    display: none;
+  }
+  #hs div.hspx b {
+    font-size: 11px;
+    font-weight: 600;
+  }
   nav {
     position: sticky;
     top: 0;

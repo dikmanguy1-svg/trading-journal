@@ -74,6 +74,8 @@ function cloudSave() {
   cloudT = setTimeout(async () => {
     try {
       const { key, keyBad, td, tdBad, px, pxT, sma, smaT, ...d } = S;
+      // Last known prices of the user's own tickers (13.11), so totals are right right after login on any device.
+      d.pxl = pxLast();
       await fbm.fs.setDoc(fbm.fs.doc(fbm.db, "users", U.uid), {
         data: JSON.stringify(d),
         updated: Date.now()
@@ -162,7 +164,9 @@ async function onUser(u) {
     try {
       const snap = await fbm.fs.getDoc(fbm.fs.doc(fbm.db, "users", u.uid));
       if (snap.exists()) {
-        S = carry(clean(JSON.parse(snap.data().data)));
+        const cd = JSON.parse(snap.data().data);
+        S = carry(clean(cd));
+        pxFromCloud(cd.pxl);
         cloudReady = true;
       } else if (
         LOCAL &&

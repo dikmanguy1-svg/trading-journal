@@ -183,6 +183,25 @@ function pxCacheLoad() {
       }
   } catch (e) {}
 }
+// Last known prices of the user's own tickers (open trades, long-term, watchlist), saved with the journal.
+function pxLast() {
+  const o = {},
+    want = new Set([
+      ...S.trades.filter(t => t.x == null).map(t => t.t),
+      ...ltSyms(),
+      ...S.wl.map(w => w.t)
+    ]);
+  for (const t of want) if (t && S.px && +S.px[t] > 0) o[t] = +S.px[t];
+  return o;
+}
+// After login: use the prices saved with the journal for tickers this device has no price for yet.
+// They are not marked fresh, so the live prices load right after.
+function pxFromCloud(o) {
+  if (!o || typeof o !== "object") return;
+  S.px = S.px || {};
+  for (const t in o)
+    if (/^[A-Z0-9.\-]{1,10}$/.test(t) && +o[t] > 0 && S.px[t] == null) S.px[t] = +o[t];
+}
 function pxCacheSave() {
   try {
     localStorage.setItem("tj_px", JSON.stringify({ p: S.px || {}, t: S.pxT || {} }));
@@ -215,8 +234,11 @@ async function getPx() {
     sd = smaDue();
   if (!todo.length && (!sd.length || smaBusy)) return;
   pxBusy = true;
+  hs();
   try {
-    await pxLoop(todo, new Set([...lts, ...opn]), open, el, fst);
+    // Our server first (13.11); if it cannot be used, the old way (straight from Finnhub).
+    if (!(await pxServer(todo, open, el, fst)))
+      await pxLoop(todo, new Set([...lts, ...opn]), open, el, fst);
   } finally {
     // Never stay "busy" after an error, or prices would stop updating until a reload.
     pxBusy = false;
@@ -229,6 +251,84 @@ async function getPx() {
 // A price that could not be loaded is tried again in 2 minutes (not hours later).
 const pxRetry = (t, age) => (S.pxT[t] = Date.now() - age + 12e4);
 // Load the prices one by one (Finnhub allows about one a second).
+// Prices from our server (13.11): one shared cache for all users, and the Finnhub key stays secret.
+// Asks for up to 40 tickers at once. Returns false when the server cannot be used (then the old way runs).
+// tks: tickers to ask for (the first group first). Returns { got, miss, busy } for js/12.
+async function pxAsk(tks) {
+  if (!U || typeof CO_URL !== "string" || !CO_URL || !tks.length) return null;
+  const got = new Set(),
+    miss = new Set();
+  let busy = false;
+  try {
+    const tok = await U.getIdToken();
+    for (let i = 0; i < tks.length; i += 40) {
+      const part = tks.slice(i, i + 40),
+        ctl = new AbortController(),
+        tm = setTimeout(() => ctl.abort(), 20000);
+      let r, d;
+      try {
+        r = await fetch(CO_URL + "/px?s=" + encodeURIComponent(part.join(",")), {
+          headers: { Authorization: "Bearer " + tok },
+          signal: ctl.signal
+        });
+        d = r.ok ? await r.json() : null;
+      } finally {
+        clearTimeout(tm);
+      }
+      // The server is not ready (for example an older version): use the old way.
+      if (!d || typeof d.p !== "object") {
+        if (!i) return null;
+        part.forEach(t => miss.add(t));
+        continue;
+      }
+      S.px = S.px || {};
+      S.pxT = S.pxT || {};
+      for (const t of part) {
+        const v = +d.p[t],
+          o = d.old ? +d.old[t] : 0;
+        if (v > 0) {
+          S.px[t] = v;
+          S.pxT[t] = Date.now();
+          got.add(t);
+        } else {
+          // An older price from the server is better than none, but it is asked again soon.
+          if (o > 0 && S.px[t] == null) S.px[t] = o;
+          miss.add(t);
+        }
+      }
+      if (d.busy) busy = true;
+    }
+  } catch (e) {
+    if (!got.size && !miss.size) return null;
+  }
+  return { got, miss, busy };
+}
+// Load prices through our server for getPx(). Returns false when the server cannot be used.
+async function pxServer(todo, open, el, fst) {
+  const age = open ? 18e4 : 216e5,
+    a = todo.filter(t => fst && fst.has(t)),
+    b = todo.filter(t => !(fst && fst.has(t)));
+  let ok = 0,
+    bad = 0,
+    any = false;
+  // The first group (what the user is looking at) gets its own request, so it shows first.
+  for (const part of [a, b]) {
+    if (!part.length) continue;
+    if (el) el.textContent = "Loading prices...";
+    const r = await pxAsk(part);
+    if (!r) {
+      if (!any) return false;
+      part.forEach(t => (bad++, pxRetry(t, age)));
+      continue;
+    }
+    any = true;
+    ok += r.got.size;
+    r.miss.forEach(t => (bad++, pxRetry(t, age)));
+    pxShow();
+  }
+  pxDone(ok, bad, open, todo.length, el);
+  return true;
+}
 // fst: the group shown first (open trades on the Trade journal tab, otherwise long-term holdings).
 async function pxLoop(todo, key, open, el, fst) {
   const age = open ? 18e4 : 216e5;
@@ -285,9 +385,13 @@ async function pxLoop(todo, key, open, el, fst) {
       pxShow();
     await pause(1100);
   }
+  pxDone(ok, bad, open, todo.length, el);
+}
+// The price status line ("Prices updated 15:42 · US market open").
+function pxDone(ok, bad, open, n, el) {
   pxMsg = S.keyBad
     ? "The key was not accepted. Check it and save it again."
-    : (ok || !todo.length
+    : (ok || !n
         ? "Prices updated " +
           new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) +
           " · US market " +
