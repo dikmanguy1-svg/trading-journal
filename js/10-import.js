@@ -931,3 +931,17 @@ ${sh
 ${rows.length > 300 ? `<p class="mut sm">${L(`Showing 300 of ${rows.length} rows. All of them will be imported.`, `מוצגות 300 מתוך ${rows.length} שורות. כולן ייובאו.`)}</p>` : ""}
 <p style="margin-top:12px">${I.T.length || I.F.length ? `<button data-a="imok">${I.T.length ? L(`Import ${I.T.length} trade${I.T.length === 1 ? "" : "s"}`, `ייבא ${I.T.length} עסקאות`) : ""}${I.T.length && I.F.length ? " + " : ""}${I.F.length ? L(`add ${I.F.length} exit date${I.F.length === 1 ? "" : "s"}`, `הוסף ${I.F.length} תאריכי יציאה`) : ""}</button> ` : ""}<button class="gh" data-a="imno">${L("Cancel", "ביטול")}</button></p>`;
 }
+
+// The file picker for "Choose file" lives outside the page area that view() redraws.
+// If it were redrawn (prices refresh every minute) while the file window is open,
+// the chosen file would be lost. The label in the Import card points to it (for="imf").
+(() => {
+  const i = document.createElement("input");
+  i.type = "file";
+  i.id = "imf";
+  i.accept = ".xlsx,.xls,.csv,.tsv,.txt,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+  i.className = "vh";
+  i.tabIndex = -1;
+  i.setAttribute("aria-hidden", "true");
+  document.body.appendChild(i);
+})();

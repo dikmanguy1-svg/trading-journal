@@ -3,7 +3,7 @@
  *
  * This device, backups and the user's cloud account.
  * - load(): reads data saved on this device.
- * - Export / import backup buttons.
+ * - (Backup and restore moved to js/18f-backup.js.)
  * - FB: Firebase settings (the apiKey is public by design; Firestore rules protect the data).
  * - cloudSave(): writes the whole journal to Firestore users/{uid}.
  * - onUser(): runs when someone logs in or out; loads their journal.
@@ -36,38 +36,7 @@ function load() {
     }
   } catch (e) {}
 }
-$("ex").onclick = () => {
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(
-    new Blob(
-      [
-        JSON.stringify({ ...S, key: undefined, keyBad: undefined, td: undefined, tdBad: undefined })
-      ],
-      { type: "application/json" }
-    )
-  );
-  a.download = "trading-journal-backup.json";
-  a.click();
-};
-$("im").onchange = async e => {
-  const f = e.target.files[0];
-  if (!f) return;
-  try {
-    const d = JSON.parse(await f.text());
-    if (f.size > 3e6 || !Array.isArray(d.trades)) throw 0;
-    if (!cf("Replace the data on this device with this backup?")) return;
-    const k = S.key,
-      k2 = S.td;
-    S = clean(d);
-    if (k2) S.td = k2;
-    if (!S.key && k) S.key = k;
-    save();
-    view();
-  } catch (x) {
-    al("This file is not a valid backup.");
-  }
-  e.target.value = "";
-};
+// Backup and restore now live in js/18f-backup.js (card on the Trade journal tab).
 /* ---- Accounts (Firebase). Stays hidden until FB is filled in. ---- */
 // Firebase settings. The apiKey is public by design.
 const FB = {
