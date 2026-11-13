@@ -151,8 +151,31 @@ function pxShow() {
   }
 }
 // Load live prices from Finnhub for long-term holdings, open trades and the watchlist.
+// Last known prices, kept on this device (13.11), so totals are right the moment the site opens
+// instead of showing buy prices until the new prices arrive. Only tickers and prices, nothing else.
+const pxSeen = new WeakSet();
+function pxCacheLoad() {
+  if (!S.px || typeof S.px !== "object") S.px = {};
+  if (!S.pxT || typeof S.pxT !== "object") S.pxT = {};
+  if (pxSeen.has(S.px)) return;
+  pxSeen.add(S.px);
+  try {
+    const c = JSON.parse(localStorage.getItem("tj_px") || "{}");
+    for (const t in c.p || {})
+      if (S.px[t] == null && +c.p[t] > 0) {
+        S.px[t] = +c.p[t];
+        if (!S.pxT[t]) S.pxT[t] = +(c.t || {})[t] || 0;
+      }
+  } catch (e) {}
+}
+function pxCacheSave() {
+  try {
+    localStorage.setItem("tj_px", JSON.stringify({ p: S.px || {}, t: S.pxT || {} }));
+  } catch (e) {}
+}
 async function getPx() {
   if (!FK || S.keyBad) return;
+  pxCacheLoad();
   // Already loading: run once more right after, so new holdings (e.g. after login) are not missed.
   if (pxBusy) return void (pxAgain = true);
   pxAgain = false;
@@ -172,13 +195,28 @@ async function getPx() {
     sd = smaDue();
   if (!todo.length && (!sd.length || smaBusy)) return;
   pxBusy = true;
-  const key = new Set([...lts, ...opn]);
+  try {
+    await pxLoop(todo, new Set([...lts, ...opn]), open, el);
+  } finally {
+    // Never stay "busy" after an error, or prices would stop updating until a reload.
+    pxBusy = false;
+  }
+  pxCacheSave();
+  smaRun();
+  pxShow();
+  if (pxAgain) getPx();
+}
+// A price that could not be loaded is tried again in 2 minutes (not hours later).
+const pxRetry = (t, age) => (S.pxT[t] = Date.now() - age + 12e4);
+// Load the prices one by one (Finnhub allows about one a second).
+async function pxLoop(todo, key, open, el) {
+  const age = open ? 18e4 : 216e5;
   let ok = 0,
     bad = 0,
     rt = 0;
   for (let i = 0; i < todo.length; i++) {
     const t = todo[i];
-    el.textContent = "Loading prices " + (i + 1) + "/" + todo.length + "...";
+    if (el) el.textContent = "Loading prices " + (i + 1) + "/" + todo.length + "...";
     try {
       const r = await fetch(
         "https://finnhub.io/api/v1/quote?symbol=" +
@@ -202,26 +240,28 @@ async function getPx() {
           continue;
         }
         bad++;
-        S.pxT[t] = Date.now();
+        pxRetry(t, age);
         continue;
       }
       const d = await r.json();
-      S.pxT[t] = Date.now();
       if (d && d.c > 0) {
         S.px[t] = d.c;
+        S.pxT[t] = Date.now();
         ok++;
         rt = 0;
-      } else bad++;
+      } else {
+        bad++;
+        pxRetry(t, age);
+      }
     } catch (e) {
       bad++;
-      S.pxT[t] = Date.now();
+      pxRetry(t, age);
     }
     // Long-term holdings and open trades load first. Once they are in, show the new totals
     // right away, without waiting for the watchlist prices.
     if (key.has(t) && !key.has(todo[i + 1])) pxShow();
     await pause(1100);
   }
-  pxBusy = false;
   pxMsg = S.keyBad
     ? "The key was not accepted. Check it and save it again."
     : (ok || !todo.length
@@ -236,8 +276,5 @@ async function getPx() {
         : S.candBad && !S.td
           ? " · For automatic SMA150 add a free Twelve Data key in Settings"
           : "");
-  el.textContent = pxMsg;
-  smaRun();
-  pxShow();
-  if (pxAgain) getPx();
+  if (el) el.textContent = pxMsg;
 }

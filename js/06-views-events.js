@@ -83,6 +83,7 @@ let aplTab = null;
 function view() {
   // The P&L box first, so new prices show on every tab even if drawing the tab below fails.
   try {
+    if (typeof pxCacheLoad === "function") pxCacheLoad();
     hs();
   } catch (e) {}
   ltSync();
