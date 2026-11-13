@@ -430,7 +430,7 @@ function clean(d) {
       return {
         c: (Array.isArray(s.c) ? s.c : [])
           .slice(0, 20)
-          .map(x => ({ f: t(x?.f, 20), op: t(x?.op, 2), v: t(x?.v, 40) })),
+          .map(x => ({ f: t(x?.f, 20), op: t(x?.op, 2), v: t(x?.v, 400) })),
         sk: t(s.sk, 20),
         sd: s.sd === -1 ? -1 : 1
       };

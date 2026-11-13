@@ -64,6 +64,34 @@
   outline: 2px solid var(--ac);
   outline-offset: 2px;
 }
+/* Ready-made ranges: all chips look the same; only the user's own picks show as chosen. */
+.scn .scchips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex: 1 1 100%;
+}
+.scn .scchip {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: inherit;
+  border-radius: 999px;
+  padding: 5px 12px;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+.scn .scchip[aria-pressed="true"] {
+  border-color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--ink);
+}
+.scn .scchip[aria-pressed="true"]::before {
+  content: "✓ ";
+}
+.scn .scchip:focus-visible {
+  outline: 2px solid var(--ac);
+  outline-offset: 2px;
+}
 @media (max-width: 640px) {
   /* Room for the round Wick button: it never sits over the text or the last result. */
   .scn {
