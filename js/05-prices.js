@@ -141,15 +141,30 @@ async function smaStep() {
 }
 // Redraw with the prices loaded so far. While the user is typing in a field (any tab,
 // e.g. Strategy), only the P&L box at the top is redrawn, so the field is not lost.
+// pxLate: new prices arrived while the user was in a field; redraw as soon as they leave it (13.11).
+let pxLate = false;
+const pxInField = () => {
+  const a = document.activeElement;
+  return !!(a && /INPUT|SELECT|TEXTAREA/.test(a.tagName));
+};
 function pxShow() {
   try {
     hs();
-    const a = document.activeElement;
-    if (!a || !/INPUT|SELECT|TEXTAREA/.test(a.tagName)) view();
+    if (!pxInField()) {
+      pxLate = false;
+      view();
+    } else pxLate = true;
   } catch (e) {
     // A drawing error must not stop the price loading (it would stay "busy" for good).
   }
 }
+// The user left a field: if new prices are waiting, show them now (no need to switch tabs).
+document.addEventListener("focusout", () => {
+  if (!pxLate) return;
+  setTimeout(() => {
+    if (pxLate && !pxInField()) pxShow();
+  }, 0);
+});
 // Load live prices from Finnhub for long-term holdings, open trades and the watchlist.
 // Last known prices, kept on this device (13.11), so totals are right the moment the site opens
 // instead of showing buy prices until the new prices arrive. Only tickers and prices, nothing else.
@@ -186,7 +201,12 @@ async function getPx() {
   // (like the long-term panel), so the total is right without opening the panel.
   const opn = S.trades.filter(t => t.x == null).map(t => t.t),
     lts = ltSyms(),
-    need = [...new Set([...lts, ...opn, ...S.wl.map(w => w.t)])].filter(Boolean);
+    // On the Trade journal tab, open trades load first; elsewhere long-term holdings first (13.11).
+    jr = tab === "jr",
+    fst = new Set(jr ? opn : lts),
+    need = [
+      ...new Set([...(jr ? [...opn, ...lts] : [...lts, ...opn]), ...S.wl.map(w => w.t)])
+    ].filter(Boolean);
   S.px = S.px || {};
   S.pxT = S.pxT || {};
   const todo = need.filter(
@@ -196,7 +216,7 @@ async function getPx() {
   if (!todo.length && (!sd.length || smaBusy)) return;
   pxBusy = true;
   try {
-    await pxLoop(todo, new Set([...lts, ...opn]), open, el);
+    await pxLoop(todo, new Set([...lts, ...opn]), open, el, fst);
   } finally {
     // Never stay "busy" after an error, or prices would stop updating until a reload.
     pxBusy = false;
@@ -209,7 +229,8 @@ async function getPx() {
 // A price that could not be loaded is tried again in 2 minutes (not hours later).
 const pxRetry = (t, age) => (S.pxT[t] = Date.now() - age + 12e4);
 // Load the prices one by one (Finnhub allows about one a second).
-async function pxLoop(todo, key, open, el) {
+// fst: the group shown first (open trades on the Trade journal tab, otherwise long-term holdings).
+async function pxLoop(todo, key, open, el, fst) {
   const age = open ? 18e4 : 216e5;
   let ok = 0,
     bad = 0,
@@ -259,7 +280,9 @@ async function pxLoop(todo, key, open, el) {
     }
     // Long-term holdings and open trades load first. Once they are in, show the new totals
     // right away, without waiting for the watchlist prices.
-    if (key.has(t) && !key.has(todo[i + 1])) pxShow();
+    // The first group is shown as soon as it is in, too.
+    if ((key.has(t) && !key.has(todo[i + 1])) || (fst && fst.has(t) && !fst.has(todo[i + 1])))
+      pxShow();
     await pause(1100);
   }
   pxMsg = S.keyBad
