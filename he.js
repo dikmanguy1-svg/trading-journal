@@ -1010,5 +1010,8 @@ window.HE_EXT = {
   "Sep": "ספט",
   "Oct": "אוק",
   "Nov": "נוב",
-  "Dec": "דצמ"
+  "Dec": "דצמ",
+  "Add deposit reminders to my calendar": "הוסף תזכורות הפקדה ללוח השנה שלי",
+  "A repeating reminder on each deposit day. Works with Google, Apple and Outlook calendars.":
+    "תזכורת חוזרת בכל יום הפקדה. עובד עם לוח השנה של Google, Apple ו-Outlook."
 };

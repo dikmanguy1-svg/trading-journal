@@ -133,6 +133,46 @@ const ltNm = h => (h.t || h.nm ? esc(h.t) + (h.t && h.nm ? " · " : "") + esc(h.
 // Number input HTML.
 const ltIn = (lab, f, v, x = "") =>
   `<label>${lab}<input type="number" step="any" inputmode="decimal" data-lf="${f}" value="${v ?? ""}"${x}></label>`;
+// Download a calendar file (.ics) with a repeating reminder for every planned deposit.
+function ltIcs() {
+  const F = { w: "WEEKLY", m: "MONTHLY", y: "YEARLY" },
+    st = new Date().toISOString().replace(/[-:]/g, "").slice(0, 15) + "Z",
+    ev = ltD()
+      .h.filter(h => h.r && h.r.on && h.r.s)
+      .map(h => {
+        const d = (ltNext(h) || h.r.s).replace(/-/g, ""),
+          nm = String(h.t || h.nm || "holding").replace(/[,;\\\n]/g, " ");
+        return [
+          "BEGIN:VEVENT",
+          "UID:tradeink-" + h.id + "@tradeink",
+          "DTSTAMP:" + st,
+          "DTSTART;VALUE=DATE:" + d,
+          "RRULE:FREQ=" + (F[h.r.f] || "MONTHLY"),
+          "SUMMARY:TradeInk: deposit" + (h.r.a ? " $" + h.r.a : "") + " into " + nm,
+          "DESCRIPTION:Record it in TradeInk: https://dikmanguy1-svg.github.io/trading-journal/",
+          "BEGIN:VALARM",
+          "TRIGGER:PT9H",
+          "ACTION:DISPLAY",
+          "DESCRIPTION:Deposit day",
+          "END:VALARM",
+          "END:VEVENT"
+        ].join("\r\n");
+      });
+  if (!ev.length) return;
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(
+    new Blob(
+      [
+        ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//TradeInk//EN", ...ev, "END:VCALENDAR"].join(
+          "\r\n"
+        )
+      ],
+      { type: "text/calendar" }
+    )
+  );
+  a.download = "tradeink-deposit-reminders.ics";
+  a.click();
+}
 // HTML of the holdings list.
 function ltHold() {
   const L = ltD(),
@@ -140,6 +180,9 @@ function ltHold() {
   let o = `<div class="ltk"><div class="k"><small>Total value</small><b>${$f(T.val, 0)}</b></div><div class="k"><small>Deposited</small><b>${$f(T.inv, 0)}</b></div><div class="k"><small>P&L</small><b class="${ltCls(T.pl)}"><span class="ltn">${(T.pl > 0 ? "+" : "") + $f(T.pl, 0)}</span> ${ltPct(T.pl, T.inv)}</b></div></div>`;
   if (T.miss)
     o += `<p class="mut sm ltp">Some holdings have no price yet, so they are counted at what you deposited.</p>`;
+  // Deposit reminders in the user's own calendar (14.11): one repeating event per planned deposit.
+  if (L.h.some(h => h.r && h.r.on && h.r.s))
+    o += `<p class="ltrem"><button class="gh sm" data-l="ics">Add deposit reminders to my calendar</button> <span class="mut sm">A repeating reminder on each deposit day. Works with Google, Apple and Outlook calendars.</span></p>`;
   for (const h of ltDue()) {
     const p = ltPx(h);
     o += `<div class="ltdue" data-id="${h.id}"><b>Planned deposit due</b><div class="mut ltdm"><span>${ltNm(h)}</span> · <span class="ltn">${ltNext(h)}</span></div><div class="ltg2">${ltIn("Amount ($)", "ra", h.r.a)}${ltIn("Price ($)", "rp", p != null ? +p.toFixed(4) : "")}</div><p><button class="sm" data-l="rec" data-id="${h.id}">Record</button> <button class="gh sm" data-l="skip" data-id="${h.id}">Skip</button></p></div>`;
@@ -374,6 +417,7 @@ document.addEventListener("click", e => {
   const a = b.dataset.l,
     h = b.dataset.id ? ltFind(b.dataset.id) : null,
     L = ltD();
+  if (a === "ics") return ltIcs();
   if (a === "open") return ltShow(true);
   if (a === "x") return ltShow(false);
   if (a === "tab") {
