@@ -218,3 +218,119 @@
   padding-top: 5px;
   padding-bottom: 5px;
 }
+
+/* ---- Landing: three notebook pages that take turns (plan, size, review) ---- */
+.lsnb {
+  position: relative;
+  width: min(420px, 100%);
+  height: 250px;
+  margin: 26px auto 0;
+  text-align: start;
+}
+.lsp {
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  background-color: #f4efe5;
+  background-image: repeating-linear-gradient(transparent 0 33px, rgba(15, 38, 32, 0.09) 33px 34px);
+  border-radius: 22px;
+  border-top: 4px solid #b8a4ff;
+  padding: 14px 22px 14px 52px;
+  color: #0f2620;
+  box-shadow: 0 24px 50px -28px rgba(0, 0, 0, 0.7);
+  animation: lsFlip 12s infinite;
+}
+.lsp::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 36px;
+  width: 1.5px;
+  background: rgba(124, 92, 230, 0.35);
+}
+[dir="rtl"] .lsp {
+  padding: 14px 52px 14px 22px;
+}
+.lsp2 {
+  animation-delay: -8s;
+}
+.lsp3 {
+  animation-delay: -4s;
+}
+.lspt {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  height: 34px;
+}
+.lspt b {
+  font-family: "Young Serif", "Suez One", serif;
+  font-weight: 400;
+  font-size: 20px;
+}
+.lspt small {
+  color: rgba(15, 38, 32, 0.6);
+}
+.lsp p {
+  margin: 0;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 15px;
+}
+.lsp p:has(.lsy) {
+  justify-content: flex-start;
+}
+.lsy {
+  color: #1d7a4c;
+  font-weight: 700;
+}
+.lsp .lsw {
+  justify-content: flex-start;
+  font-family: var(--hw);
+  font-size: 22px;
+  color: #5a3fc0;
+}
+.lsp :is(.pos) {
+  color: #1d7a4c;
+}
+.lsp :is(.neg) {
+  color: #b3261e;
+}
+@keyframes lsFlip {
+  0%,
+  28% {
+    opacity: 1;
+    transform: none;
+  }
+  34%,
+  94% {
+    opacity: 0;
+    transform: translateY(-14px) rotate(-3deg);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+/* The notebook pages replace the small cards under the title. */
+.ls-hero:has(.lsnb) .ls-cards {
+  display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .lsp {
+    animation: none;
+  }
+  .lsp2,
+  .lsp3 {
+    display: none;
+  }
+}
+:root.ay-m .lsp {
+  animation: none;
+}
+:root.ay-m :is(.lsp2, .lsp3) {
+  display: none;
+}

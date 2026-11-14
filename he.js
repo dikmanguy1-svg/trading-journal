@@ -1015,5 +1015,22 @@ window.HE_EXT = {
   "A repeating reminder on each deposit day. Works with Google, Apple and Outlook calendars.":
     "תזכורת חוזרת בכל יום הפקדה. עובד עם לוח השנה של Google, Apple ו-Outlook.",
   "Why I'm watching": "למה אני עוקב",
-  "Your reason": "הסיבה שלך"
+  "Your reason": "הסיבה שלך",
+  "Three pages of a trade: plan, size, review": "שלושה דפים של עסקה: תכנון, גודל, סיכום",
+  "Before: the plan": "לפני: התוכנית",
+  "Weekly trend is up": "המגמה השבועית עולה",
+  "Stop set before entry": "סטופ נקבע לפני הכניסה",
+  "Risk 0.8% of my account": "סיכון 0.8% מהחשבון",
+  "Wait for the open, then go.": "מחכים לפתיחה, ואז נכנסים.",
+  "During: the risk": "בזמן: הסיכון",
+  "Entry · Stop": "כניסה · סטופ",
+  "Buy": "קנייה",
+  "If the stop hits": "אם הסטופ נפגע",
+  "Small enough to sleep well.": "קטן מספיק כדי לישון בשקט.",
+  "Looking back": "מבט לאחור",
+  "After: the note": "אחרי: ההערה",
+  "Result": "תוצאה",
+  "Rules kept": "חוקים שנשמרו",
+  "Sold at target. Didn't move my stop.": "מכרתי ביעד. לא הזזתי את הסטופ.",
+  "Proud of this one.": "גאה בעסקה הזאת."
 };
