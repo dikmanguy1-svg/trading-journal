@@ -264,7 +264,7 @@
 .jt tr:hover .rbox {
   border-color: var(--line);
 }
-.jwrap:not(.allc)
+.jwrap:not(.allc):not(.jsimple)
   .jt
   tr
   > :is(

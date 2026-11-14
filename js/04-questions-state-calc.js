@@ -384,7 +384,18 @@ function clean(d) {
                 .filter(([t, x]) => /^[A-Z0-9.\-]{1,10}$/.test(t) && +x > 0)
                 .slice(0, 200)
                 .map(([t, x]) => [t, +x])
-            )
+            ),
+            // e: the last prices seen in that month (js/18g). Missing in data from before 15.11.
+            ...(v.e && typeof v.e === "object"
+              ? {
+                  e: Object.fromEntries(
+                    Object.entries(v.e)
+                      .filter(([t, x]) => /^[A-Z0-9.\-]{1,10}$/.test(t) && +x > 0)
+                      .slice(0, 200)
+                      .map(([t, x]) => [t, +x])
+                  )
+                }
+              : {})
           }
         ])
     ),

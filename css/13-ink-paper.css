@@ -334,3 +334,400 @@
 :root.ay-m :is(.lsp2, .lsp3) {
   display: none;
 }
+
+/* ---- Inviting choices (15.11): every drop-down and every plain outline button ----
+ * Drop-downs: a purple arrow, a soft purple edge, and they light up under the mouse.
+ * Plain buttons (.gh, "Choose file"): a soft purple fill instead of a thin outline.
+ * Not in high contrast (.ay-c keeps its own strong borders). */
+:where(:root:not(.ay-c)) select:not([multiple]) {
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  font-weight: 600;
+  border: 1.5px solid rgba(124, 92, 230, 0.4);
+  border-radius: 12px;
+  padding-inline-end: 38px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' fill='%23b8a4ff' fill-opacity='.35'/%3E%3Cpath d='m7.5 10 4.5 4.5 4.5-4.5' fill='none' stroke='%235a3fc0' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 22px 22px;
+  background-position: right 9px center;
+  box-shadow: 0 1px 0 rgba(15, 38, 32, 0.06);
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s,
+    background-color 0.15s;
+}
+[dir="rtl"] select:not([multiple]) {
+  background-position: left 9px center;
+}
+:where(:root:not(.ay-c)) select:not([multiple]):hover {
+  border-color: #7c5ce6;
+  box-shadow: 0 0 0 3px rgba(184, 164, 255, 0.28);
+}
+:where(:root:not(.ay-c)) select:not([multiple]):focus-visible {
+  border-color: #7c5ce6;
+}
+:root:not(.ay-c) select option {
+  font-weight: 500;
+}
+
+:root:not(.ay-c) :is(button.gh, label.bl):not(nav *):not(.on):not([aria-pressed="true"]) {
+  background: rgba(184, 164, 255, 0.2);
+  border: 1.5px solid rgba(124, 92, 230, 0.5);
+  box-shadow: 0 2px 0 rgba(90, 63, 192, 0.18);
+}
+:root:not(.ay-c) :is(button.gh, label.bl):not(nav *):not(.on):not([aria-pressed="true"]):hover {
+  background: #b8a4ff;
+  border-color: #b8a4ff;
+  color: #0f2620;
+}
+:root:not(.ay-c) :is(button.gh, label.bl):not(nav *):active {
+  box-shadow: none;
+  transform: translateY(1px);
+}
+:root:not(.ay-c) :is(button.gh, label.bl):disabled {
+  opacity: 0.5;
+  box-shadow: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  :where(:root) select {
+    transition: none;
+  }
+}
+
+/* ---- Trade journal: short rows, each opens the trade's notebook page (js/18i) ---- */
+.jsimple .jt {
+  min-width: 760px;
+}
+.jsimple .jt tbody tr[data-tpo] {
+  cursor: pointer;
+}
+.jsimple .jt tbody tr[data-tpo]:hover td {
+  background: rgba(184, 164, 255, 0.14);
+}
+.jrs {
+  display: block;
+  max-width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+:root:not(.ay-c) .jrs {
+  font-family: var(--hw);
+  font-size: 20px;
+  color: #5a3fc0;
+}
+.jrs.empty {
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--mut);
+  font-style: italic;
+}
+.jst {
+  display: inline-block;
+  padding: 1px 9px;
+  border-radius: 999px;
+  background: rgba(184, 164, 255, 0.3);
+  font-size: 12px;
+  font-weight: 700;
+}
+.jgo {
+  white-space: nowrap;
+  text-align: end;
+}
+.jgo .ib {
+  vertical-align: middle;
+}
+button.jopn {
+  padding: 6px 14px;
+  font-size: 13px;
+  background: #b8a4ff;
+  color: #0f2620;
+  box-shadow: 0 2px 0 rgba(90, 63, 192, 0.35);
+}
+button.jopn:hover {
+  background: #a48df7;
+}
+.jc .jkv {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+  margin: 8px 0;
+}
+.jc .jkv div {
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  color: var(--mut);
+}
+.jc .jkv b {
+  font-size: 14px;
+  color: var(--ink);
+}
+.jc .jact {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* The page itself: a sheet of the notebook. */
+#tpw {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+}
+body.tp-on {
+  overflow: hidden;
+}
+.tpov {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 22, 18, 0.62);
+}
+.tpd {
+  position: relative;
+  box-sizing: border-box;
+  width: min(760px, 100%);
+  max-height: calc(100dvh - 32px);
+  overflow: auto;
+  background-color: #f4efe5;
+  background-image: repeating-linear-gradient(transparent 0 33px, rgba(15, 38, 32, 0.07) 33px 34px);
+  background-attachment: local;
+  color: #0f2620;
+  border-radius: 22px;
+  border-top: 5px solid #b8a4ff;
+  padding: 14px 26px 20px 58px;
+  box-shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.8);
+  --ink: #0f2620;
+  --mut: rgba(15, 38, 32, 0.62);
+  --in: #fbf8f1;
+  --line: rgba(15, 38, 32, 0.14);
+  --rgb: 15, 38, 32;
+}
+/* The red-purple margin line of a notebook page. */
+.tpd::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 40px;
+  width: 1.5px;
+  background: rgba(124, 92, 230, 0.4);
+}
+[dir="rtl"] .tpd {
+  padding: 14px 58px 20px 26px;
+}
+.tptop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.tptop .hk {
+  margin: 0;
+  color: #5a3fc0;
+}
+.tpx {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  font-size: 22px;
+  line-height: 1;
+  background: rgba(15, 38, 32, 0.08);
+  color: #0f2620;
+}
+.tpx:hover {
+  background: rgba(15, 38, 32, 0.16);
+}
+.tphd {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+  margin: 4px 0 6px;
+}
+.tphd h2 {
+  margin: 0;
+  font-family: "Young Serif", "Suez One", serif;
+  font-weight: 400;
+  font-size: 34px;
+}
+.tpb {
+  padding: 3px 11px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(15, 38, 32, 0.25);
+  font-size: 12.5px;
+  font-weight: 700;
+}
+.tpb.tpo {
+  background: #b8a4ff;
+  border-color: #b8a4ff;
+}
+.tpb.tpc {
+  background: rgba(29, 122, 76, 0.14);
+  border-color: rgba(29, 122, 76, 0.4);
+  color: #1d5a3c;
+}
+.tpsp {
+  flex: 1;
+}
+.tppl {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.1;
+}
+.tppl small {
+  font-size: 11px;
+  color: var(--mut);
+  font-weight: 700;
+}
+.tppl b {
+  font-size: 20px;
+}
+.tpd .pos {
+  color: #1d7a4c;
+}
+.tpd .neg {
+  color: #b3261e;
+}
+.tps {
+  margin-top: 14px;
+}
+.tps h3 {
+  margin: 0 0 8px;
+  font-family: var(--hw);
+  font-size: 26px;
+  font-weight: 600;
+  color: #5a3fc0;
+}
+.tpg {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px 12px;
+}
+.tpf {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--mut);
+}
+.tpd :is(input, select, textarea) {
+  background-color: var(--in);
+  color: #0f2620;
+  border: 1.5px solid rgba(15, 38, 32, 0.16);
+  border-radius: 12px;
+  font-size: 15px;
+}
+.tpd :is(input, textarea):focus {
+  border-color: #7c5ce6;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(184, 164, 255, 0.35);
+}
+.tpk {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 22px;
+  margin: 12px 0 4px;
+  font-size: 14px;
+}
+.tpk small {
+  color: var(--mut);
+  font-weight: 700;
+}
+.tpw {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 12px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--mut);
+}
+.tpw textarea {
+  font-family: var(--hw);
+  font-size: 22px;
+  line-height: 34px;
+  color: #5a3fc0;
+  background-image: repeating-linear-gradient(transparent 0 33px, rgba(15, 38, 32, 0.1) 33px 34px);
+  background-attachment: local;
+  padding: 0 12px;
+  resize: vertical;
+}
+.tpw textarea::placeholder {
+  font-family: Figtree, Heebo, sans-serif;
+  font-size: 14px;
+}
+.tpw .rk {
+  font-size: 14px;
+  font-weight: 500;
+  color: #0f2620;
+}
+button.tpcl {
+  margin-top: 4px;
+}
+.tpft {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  padding-top: 12px;
+  border-top: 1.5px dashed rgba(15, 38, 32, 0.18);
+}
+.tpd button.gh {
+  color: #0f2620;
+}
+.tpd .tpdel:hover {
+  background: #f3c9c4;
+  border-color: #e09b93;
+}
+button.tpok {
+  padding: 10px 26px;
+}
+:root.ay-c .tpd {
+  background-image: none;
+  border: 2px solid currentColor;
+}
+@media (max-width: 640px) {
+  #tpw {
+    padding: 0;
+    place-items: end stretch;
+  }
+  .tpd {
+    width: 100%;
+    max-height: 94dvh;
+    border-radius: 22px 22px 0 0;
+    padding: 12px 16px 20px 34px;
+  }
+  [dir="rtl"] .tpd {
+    padding: 12px 34px 20px 16px;
+  }
+  .tpd::before {
+    inset-inline-start: 22px;
+  }
+  .tpg {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .tphd h2 {
+    font-size: 28px;
+  }
+}
+
+/* Monthly report: "since entry" / "from the 1st" under the ticker; month squares light up. */
+.mbf {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--mut);
+}
+.mbm:not(.on):not(:disabled):hover {
+  background: rgba(184, 164, 255, 0.22);
+  border-color: #b8a4ff;
+}
+.tppl b small {
+  font-size: 11px;
+}

@@ -44,7 +44,7 @@ function lsPlans(he) {
           "Trade journal (up to 10 trades a month)",
           "Risk calculator",
           "Daily pulse and stock screening (up to 10 checks a month, one strategy)",
-          "Weekly stock scanner: 1 scan, up to 5 stocks",
+          "Stocks scanner: 1 scan, up to 5 stocks",
           "Dashboard for the last 30 days",
           "XP and streaks",
           ["Cost of indiscipline (total only)", 1]
@@ -59,7 +59,7 @@ function lsPlans(he) {
           "Fixed monthly deposit",
           "Compound interest calculator",
           "CSV import",
-          "Weekly stock scanner: 2 scans, up to 25 stocks"
+          "Stocks scanner: 2 scans, up to 25 stocks"
         ]
       },
       {
@@ -74,7 +74,7 @@ function lsPlans(he) {
           "CSV import from your broker",
           ["Full cost of indiscipline breakdown", 1],
           ["Wick, the AI coach", 1],
-          "Weekly stock scanner: 5 scans, up to 50 stocks"
+          "Stocks scanner: 5 scans, up to 50 stocks"
         ]
       },
       {
@@ -86,7 +86,7 @@ function lsPlans(he) {
           "All long-term tools from Patient",
           ["Full cost of indiscipline breakdown", 1],
           ["Wick, the AI coach, with more messages", 1],
-          "Weekly stock scanner: unlimited scans, all stocks",
+          "Stocks scanner: unlimited scans, all stocks",
           ["Broker auto-sync", 1]
         ]
       }

@@ -43,10 +43,9 @@ function wlCards(sig) {
     `</div>`
   );
 }
-// The trade journal as cards (phones).
+// The trade journal as cards (phones). Pressing a card's ticker or reason, or "Open",
+// opens the trade's notebook page (js/18i-trade-page.js), where everything is written and changed.
 function jCards(rows) {
-  const ni = (k, v, lab, t) =>
-    `<label>${lab}<input type="number" step="any" inputmode="decimal" class="ti" data-k="${k}" data-id="${t.id}" value="${v ?? ""}" aria-label="${lab} ${esc(t.t)}"></label>`;
   if (!rows.length)
     return `<div class="jcards"><p class="mut card" style="text-align:center">Nothing logged yet. Add your first trade in the form above.</p></div>`;
   return (
@@ -54,15 +53,12 @@ function jCards(rows) {
     rows
       .map(t => {
         const p = pnl(t) ?? fl(t),
-          R = aR(t),
-          o = t.x == null;
-        return `<article class="jc" aria-label="${esc(t.t)}"><div class="jch"><input type="text" readonly class="ti dt dpk" data-k="tdt" data-id="${t.id}" value="${esc(t.d)}" aria-label="Entry date ${esc(t.t)}"><b data-n="${t.id}" role="button" tabindex="0">${esc(t.t)}</b><span class="jdir">${t.dir}</span><span class="jpl ${p > 0 ? "pos" : p < 0 ? "neg" : ""}">${$f(p, 2)}</span></div>
+          o = t.x == null,
+          now = o ? lp(t) : null;
+        return `<article class="jc${o ? " jopen" : ""}" aria-label="${esc(t.t)}"><div class="jch"><span class="mut" data-nt>${esc(t.d)}</span><b data-n="${t.id}" role="button" tabindex="0" data-nt>${esc(t.t)}</b><span class="jdir">${t.dir}</span><span class="jpl ${p > 0 ? "pos" : p < 0 ? "neg" : ""}" data-nt>${$f(p, 2)}</span></div>
  <div class="rbox${t.th ? "" : " empty"}" data-n="${t.id}" role="button" tabindex="0">${t.th ? esc(t.th.slice(0, 90)) + (t.th.length > 90 ? "…" : "") : "Add reason"}</div>
- <div class="jg">${ni("te", t.e, "Entry", t)}${ni("ts", t.s, "Stop", t)}${ni("tg", t.tg, "Target", t)}${ni("tsh", t.sh, "Shares", t)}</div>
- <div class="jg jg2"><label>Exit${o ? `<span class="jro">open</span>` : `<input type="number" step="any" inputmode="decimal" class="ti" data-k="tx" data-id="${t.id}" value="${t.x}" aria-label="Exit price ${esc(t.t)}">`}</label><label>Exit date${o ? `<span class="jro">–</span>` : `<input type="text" readonly class="ti dt dpk" data-k="txd" data-id="${t.id}" value="${esc(t.xd || "")}" placeholder="Set date" aria-label="Exit date ${esc(t.t)}">`}</label></div>
- <details class="jmore" data-id="${t.id}"${JMO.has(t.id) ? " open" : ""}><summary>More</summary><div class="jkv"><div><span>Size</span><b>${$f(cost(t), 0)} <small class="mut">${((cost(t) / acct()) * 100).toFixed(1)}%</small></b></div><div><span>Risk $</span><b>${$f(risk(t), 0)}</b></div><div><span>Plan R:R</span><b>${rr(t) == null ? "–" : rr(t).toFixed(1)}</b></div><div><span>Current price</span><b>${o ? (lp(t) == null ? "–" : $f(lp(t), 2)) : "–"}</b></div><div><span>R</span><b>${rCell(t)}</b></div><div><span>Mind</span><b>${t.m ?? "–"}</b></div></div><div class="jfull"><span class="mut">Followed my rules?</span>${rkUI(t)}</div>${o ? "" : `<label class="jfull">Exit type<select data-k="trs" data-id="${t.id}" aria-label="Exit type ${esc(t.t)}"><option value="">Choose</option>${RSL.map(x => `<option${t.rs === x ? " selected" : ""}>${x}</option>`).join("")}</select></label><div class="jfull"><span class="mut">Reason for exit</span><div class="rbox${t.xr ? "" : " empty"}" data-n="${t.id}" role="button" tabindex="0">${t.xr ? esc(t.xr.slice(0, 90)) + (t.xr.length > 90 ? "…" : "") : "Add reason"}</div></div>`}</details>
- ${openN === t.id ? `<div class="jnotes"><label>Reason for entry<textarea data-k="tth" data-id="${t.id}" rows="4" maxlength="2000" placeholder="Why did you take this trade?">${esc(t.th || "")}</textarea></label>${o ? "" : `<label>Reason for exit<textarea data-k="txr" data-id="${t.id}" rows="3" maxlength="2000" placeholder="Why did you close it? Stop, target, plan changed, fear...">${esc(t.xr || "")}</textarea></label>`}${t.ls ? "<p><b>Lessons:</b> " + esc(t.ls) + "</p>" : ""}</div>` : ""}
- <div class="jact">${coAskBtn(t)}${o ? `<button class="gh sm" data-a="cl" data-id="${t.id}">Close</button>` : `<button class="gh sm" data-a="ro" data-id="${t.id}">Reopen</button>`}<button class="gh sm" data-a="dl" data-id="${t.id}">Delete</button></div></article>`;
+ <div class="jkv"><div><span>Entry</span><b data-nt>${$f(t.e, 2)}</b></div><div><span>Shares</span><b data-nt>${t.sh}</b></div><div><span>${o ? "Now" : "Exit"}</span><b data-nt>${o ? (now == null ? "–" : $f(now, 2)) : $f(t.x, 2)}</b></div><div><span>R</span><b>${rCell(t)}</b></div></div>
+ <div class="jact">${o ? `<button class="gh sm" data-a="cl" data-id="${t.id}">Close</button>` : ""}<button type="button" class="jopn" data-tpo="${t.id}"><span>Open the page</span> <span aria-hidden="true">›</span></button></div></article>`;
       })
       .join("") +
     `</div>`
