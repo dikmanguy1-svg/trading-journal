@@ -1013,5 +1013,7 @@ window.HE_EXT = {
   "Dec": "דצמ",
   "Add deposit reminders to my calendar": "הוסף תזכורות הפקדה ללוח השנה שלי",
   "A repeating reminder on each deposit day. Works with Google, Apple and Outlook calendars.":
-    "תזכורת חוזרת בכל יום הפקדה. עובד עם לוח השנה של Google, Apple ו-Outlook."
+    "תזכורת חוזרת בכל יום הפקדה. עובד עם לוח השנה של Google, Apple ו-Outlook.",
+  "Why I'm watching": "למה אני עוקב",
+  "Your reason": "הסיבה שלך"
 };

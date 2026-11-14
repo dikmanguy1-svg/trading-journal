@@ -193,3 +193,28 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* ---- Watchlist and scanner: smaller rows so more stocks fit ---- */
+:root:not(.ay-c) .wlt :is(th, td) {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-size: 14px;
+}
+:root:not(.ay-c) .wlt .wli {
+  padding: 6px 8px;
+  font-size: 14px;
+}
+:root:not(.ay-c) .wlt .wy {
+  min-width: 170px;
+  font-family: var(--hw);
+  font-size: 20px;
+  color: #5a3fc0;
+}
+:root:not(.ay-c) .wlt .wy::placeholder {
+  font-family: Figtree, Heebo, sans-serif;
+  font-size: 13px;
+}
+:root:not(.ay-c) .sct :is(th, td) {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}

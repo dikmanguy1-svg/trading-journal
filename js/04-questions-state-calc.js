@@ -432,7 +432,9 @@ function clean(d) {
         s: n(w?.s),
         tg: n(w?.tg),
         p: n(w?.p),
-        m: n(w?.m)
+        m: n(w?.m),
+        // Why I'm watching (14.11): the user's own reason, e.g. for investors without a stop.
+        y: t(w?.y, 200)
       }))
       .filter(w => w.t),
     prof: Array.isArray(d.prof)
