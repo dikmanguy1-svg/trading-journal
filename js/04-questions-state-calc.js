@@ -361,6 +361,30 @@ function clean(d) {
     bd: Array.isArray(d.bd) ? d.bd.map(x => t(x, 20)).slice(0, 30) : null,
     pulse: Array.from({ length: (q1 || PQ).length }, (_, i) => yn(d.pulse, i)),
     pd: /^\d{4}-\d{2}-\d{2}$/.test(String(d.pd || "")) ? d.pd : "",
+    // Monthly report (js/18g): what I learned per month, and open-trade prices on the month's first visit.
+    mbl: Object.fromEntries(
+      Object.entries(d.mbl && typeof d.mbl === "object" ? d.mbl : {})
+        .filter(([k, v]) => /^\d{4}-\d{2}$/.test(k) && typeof v === "string")
+        .slice(-120)
+        .map(([k, v]) => [k, v.slice(0, 2000)])
+    ),
+    mps: Object.fromEntries(
+      Object.entries(d.mps && typeof d.mps === "object" ? d.mps : {})
+        .filter(([k, v]) => /^\d{4}-\d{2}$/.test(k) && v && typeof v.p === "object")
+        .slice(-24)
+        .map(([k, v]) => [
+          k,
+          {
+            d: /^\d{4}-\d{2}-\d{2}$/.test(String(v.d)) ? v.d : "",
+            p: Object.fromEntries(
+              Object.entries(v.p)
+                .filter(([t, x]) => /^[A-Z0-9.\-]{1,10}$/.test(t) && +x > 0)
+                .slice(0, 200)
+                .map(([t, x]) => [t, +x])
+            )
+          }
+        ])
+    ),
     scr: {
       t: t(d.scr?.t, 10).toUpperCase(),
       a: Array.from({ length: (q2 || SQ).length }, (_, i) => yn(d.scr?.a, i)),

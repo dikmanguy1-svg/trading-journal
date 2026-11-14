@@ -1,0 +1,195 @@
+/*
+ * 13-ink-paper.css — part of the TradeInk styles.
+ *
+ * "Ink & Paper" (14.11, design E): the 60/30/10 design plus a notebook feel.
+ * - Handwriting (Caveat in English, Gveret Levin in Hebrew) for personal words: notes, reasons, rules.
+ * - A handwritten line above each tab title (#hkk, text from js/18b-tab-hero.js HK).
+ * - Ruled lines on the notebook-like cards: the Trade journal, the rules and the question lists.
+ * Only for the dark themes (green, Ink), like css/10. Turn off: remove this file's <link>.
+ *
+ * The css/*.css files are loaded in order by index.html. Order matters: later rules win.
+ */
+:root {
+  --hw: "Caveat", "Gveret Levin", cursive;
+}
+[lang="he"] {
+  --hw: "Gveret Levin", "Caveat", cursive;
+}
+
+/* The handwritten line above the title. */
+.hk {
+  margin: 0 0 4px;
+  font-family: var(--hw);
+  font-size: 26px;
+  line-height: 1.1;
+  color: #b8a4ff;
+  transform: rotate(-2deg);
+  transform-origin: left center;
+}
+[dir="rtl"] .hk {
+  transform-origin: right center;
+}
+.hk:empty {
+  display: none;
+}
+:root.th-l .hk {
+  color: #5a3fc0;
+}
+
+/* Personal words in handwriting: reasons and notes in the journal, the rules list. */
+:root:not(.ay-c) .jt td.rc :is(input, textarea),
+:root:not(.ay-c) .rl li {
+  font-family: var(--hw);
+  font-size: 21px;
+  line-height: 1.2;
+  color: #5a3fc0;
+}
+:root:not(.th-l):not(.ay-c) .jt td.rc :is(input, textarea)::placeholder {
+  font-family: Figtree, Heebo, sans-serif;
+  font-size: 13px;
+}
+
+/* Ruled notebook lines: one line under every row. */
+:root:not(.th-l):not(.ay-c) :is(.jt, .wlt) tbody tr {
+  border-bottom: 1px solid rgba(15, 38, 32, 0.09);
+}
+:root:not(.th-l):not(.ay-c) :is(.jt, .wlt) tbody td {
+  border-top: 0;
+}
+/* Open trades get a soft purple mark, like a bookmark. */
+:root:not(.th-l):not(.ay-c) .jt tbody tr.jopen {
+  background: rgba(184, 164, 255, 0.16);
+}
+/* The notebook cards: a purple top edge and a margin line on the start side. */
+:root:not(.th-l):not(.ay-c) :is(.jwrap, .rdash) {
+  border-top: 3px solid #b8a4ff;
+}
+:root:not(.th-l):not(.ay-c) .ql {
+  position: relative;
+  background-image: repeating-linear-gradient(transparent 0 51px, rgba(15, 38, 32, 0.08) 51px 52px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .hk {
+    transform: none;
+  }
+}
+
+/* ---- Monthly report as a calendar (js/18g-month-book.js) ---- */
+.mbk {
+  display: grid;
+  grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.mby {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.mby b {
+  font-family: "Young Serif", "Suez One", serif;
+  font-weight: 400;
+  font-size: 22px;
+}
+.mbs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.mbm {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-height: 74px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1.5px solid var(--line);
+  background: transparent;
+  color: inherit;
+  text-align: start;
+  font: inherit;
+}
+.mbm b {
+  font-family: "Young Serif", "Suez One", serif;
+  font-weight: 400;
+  font-size: 17px;
+}
+.mbm span {
+  font-weight: 700;
+  font-size: 14px;
+}
+.mbm small {
+  font-size: 11.5px;
+  opacity: 0.75;
+}
+.mbm.on {
+  background: #b8a4ff;
+  border-color: #b8a4ff;
+  color: #0f2620;
+}
+.mbm.on :is(.pos, .neg, .mut) {
+  color: #0f2620;
+}
+.mbm:disabled {
+  opacity: 0.45;
+}
+.mbh {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 18px;
+}
+.mbh h2 {
+  margin: 0;
+}
+.mbc {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 10px 0;
+}
+.mbc h3 {
+  margin: 0 0 4px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--mut);
+}
+.mbt {
+  width: 100%;
+  min-width: 0;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.mbt td {
+  padding: 6px 4px;
+  border-bottom: 1px solid var(--line);
+}
+.mbl {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--mut);
+}
+.mbl textarea {
+  font-family: var(--hw);
+  font-size: 22px;
+  line-height: 34px;
+  color: #5a3fc0;
+  background-color: var(--in);
+  background-image: repeating-linear-gradient(transparent 0 33px, rgba(15, 38, 32, 0.1) 33px 34px);
+  background-attachment: local;
+  border: 1.5px solid var(--line);
+  border-radius: 14px;
+  padding: 0 14px;
+  resize: vertical;
+}
+@media (max-width: 900px) {
+  .mbk,
+  .mbc {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -141,6 +141,18 @@ function heroFact(t) {
 }
 
 // Draw the headline for the open tab. Returns false on the Dashboard (the profile headline is used there).
+// The handwritten line above each tab's title (css/13-ink-paper.css, class hk).
+const HK = {
+  str: "first page of your notebook —",
+  pulse: "before the market opens —",
+  scr: "only the best setups pass —",
+  calc: "size it before you click —",
+  jr: "every trade, written in ink —",
+  mon: "looking back —",
+  wl: "waiting for the right moment —",
+  pf: "the big picture —",
+  scan: "your own criteria, once a week —"
+};
 function heroTab() {
   const H = (ltOnly() && TABH_LT[tab]) || TABH[tab];
   const f = $("hst");
@@ -156,6 +168,8 @@ function heroTab() {
   if (k === heroK) return true;
   heroK = k;
   $("hh1").innerHTML = `<span>${H[0]}</span><br><span>${H[1]}</span>`;
+  // Ink & Paper (14.11): a short handwritten line above the title.
+  if ($("hkk")) $("hkk").textContent = tr(HK[tab] || "");
   $("hsb").textContent = H[2];
   const c = $("hcta");
   c.dataset.t = H[3];
