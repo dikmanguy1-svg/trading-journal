@@ -9,6 +9,8 @@
  * All js/*.js files share one global scope and run in the order index.html lists them.
  */
 
+// Daily limits are only for day traders (profile "day" on the Strategy tab).
+const isDayTr = () => (S.prof || []).includes("day");
 // Today's realized P&L and the number of trades opened today.
 function dayStats() {
   const d = dkey(new Date());
@@ -19,6 +21,7 @@ function dayStats() {
 }
 // The reached limit as a sentence, or "" when trading is fine today.
 function dayLim() {
+  if (!isDayTr()) return "";
   const L = S.set || {},
     s = dayStats();
   if (L.dml > 0 && s.pl <= -L.dml) return "You reached your max loss for today. Stop for today.";
