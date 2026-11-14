@@ -2,7 +2,8 @@
  * 09-theme-accessibility.js — part of the TradeInk app script.
  *
  * Light / dark theme and the Accessibility menu
- * (text size, high contrast, underline links, reduce motion).
+ * (text size, high contrast, underline links, reduce motion, handwriting).
+ * Handwriting (15.11): personal notes in a handwritten font (class hw-on, css/13). Off = regular font.
  *
  * All js/*.js files share one global scope and run in the order index.html lists them.
  */
@@ -31,11 +32,17 @@ function thApply() {
 // Device storage key for the accessibility settings.
 const AYK = "tj_a11y";
 // Accessibility settings.
-let AY = { z: 0, c: 0, u: 0, m: 0 };
+let AY = { z: 0, c: 0, u: 0, m: 0, h: 0 };
 // Read saved accessibility settings from this device.
 try {
   const o = JSON.parse(localStorage.getItem(AYK) || "{}");
-  AY = { z: Math.max(0, Math.min(3, o.z | 0)), c: o.c ? 1 : 0, u: o.u ? 1 : 0, m: o.m ? 1 : 0 };
+  AY = {
+    z: Math.max(0, Math.min(3, o.z | 0)),
+    c: o.c ? 1 : 0,
+    u: o.u ? 1 : 0,
+    m: o.m ? 1 : 0,
+    h: o.h ? 1 : 0
+  };
 } catch (e) {}
 // Apply the accessibility settings.
 function ayApply() {
@@ -43,10 +50,12 @@ function ayApply() {
   h.classList.toggle("ay-c", !!AY.c);
   h.classList.toggle("ay-u", !!AY.u);
   h.classList.toggle("ay-m", !!AY.m);
+  h.classList.toggle("hw-on", !!AY.h);
   h.style.setProperty("--ayz", [1, 1.15, 1.3, 1.5][AY.z]);
   $("ayc").checked = !!AY.c;
   $("ayu").checked = !!AY.u;
   $("aym2").checked = !!AY.m;
+  if ($("ayh")) $("ayh").checked = !!AY.h;
   try {
     localStorage.setItem(AYK, JSON.stringify(AY));
   } catch (e) {}
@@ -86,8 +95,13 @@ function ayInit() {
     AY.m = e.target.checked ? 1 : 0;
     ayApply();
   };
+  if ($("ayh"))
+    $("ayh").onchange = e => {
+      AY.h = e.target.checked ? 1 : 0;
+      ayApply();
+    };
   $("ayr").onclick = () => {
-    AY = { z: 0, c: 0, u: 0, m: 0 };
+    AY = { z: 0, c: 0, u: 0, m: 0, h: 0 };
     ayApply();
   };
   ayApply();

@@ -66,7 +66,7 @@ function tpDraw(first) {
     c = cost(t);
   d.innerHTML = `<div class="tpov" data-tpx></div><div class="tpd" role="dialog" aria-modal="true" aria-labelledby="tph">
 <div class="tptop"><p class="hk" aria-hidden="true">${o ? "still in the trade —" : "the trade, start to finish —"}</p><button type="button" class="tpx" data-tpx aria-label="Close">×</button></div>
-<div class="tphd"><h2 id="tph"><span data-nt>${esc(t.t)}</span></h2><span class="tpb">${t.dir === "Short" ? "Short" : "Long"}</span><span class="tpb ${o ? "tpo" : "tpc"}">${o ? "Still open" : "Closed"}</span><span class="tpsp"></span><span class="tppl"><small>P&amp;L</small><b class="${p > 0 ? "pos" : p < 0 ? "neg" : ""}" data-nt>${p == null ? "–" : $f(p, 2)}</b></span><span class="tppl"><small>R</small><b>${rCell(t)}</b></span></div>
+<div class="tphd"><h2 id="tph"><span data-nt>${esc(t.t)}</span></h2><span class="tpb">${t.dir === "Short" ? "Short" : "Long"}</span><span class="tpb ${o ? "tpo" : "tpc"}">${o ? "Open trade" : "Closed trade"}</span><span class="tpsp"></span><span class="tppl"><small>P&amp;L</small><b class="${p > 0 ? "pos" : p < 0 ? "neg" : ""}" data-nt>${p == null ? "–" : $f(p, 2)}</b></span><span class="tppl"><small>R</small><b>${rCell(t)}</b></span></div>
 <section class="tps"><h3>The plan</h3><div class="tpg">
 <label class="tpf"><span>Entry date</span><input type="text" readonly class="dpk" data-k="tdt" data-id="${t.id}" value="${esc(t.d)}"></label>
 <label class="tpf"><span>Ticker</span><input data-tp="t" maxlength="10" value="${esc(t.t)}" style="text-transform:uppercase"></label>

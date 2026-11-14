@@ -10,9 +10,14 @@
  * The css/*.css files are loaded in order by index.html. Order matters: later rules win.
  */
 :root {
+  --hw: Figtree, Heebo, system-ui, sans-serif;
+}
+/* Handwriting is a choice (15.11): Accessibility menu > "Handwriting for my notes" (class hw-on).
+ * Off (the default): the same places use the regular font, at regular sizes (end of this file). */
+:root.hw-on {
   --hw: "Caveat", "Gveret Levin", cursive;
 }
-[lang="he"] {
+:root.hw-on[lang="he"] {
   --hw: "Gveret Levin", "Caveat", cursive;
 }
 
@@ -730,4 +735,29 @@ button.tpok {
 }
 .tppl b small {
   font-size: 11px;
+}
+
+/* ---- Regular font (handwriting off, the default): regular sizes for the same places ---- */
+:root:not(.hw-on) .hk {
+  font-size: 15px;
+  font-style: italic;
+  font-weight: 600;
+  transform: none;
+}
+:root:not(.ay-c):not(.hw-on) .jt td.rc :is(input, textarea),
+:root:not(.ay-c):not(.hw-on) .rl li,
+:root:not(.ay-c):not(.hw-on) .jrs,
+:root:not(.hw-on) .lsp .lsw {
+  font-size: 15px;
+}
+:root:not(.ay-c):not(.hw-on) .wlt .wy {
+  font-size: 14px;
+}
+:root:not(.hw-on) :is(.mbl, .tpw) textarea {
+  font-size: 16px;
+}
+:root:not(.hw-on) .tps h3 {
+  font-family: "Young Serif", "Suez One", serif;
+  font-weight: 400;
+  font-size: 20px;
 }
