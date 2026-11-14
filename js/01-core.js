@@ -185,7 +185,16 @@ const TLX = {
       "Trading window",
       "Am I trading inside my planned time window (for example the first 90 minutes or the last hour)?"
     ],
-    intl: ["Market internals", null, "Do the market internals (TICK, ADD) support my direction?"]
+    intl: ["Market internals", null, "Do the market internals (TICK, ADD) support my direction?"],
+    // 14.11: the levels day traders watch most, and the intraday moving averages.
+    lvl: [
+      "Key levels (pre-market, yesterday)",
+      "Do I know the pre-market high and low and yesterday's high and low, and is my entry clear of them?"
+    ],
+    ema: [
+      "9 / 20 EMA (1-5 min)",
+      "Is price on the right side of the 9 and 20 EMA on the 1 or 5-minute chart?"
+    ]
   },
   swing: {
     wk: ["Weekly chart", "Is the weekly chart trend aligned with my trade direction?"],

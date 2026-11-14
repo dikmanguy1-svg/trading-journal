@@ -298,7 +298,16 @@ function scS() {
 
 // The value of one measure for one stock (null when there is no data).
 function scVal(r, k) {
-  if (k === "size") return r.capM == null ? null : r.capM >= 200000 ? "mega" : r.capM >= 10000 ? "large" : r.capM >= 2000 ? "mid" : "small";
+  if (k === "size")
+    return r.capM == null
+      ? null
+      : r.capM >= 200000
+        ? "mega"
+        : r.capM >= 10000
+          ? "large"
+          : r.capM >= 2000
+            ? "mid"
+            : "small";
   if (k === "earnDays") {
     if (!r.nextEarnings) return null;
     const d = Math.round(
@@ -376,11 +385,20 @@ function scRngParse(v) {
     .split("|")
     .map(x => x.split("~"))
     .filter(x => x.length >= 2 && (x[0] !== "" || x[1] !== ""))
-    .map(([a, b, fl]) => [a === "" ? -Infinity : +a, b === "" ? Infinity : +b, fl === "i" || fl === "x" ? fl : ""])
+    .map(([a, b, fl]) => [
+      a === "" ? -Infinity : +a,
+      b === "" ? Infinity : +b,
+      fl === "i" || fl === "x" ? fl : ""
+    ])
     .filter(([a, b]) => !isNaN(a) && !isNaN(b) && a < b);
 }
 function scRngKey(a, b, fl) {
-  return (a === -Infinity ? "" : String(a)) + "~" + (b === Infinity ? "" : String(b)) + (fl ? "~" + fl : "");
+  return (
+    (a === -Infinity ? "" : String(a)) +
+    "~" +
+    (b === Infinity ? "" : String(b)) +
+    (fl ? "~" + fl : "")
+  );
 }
 function scInRng(v, a, b, fl) {
   return (fl === "x" ? v > a : v >= a) && (fl === "i" ? v <= b : v < b);
@@ -418,7 +436,11 @@ function scRanges(k) {
 function scNum(x, f) {
   const u = f[5],
     n = Math.abs(x) >= 1000 ? Math.round(x).toLocaleString("en-US") : String(+x.toFixed(2));
-  return "<bdi dir=\"ltr\">" + (u === "$" ? "$" + n : u === "%" ? n + "%" : u === "x" ? n + "×" : n) + "</bdi>";
+  return (
+    '<bdi dir="ltr">' +
+    (u === "$" ? "$" + n : u === "%" ? n + "%" : u === "x" ? n + "×" : n) +
+    "</bdi>"
+  );
 }
 function scRngLabel(a, b, f) {
   if (a === -Infinity) return scL("Under ", "מתחת ל-") + scNum(b, f);
@@ -472,7 +494,11 @@ function scInner() {
               if (!list.some(([a, b, fl]) => scRngKey(a, b, fl) === scRngKey(...r))) list.push(r);
             });
             list.sort((x, y) => x[0] - y[0]);
-            chips = list.map(([a, b, fl]) => chip(scRngKey(a, b, fl), scRngLabel(a, b, f), selK.has(scRngKey(a, b, fl)))).join("");
+            chips = list
+              .map(([a, b, fl]) =>
+                chip(scRngKey(a, b, fl), scRngLabel(a, b, f), selK.has(scRngKey(a, b, fl)))
+              )
+              .join("");
           }
           h += `<div class="scchips" role="group" aria-label="${esc(scL(f[1], f[2]))}">${chips}<button type="button" class="scchip scown" data-sca="own" data-i="${i}">${scL("My own value", "ערך משלי")}</button></div>`;
         } else
@@ -481,10 +507,22 @@ function scInner() {
       if (f && f[4] === "b")
         h += `<label class="scl"><span class="vh">${scL("Value", "ערך")}</span><select data-sc="v" data-i="${i}" aria-label="${scL("Value", "ערך")}"><option value="">${scL("Choose", "בחר")}</option><option value="yes"${c.v === "yes" ? " selected" : ""}>${scL("Yes", "כן")}</option><option value="no"${c.v === "no" ? " selected" : ""}>${scL("No", "לא")}</option></select></label>`;
       if (f && f[4] === "c")
-        h += `<label class="scl"><span class="vh">${scL("Value", "ערך")}</span><select data-sc="v" data-i="${i}" aria-label="${scL("Value", "ערך")}"><option value="">${scL("Choose", "בחר")}</option>${opts(c.f).map(([x, lab]) => `<option value="${esc(x)}"${x === c.v ? " selected" : ""}>${esc(lab)}</option>`).join("")}</select></label>`;
+        h += `<label class="scl"><span class="vh">${scL("Value", "ערך")}</span><select data-sc="v" data-i="${i}" aria-label="${scL("Value", "ערך")}"><option value="">${scL("Choose", "בחר")}</option>${opts(
+          c.f
+        )
+          .map(
+            ([x, lab]) =>
+              `<option value="${esc(x)}"${x === c.v ? " selected" : ""}>${esc(lab)}</option>`
+          )
+          .join("")}</select></label>`;
       h += `<button type="button" class="gh sm" data-sca="del" data-i="${i}" aria-label="${scL("Remove this condition", "הסר את התנאי")}">✕</button></div>`;
       if (f) h += `<p class="mut sm scd">${scL(f[6], f[7])}</p>`;
-      if (f && f[4] === "n" && !SCMA.includes(c.f) && !(c.op === ">=" || c.op === "<=" || c.op === "o"))
+      if (
+        f &&
+        f[4] === "n" &&
+        !SCMA.includes(c.f) &&
+        !(c.op === ">=" || c.op === "<=" || c.op === "o")
+      )
         h += `<p class="mut sm scd">${scL("The ranges follow one fixed rule for every measure: this week's spread of values is cut into about 10 equal steps.", "הטווחים לפי כלל קבוע אחד לכל המדדים: פיזור הערכים של השבוע מחולק לכ-10 צעדים שווים.")}</p>`;
       return h;
     };
@@ -637,7 +675,9 @@ document.addEventListener("click", e => {
     c.op = a === "own" ? "o" : "";
     c.v = "";
     save();
-    scRedraw(a === "own" ? `select[data-sc="op"][data-i="${i}"]` : `[data-sca="pick"][data-i="${i}"]`);
+    scRedraw(
+      a === "own" ? `select[data-sc="op"][data-i="${i}"]` : `[data-sca="pick"][data-i="${i}"]`
+    );
   } else if (a === "retry") {
     SCD.st = "idle";
     scRedraw();

@@ -179,7 +179,7 @@ function view() {
     const r = calc(),
       p = S.set,
       c = S.calc;
-    h = `<div class="two"><div class="card"><details id="ds"${setOpen ? " open" : ""}><summary>Account and risk settings</summary><p class="mut" style="margin:8px 0 0">Current account <b>${$f(acct())}</b> (starting size plus closed-trade P&amp;L) · Invested <b>${$f(inv() + ltInvC())}</b> · Free cash <b class="${cash() < 0 ? "neg" : ""}">${$f(cash())}</b></p><div class="f" style="margin-top:10px"><label>Starting account size ($)<input type="number" data-k="pf" value="${p.pf}"></label><label>Allocation per position (%)<input type="number" step="any" data-k="al" value="${p.al * 100}"></label><label>Max $ risk per trade (% of account)<input type="number" step="any" data-k="mr" value="${p.mr * 100}"></label><label>Minimum R:R<input type="number" step="any" data-k="rr" value="${p.rr}"></label></div></details>
+    h = `<div class="two"><div class="card"><details id="ds"${setOpen ? " open" : ""}><summary>Account and risk settings</summary><p class="mut" style="margin:8px 0 0">Current account <b>${$f(acct())}</b> (starting size plus closed-trade P&amp;L) · Invested <b>${$f(inv() + ltInvC())}</b> · Free cash <b class="${cash() < 0 ? "neg" : ""}">${$f(cash())}</b></p><div class="f" style="margin-top:10px"><label>Starting account size ($)<input type="number" data-k="pf" value="${p.pf}"></label><label>Allocation per position (%)<input type="number" step="any" data-k="al" value="${p.al * 100}"></label><label>Max $ risk per trade (% of account)<input type="number" step="any" data-k="mr" value="${p.mr * 100}"></label><label>Minimum R:R<input type="number" step="any" data-k="rr" value="${p.rr}"></label><label>Max loss per day ($, 0 = off)<input type="number" step="any" min="0" data-k="dml" value="${p.dml || 0}"></label><label>Max new trades per day (0 = off)<input type="number" step="1" min="0" data-k="dmt" value="${p.dmt || 0}"></label></div></details>${dayLimMsg()}
   <h2 style="margin-top:16px">Planned trade</h2><div class="f"><label>Ticker<input data-k="ct" value="${esc(c.t)}" style="text-transform:uppercase"></label><label>Direction<select data-k="cd"><option${c.dir === "Long" ? " selected" : ""}>Long</option><option${c.dir === "Short" ? " selected" : ""}>Short</option></select></label><label>Entry price ($)<input type="number" step="any" data-k="ce" value="${c.e}"></label><label>Stop-loss price ($)<input type="number" step="any" data-k="cs" value="${c.s}"></label><label>Target price ($)<input type="number" step="any" data-k="cg" value="${c.tg}"></label><label>Position size ($), optional<input type="number" step="any" data-k="ca" value="${esc(c.amt ?? "")}" placeholder="${r ? "auto: " + Math.round(r.mode === "amount" ? r.cost : Math.floor(S.set.al * acct())) : "auto"}"></label><label style="grid-column:1/-1">Reason for entry<textarea data-k="cth" rows="3" maxlength="2000" placeholder="Why this trade? Setup, trigger, what makes you wrong.">${esc(c.th ?? "")}</textarea></label><label>Shares, optional<input type="number" step="any" data-k="cn" value="${esc(c.shs ?? "")}" placeholder="${r ? "auto: " + (r.mode === "alloc" ? r.sh : Math.round((acct() * S.set.al) / r.e)) : "auto"}"></label></div></div>
   <div class="card"><h2>Automatic calculations</h2>${
     r
@@ -520,6 +520,8 @@ document.addEventListener("click", e => {
   } else if (a === "rs") {
     S.scr = { t: "", a: Array(QS().length).fill(null) };
   } else if (a === "tj") {
+    // Daily limits (js/18h): stop for today when the max loss or max trades is reached.
+    if (dayLim() && !confirm(tr(dayLim()) + " " + tr("Add this trade anyway?"))) return;
     const r = calc();
     S.trades.push({
       id: "t" + Date.now(),
@@ -775,6 +777,8 @@ document.addEventListener("change", e => {
     else if (k === "al") S.set.al = (num(v) || 0) / 100;
     else if (k === "mr") S.set.mr = (num(v) || 0) / 100;
     else if (k === "rr") S.set.rr = num(v) || 0;
+    else if (k === "dml") S.set.dml = Math.max(0, num(v) || 0);
+    else if (k === "dmt") S.set.dmt = Math.max(0, Math.round(num(v) || 0));
     else if (k === "wp") S.wl[i].p = num(v);
     else if (k === "we") S.wl[i].e = num(v);
     else if (k === "ws") S.wl[i].s = num(v);
@@ -842,6 +846,8 @@ document.addEventListener("submit", e => {
   const v = Object.fromEntries(new FormData(e.target));
   if (!/^\d{4}-\d{2}-\d{2}$/.test(v.d || "")) return;
   if (!tk(v.t)) return;
+  if (v.d === dkey(new Date()) && dayLim() && !confirm(tr(dayLim()) + " " + tr("Add this trade anyway?")))
+    return;
   S.trades.push({
     id: "t" + Date.now(),
     d: v.d,

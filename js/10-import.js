@@ -939,7 +939,8 @@ ${rows.length > 300 ? `<p class="mut sm">${L(`Showing 300 of ${rows.length} rows
   const i = document.createElement("input");
   i.type = "file";
   i.id = "imf";
-  i.accept = ".xlsx,.xls,.csv,.tsv,.txt,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+  i.accept =
+    ".xlsx,.xls,.csv,.tsv,.txt,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
   i.className = "vh";
   i.tabIndex = -1;
   i.setAttribute("aria-hidden", "true");

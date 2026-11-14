@@ -1032,5 +1032,18 @@ window.HE_EXT = {
   "Result": "תוצאה",
   "Rules kept": "חוקים שנשמרו",
   "Sold at target. Didn't move my stop.": "מכרתי ביעד. לא הזזתי את הסטופ.",
-  "Proud of this one.": "גאה בעסקה הזאת."
+  "Proud of this one.": "גאה בעסקה הזאת.",
+  "Max loss per day ($, 0 = off)": "הפסד מקסימלי ליום ($, 0 = כבוי)",
+  "Max new trades per day (0 = off)": "מקסימום עסקאות חדשות ביום (0 = כבוי)",
+  "You reached your max loss for today. Stop for today.":
+    "הגעת להפסד המקסימלי שלך להיום. עוצרים להיום.",
+  "You reached your max trades for today. Stop for today.":
+    "הגעת למספר העסקאות המקסימלי שלך להיום. עוצרים להיום.",
+  "Add this trade anyway?": "להוסיף את העסקה בכל זאת?",
+  "Key levels (pre-market, yesterday)": "רמות מפתח (פרה-מרקט, אתמול)",
+  "Do I know the pre-market high and low and yesterday's high and low, and is my entry clear of them?":
+    "אני יודע את הגבוה והנמוך של הפרה-מרקט ושל אתמול, והכניסה שלי לא צמודה אליהם?",
+  "9 / 20 EMA (1-5 min)": "EMA 9 / 20 (1-5 דקות)",
+  "Is price on the right side of the 9 and 20 EMA on the 1 or 5-minute chart?":
+    "המחיר בצד הנכון של EMA 9 ו-20 בגרף של 1 או 5 דקות?"
 };

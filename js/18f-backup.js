@@ -76,7 +76,8 @@ async function bkRead(f) {
       d = j && j.app === "TradeInk" && j.data && typeof j.data === "object" ? j.data : j;
     if (!d || typeof d !== "object" || !Array.isArray(d.trades)) throw 0;
     const n = clean(d),
-      at = j && typeof j.at === "string" && /^\d{4}-\d{2}-\d{2}/.test(j.at) ? j.at.slice(0, 10) : "";
+      at =
+        j && typeof j.at === "string" && /^\d{4}-\d{2}-\d{2}/.test(j.at) ? j.at.slice(0, 10) : "";
     BK = { name: String(f.name || "").slice(0, 120), at, n, c: bkCount(n) };
   } catch (e) {
     BK = { err: 1, name: String((f && f.name) || "").slice(0, 120) };
@@ -175,7 +176,8 @@ document.addEventListener("change", e => {
 
 // Keyboard: Enter or Space on a "choose file" label opens the file window (Import and Backup cards).
 document.addEventListener("keydown", e => {
-  const l = e.target && e.target.closest && e.target.closest('label.bl[for="imf"], label.bl[for="bkf"]');
+  const l =
+    e.target && e.target.closest && e.target.closest('label.bl[for="imf"], label.bl[for="bkf"]');
   if (!l || (e.key !== "Enter" && e.key !== " ")) return;
   e.preventDefault();
   const i = document.getElementById(l.htmlFor);

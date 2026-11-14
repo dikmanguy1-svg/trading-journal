@@ -340,7 +340,10 @@ function clean(d) {
       pf: n(d.set?.pf) || 10000,
       al: n(d.set?.al) ?? 0.1,
       mr: n(d.set?.mr) ?? 0.01,
-      rr: n(d.set?.rr) ?? 2
+      rr: n(d.set?.rr) ?? 2,
+      // Daily limits (js/18h): max loss per day in $, max new trades per day. 0 = off.
+      dml: Math.max(0, n(d.set?.dml) || 0),
+      dmt: Math.max(0, Math.round(n(d.set?.dmt) || 0))
     },
     qp: q1,
     qs: q2,
