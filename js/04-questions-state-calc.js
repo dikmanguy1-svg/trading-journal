@@ -343,7 +343,8 @@ function clean(d) {
       rr: n(d.set?.rr) ?? 2,
       // Daily limits (js/18h): max loss per day in $, max new trades per day. 0 = off.
       dml: Math.max(0, n(d.set?.dml) || 0),
-      dmt: Math.max(0, Math.round(n(d.set?.dmt) || 0))
+      dmt: Math.max(0, Math.round(n(d.set?.dmt) || 0)),
+      dmc: Math.max(0, Math.round(n(d.set?.dmc) || 0))
     },
     qp: q1,
     qs: q2,
@@ -434,6 +435,10 @@ function clean(d) {
         ls: t(x?.ls),
         xr: t(x?.xr),
         rk: x?.rk === "y" || x?.rk === "n" ? x.rk : "",
+        // Day trader tools (15.11, js/18j): entry/exit time and mistake tags.
+        tm: /^\d{2}:\d{2}$/.test(x?.tm) ? x.tm : "",
+        xt: /^\d{2}:\d{2}$/.test(x?.xt) ? x.xt : "",
+        mk: Array.isArray(x?.mk) ? x.mk.filter(v => /^[a-z]{1,10}$/.test(v)).slice(0, 10) : [],
         rb: Array.isArray(x?.rb) ? x.rb.filter(v => /^[\w-]{1,40}$/.test(v)).slice(0, 10) : []
       }))
       .filter(x => x.e != null && x.sh != null),

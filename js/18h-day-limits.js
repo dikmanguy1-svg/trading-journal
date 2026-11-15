@@ -26,6 +26,9 @@ function dayLim() {
     s = dayStats();
   if (L.dml > 0 && s.pl <= -L.dml) return "You reached your max loss for today. Stop for today.";
   if (L.dmt > 0 && s.n >= L.dmt) return "You reached your max trades for today. Stop for today.";
+  // Losses in a row today (js/18j).
+  if (L.dmc > 0 && typeof ddStreak === "function" && ddStreak() >= L.dmc)
+    return "You reached your losses in a row for today. Stop for today.";
   return "";
 }
 // A red note for the calculator when a limit is reached.

@@ -72,17 +72,17 @@ function tpDraw(first) {
 <label class="tpf"><span>Ticker</span><input data-tp="t" maxlength="10" value="${esc(t.t)}" style="text-transform:uppercase"></label>
 <label class="tpf"><span>Direction</span><select data-tp="dir"><option value="Long"${t.dir !== "Short" ? " selected" : ""}>Long</option><option value="Short"${t.dir === "Short" ? " selected" : ""}>Short</option></select></label>
 ${tpNum("Entry price", t.e, t.id, "te")}${tpNum("Stop", t.s, t.id, "ts")}${tpNum("Target", t.tg, t.id, "tg")}${tpNum("Shares", t.sh, t.id, "tsh")}
-<label class="tpf"><span>Mindset (1-5)</span><select data-tp="m"><option value="">–</option>${[1, 2, 3, 4, 5].map(n => `<option${t.m === n ? " selected" : ""}>${n}</option>`).join("")}</select></label>
+<label class="tpf"><span>Mindset (1-5)</span><select data-tp="m"><option value="">–</option>${[1, 2, 3, 4, 5].map(n => `<option${t.m === n ? " selected" : ""}>${n}</option>`).join("")}</select></label>${ddShowTimes(t) ? ddTimeField(t, "tm", "Entry time") : ""}
 </div>
 <p class="tpk"><span><small>Size</small> <b data-nt>${$f(c, 0)}</b> <small class="mut" data-nt>${((c / acct()) * 100).toFixed(1)}%</small></span><span><small>Risk $</small> <b data-nt>${rsk == null ? "–" : $f(rsk, 0)}</b></span><span><small>Plan R:R</small> <b data-nt>${rv == null ? "–" : rv.toFixed(1)}</b></span>${o ? `<span><small>Current price</small> <b data-nt>${now == null ? "–" : $f(now, 2)}</b></span>` : ""}</p>
 <label class="tpw"><span>Why I entered</span><textarea data-k="tth" data-id="${t.id}" rows="3" maxlength="2000" placeholder="Why did you take this trade?">${esc(t.th || "")}</textarea></label></section>
 ${
   o
     ? `<section class="tps"><h3>The exit</h3><p class="mut">The trade is still open.</p><button type="button" class="tpcl" data-a="cl" data-id="${t.id}">Close this trade</button></section>`
-    : `<section class="tps"><h3>The exit</h3><div class="tpg">${tpNum("Exit price", t.x, t.id, "tx")}<label class="tpf"><span>Exit date</span><input type="text" readonly class="dpk" data-k="txd" data-id="${t.id}" value="${esc(t.xd || "")}" placeholder="Set date"></label><label class="tpf"><span>Exit type</span><select data-k="trs" data-id="${t.id}"><option value="">Choose</option>${RSL.map(x => `<option${t.rs === x ? " selected" : ""}>${x}</option>`).join("")}</select></label></div>
+    : `<section class="tps"><h3>The exit</h3><div class="tpg">${tpNum("Exit price", t.x, t.id, "tx")}${ddShowTimes(t) ? ddTimeField(t, "xt", "Exit time") : ""}<label class="tpf"><span>Exit date</span><input type="text" readonly class="dpk" data-k="txd" data-id="${t.id}" value="${esc(t.xd || "")}" placeholder="Set date"></label><label class="tpf"><span>Exit type</span><select data-k="trs" data-id="${t.id}"><option value="">Choose</option>${RSL.map(x => `<option${t.rs === x ? " selected" : ""}>${x}</option>`).join("")}</select></label></div>
 <label class="tpw"><span>Why I exited</span><textarea data-k="txr" data-id="${t.id}" rows="2" maxlength="2000" placeholder="Why did you close it? Stop, target, plan changed, fear...">${esc(t.xr || "")}</textarea></label>
 <label class="tpw"><span>What I learned</span><textarea data-tp="ls" rows="2" maxlength="2000" placeholder="Write it in your own words…">${esc(t.ls || "")}</textarea></label>
-<div class="tpw"><span>My rules</span>${rkUI(t)}</div></section>`
+${ddMistakes(t)}<div class="tpw"><span>My rules</span>${rkUI(t)}</div></section>`
 }
 <div class="tpft">${coAskBtn(t)}${o ? "" : `<button type="button" class="gh sm" data-a="ro" data-id="${t.id}">Reopen</button>`}<button type="button" class="gh sm tpdel" data-a="dl" data-id="${t.id}">Delete</button><span class="tpsp"></span><button type="button" class="tpok" data-tpx>Done</button></div>
 </div>`;
@@ -157,6 +157,7 @@ document.addEventListener("change", e => {
     } else if (k === "dir") t.dir = v === "Short" ? "Short" : "Long";
     else if (k === "m") t.m = v ? Math.min(5, Math.max(1, +v)) : null;
     else if (k === "ls") t.ls = v.slice(0, 2000);
+    else if (k === "tm" || k === "xt") t[k] = /^\d{2}:\d{2}$/.test(v) ? v : "";
     save();
     view();
   }

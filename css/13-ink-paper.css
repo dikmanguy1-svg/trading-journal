@@ -761,3 +761,134 @@ button.tpok {
   font-weight: 400;
   font-size: 20px;
 }
+
+/* ---- Day trader tools (js/18j): mistake buttons and the "Day trading" dashboard card ---- */
+.ddmk {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+button.ddm {
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  background: transparent;
+  color: inherit;
+  border: 1.5px dashed rgba(15, 38, 32, 0.3);
+  box-shadow: none;
+}
+button.ddm:hover {
+  border-style: solid;
+  border-color: #b3261e;
+}
+button.ddm.on {
+  background: #f3c9c4;
+  border: 1.5px solid #b3261e;
+  color: #7a1712;
+}
+.dd {
+  margin-bottom: 16px;
+}
+.dd h2 {
+  margin-top: 0;
+}
+.ddtoday {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 26px;
+  margin: 6px 0 14px;
+}
+.ddtoday > span:not(.ddst),
+.ddh span {
+  display: flex;
+  flex-direction: column;
+}
+.ddtoday small,
+.ddh small {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--mut);
+}
+.ddtoday b,
+.ddh b {
+  font-size: 22px;
+}
+.ddst {
+  flex: 1 1 260px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-weight: 600;
+  font-size: 14px;
+}
+.ddst.ok {
+  background: rgba(29, 122, 76, 0.12);
+  color: #1d5a3c;
+}
+.ddst.no {
+  background: #f3c9c4;
+  color: #7a1712;
+}
+.ddg {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 26px;
+}
+.ddg h3 {
+  margin: 0 0 8px;
+  font-size: 14px;
+}
+.ddb {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.ddr {
+  display: grid;
+  grid-template-columns: 74px minmax(0, 1fr) 70px 24px;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+.ddl {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ddr b {
+  text-align: end;
+}
+.ddt {
+  height: 12px;
+  border-radius: 6px;
+  background: rgba(15, 38, 32, 0.07);
+  overflow: hidden;
+}
+.ddt i {
+  display: block;
+  height: 100%;
+  border-radius: 6px;
+}
+.ddt i.pos {
+  background: #2f9e64;
+}
+.ddt i.neg {
+  background: #d0503f;
+}
+.ddh {
+  display: flex;
+  gap: 30px;
+  margin: 0 0 6px;
+}
+.ddn {
+  margin: 0;
+  font-size: 13px;
+}
+@media (max-width: 760px) {
+  .ddg {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ddr {
+    grid-template-columns: 64px minmax(0, 1fr) 64px 20px;
+  }
+}
