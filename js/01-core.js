@@ -98,6 +98,30 @@ const LSQ = [
 ];
 // True when the only chosen profile is long-term investor.
 const ltOnly = () => !!(S.prof && S.prof.length && S.prof.every(p => p === "lt"));
+// Which questions and tab names fit the profile (15.11): "lt" long-term only, "day" day trader
+// only, "sw" swing (also when day and swing are both chosen, or nothing is chosen yet).
+const qMode = () =>
+  ltOnly() ? "lt" : S.prof && S.prof.length && S.prof.every(p => p === "day") ? "day" : "sw";
+// Daily pulse questions for day traders: before the market opens.
+const DPQ = [
+  "Did I sleep well, and am I calm, not trading out of anger, boredom or FOMO?",
+  "Did I check today's news and economic calendar (CPI, Fed, big earnings)?",
+  "Do I know the market's direction today (S&P 500 / Nasdaq futures, above or below VWAP)?",
+  "Did I mark the key levels (pre-market high/low, yesterday's high, low and close)?",
+  "Do I know my max loss and max number of trades for today?",
+  "Do I have a short watchlist (3 to 5 stocks) with a plan for each one?"
+];
+// Setup check before every entry, for day traders.
+const DSQ = [
+  "Is the stock in play today (news, a gap, or relative volume above 2)?",
+  "Is volume high (over 1,000,000 shares a day) and the spread tight?",
+  "Is the price on the right side of VWAP for my direction?",
+  "Is this a setup from my plan (opening range breakout, pullback to 9/20 EMA, VWAP reclaim)?",
+  "Is my stop at a logical level (past a key level or the last candle's low/high)?",
+  "Is reward/risk at least 1:2 to the next key level?",
+  "Is my size inside my risk per trade?",
+  "Am I not entering in the first chaotic minutes or right before big news?"
+];
 // Trading styles.
 const STY = {
   trend: "Trend following",

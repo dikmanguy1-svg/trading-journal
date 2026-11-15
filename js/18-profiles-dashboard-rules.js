@@ -40,8 +40,14 @@ function navTabs() {
       if (!ids.includes(id)) ids.push(id);
     })
   );
-  const all = TALL(),
-    lab = t => [t[0], t[1].replace(/^\d+\.\s*/, "")];
+  // Tab names that fit the profile (15.11).
+  const NM =
+      {
+        day: { pulse: "Pre-market check", scr: "Setup check" },
+        lt: { pulse: "Check-in", scr: "Before you buy" }
+      }[qMode()] || {},
+    all = TALL(),
+    lab = t => [t[0], NM[t[0]] || t[1].replace(/^\d+\.\s*/, "")];
   return {
     main: ids
       .map(id => all.find(t => t[0] === id))

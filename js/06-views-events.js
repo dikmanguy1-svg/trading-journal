@@ -172,9 +172,9 @@ function view() {
     h = `<div class="card pfp"><div id="ltpg">${ltPageHTML()}</div></div>`;
   }
   if (tab === "pulse")
-    h = `<div class="card">${ltOnly() ? `<h2>Check-in before you invest</h2><p class="mut">Complete before every deposit or new purchase.</p>` : `<h2>Mental and macro pulse check</h2><p class="mut">Complete at the start of every trading day, before opening your trading platform.</p>`}${qblock("pulse")}${ltOnly() ? gate(S.pulse, "Ready: go ahead with your plan", "Not now: wait and check again", QP().length) : gate(S.pulse, "Approved: continue to step 2", "Stop for today: do not trade", QP().length)}<p><button class="gh sm" data-a="rp">Reset for a new day</button></p></div>`;
+    h = `<div class="card">${ltOnly() ? `<h2>Check-in before you invest</h2><p class="mut">Complete before every deposit or new purchase.</p>` : qMode() === "day" ? `<h2>Pre-market check</h2><p class="mut">Complete before the market opens, before your first trade of the day.</p>` : `<h2>Mental and macro pulse check</h2><p class="mut">Complete at the start of every trading day, before opening your trading platform.</p>`}${qblock("pulse")}${ltOnly() ? gate(S.pulse, "Ready: go ahead with your plan", "Not now: wait and check again", QP().length) : gate(S.pulse, "Approved: continue to step 2", "Stop for today: do not trade", QP().length)}<p><button class="gh sm" data-a="rp">Reset for a new day</button></p></div>`;
   if (tab === "scr")
-    h = `<div class="card"><h2>${ltOnly() ? "Before you buy a stock or fund" : "Candidate stock screening"}</h2><div class="f" style="max-width:260px;margin:8px 0"><label>Ticker<input data-k="st" value="${esc(S.scr.t)}" style="text-transform:uppercase"></label></div>${qblock("scr")}${ltOnly() ? gate(S.scr.a, "All your answers are “Yes”: it matches your own plan", "Not yet: every answer should be “Yes”", QS().length) : gate(S.scr.a, "All your criteria are met: continue to step 3, risk calculator", "Not all your criteria are met (each must be “Yes”)", QS().length)}<p><button class="gh sm" data-a="rs">Screen another stock</button></p></div>`;
+    h = `<div class="card"><h2>${ltOnly() ? "Before you buy a stock or fund" : qMode() === "day" ? "Setup check before entry" : "Candidate stock screening"}</h2><div class="f" style="max-width:260px;margin:8px 0"><label>Ticker<input data-k="st" value="${esc(S.scr.t)}" style="text-transform:uppercase"></label></div>${qblock("scr")}${ltOnly() ? gate(S.scr.a, "All your answers are “Yes”: it matches your own plan", "Not yet: every answer should be “Yes”", QS().length) : gate(S.scr.a, "All your criteria are met: continue to step 3, risk calculator", "Not all your criteria are met (each must be “Yes”)", QS().length)}<p><button class="gh sm" data-a="rs">Screen another stock</button></p></div>`;
   if (tab === "calc") {
     const r = calc(),
       p = S.set,
@@ -671,12 +671,12 @@ document.addEventListener("click", e => {
   } else if (a === "stp") {
     if (!PRN[id]) return;
     S.prof = S.prof || [];
-    const w = ltOnly(),
+    const w = qMode(),
       j = S.prof.indexOf(id);
     if (j >= 0) S.prof.splice(j, 1);
     else S.prof.push(id);
     S.st.type = S.prof.find(p => STP[p]) || "";
-    if (w !== ltOnly()) {
+    if (w !== qMode()) {
       if (!S.qp) fixA("pulse");
       if (!S.qs) fixA("scr");
     }

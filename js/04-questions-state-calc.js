@@ -16,8 +16,9 @@
 // Which question list is being edited (null = none).
 let edq = null;
 // The current pulse / screening questions (the user's own, or the defaults).
-const QP = () => (S.qp && S.qp.length ? S.qp : ltOnly() ? LPQ : PQ),
-  QS = () => (S.qs && S.qs.length ? S.qs : ltOnly() ? LSQ : SQ);
+// Defaults fit the profile: long-term, day trader or swing (qMode in js/01).
+const QP = () => (S.qp && S.qp.length ? S.qp : { lt: LPQ, day: DPQ, sw: PQ }[qMode()]),
+  QS = () => (S.qs && S.qs.length ? S.qs : { lt: LSQ, day: DSQ, sw: SQ }[qMode()]);
 // The editable copy of a question list.
 function qarr(id) {
   if (id === "pulse") {

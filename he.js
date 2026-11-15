@@ -101,6 +101,40 @@ window.HE_EXT = {
   "High contrast": "ניגודיות גבוהה",
   "Underline links": "קו תחתון לקישורים",
   "Reduce motion": "הפחתת אנימציות",
+  "Pre-market check": "בדיקה לפני הפתיחה",
+  "Setup check": "בדיקת סטאפ",
+  "Check-in": "בדיקה לפני השקעה",
+  "Before you buy": "לפני שקונים",
+  "Complete before the market opens, before your first trade of the day.":
+    "השלם לפני פתיחת השוק, לפני העסקה הראשונה של היום.",
+  "Setup check before entry": "בדיקת סטאפ לפני כניסה",
+  "Did I sleep well, and am I calm, not trading out of anger, boredom or FOMO?":
+    "ישנתי טוב ואני רגוע, לא סוחר מתוך כעס, שעמום או פחד לפספס?",
+  "Did I check today's news and economic calendar (CPI, Fed, big earnings)?":
+    "בדקתי את החדשות והיומן הכלכלי של היום (מדד המחירים, הפד, דוחות גדולים)?",
+  "Do I know the market's direction today (S&P 500 / Nasdaq futures, above or below VWAP)?":
+    "אני יודע מה כיוון השוק היום (חוזים של S&P 500 / נאסד״ק, מעל או מתחת ל-VWAP)?",
+  "Did I mark the key levels (pre-market high/low, yesterday's high, low and close)?":
+    "סימנתי את רמות המפתח (גבוה/נמוך של טרום המסחר, הגבוה, הנמוך והסגירה של אתמול)?",
+  "Do I know my max loss and max number of trades for today?":
+    "אני יודע מה ההפסד המקסימלי ומספר העסקאות המקסימלי שלי להיום?",
+  "Do I have a short watchlist (3 to 5 stocks) with a plan for each one?":
+    "יש לי רשימת מעקב קצרה (3 עד 5 מניות) עם תוכנית לכל אחת?",
+  "Is the stock in play today (news, a gap, or relative volume above 2)?":
+    "המניה בתנועה היום (חדשות, פער פתיחה, או נפח יחסי מעל 2)?",
+  "Is volume high (over 1,000,000 shares a day) and the spread tight?":
+    "יש נפח מסחר גבוה (מעל מיליון מניות ביום) והמרווח צר?",
+  "Is the price on the right side of VWAP for my direction?":
+    "המחיר בצד הנכון של ה-VWAP לכיוון שלי?",
+  "Is this a setup from my plan (opening range breakout, pullback to 9/20 EMA, VWAP reclaim)?":
+    "זה סטאפ מהתוכנית שלי (פריצת טווח הפתיחה, תיקון לממוצע 9/20, חזרה מעל VWAP)?",
+  "Is my stop at a logical level (past a key level or the last candle's low/high)?":
+    "הסטופ שלי ברמה הגיונית (מעבר לרמת מפתח או לנמוך/גבוה של הנר האחרון)?",
+  "Is reward/risk at least 1:2 to the next key level?":
+    "יחס הסיכוי לסיכון לפחות 1:2 עד רמת המפתח הבאה?",
+  "Is my size inside my risk per trade?": "גודל הפוזיציה בתוך הסיכון לעסקה שלי?",
+  "Am I not entering in the first chaotic minutes or right before big news?":
+    "אני לא נכנס בדקות הראשונות הכאוטיות או רגע לפני חדשות גדולות?",
   "Entry time": "שעת כניסה",
   "Exit time": "שעת יציאה",
   "Mistakes in this trade": "טעויות בעסקה הזו",
