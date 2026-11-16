@@ -64,6 +64,14 @@ function fxMoney(v, c) {
     return Math.round(v).toLocaleString() + " " + (c || fxD().cur);
   }
 }
+// "Israeli New Shekel" / "שקל חדש" (the browser knows the names in each language).
+function fxName(c) {
+  try {
+    return new Intl.DisplayNames([LANG === "he" ? "he" : "en"], { type: "currency" }).of(c);
+  } catch (e) {
+    return c;
+  }
+}
 const fxSign = (v, c) => (v > 0 ? "+" : v < 0 ? "−" : "") + fxMoney(Math.abs(v), c);
 // The whole account now, in $ (like the top card: account + open trades + long-term).
 function fxVal() {
@@ -194,7 +202,7 @@ function fxPage() {
     .join("");
   return `<div class="card fxp" id="fxp"><p class="hk" aria-hidden="true">money in, money out —</p><h2>Deposits, withdrawals and currency</h2>
 <p class="mut">Write each time you moved money into or out of your trading account. Don't remember the rate? Leave it empty and we fill in the rate of that day.</p>
-<div class="f fxset"><label>Home currency<select data-fx="cur">${FXC.map(x => `<option${x === c ? " selected" : ""}>${x}</option>`).join("")}</select></label><label class="chk"><input type="checkbox" data-fx="sync"${F.sync ? " checked" : ""}> <span>Account size from my deposits</span></label>${R != null ? `<p class="fxnow"><span>Rate today</span> <b data-nt>1 USD = ${R.toFixed(3)} ${c}</b></p>` : ""}</div>
+<div class="f fxset"><label>Home currency<select data-fx="cur">${FXC.map(x => `<option value="${x}"${x === c ? " selected" : ""} data-nt>${x} · ${esc(fxName(x))}</option>`).join("")}</select></label><label class="chk"><input type="checkbox" data-fx="sync"${F.sync ? " checked" : ""}> <span>Account size from my deposits</span></label>${R != null ? `<p class="fxnow"><span>Rate today</span> <b data-nt dir="ltr">1 USD = ${R.toFixed(3)} ${c}</b></p>` : ""}</div>
 <form class="f fxf" id="fxf" novalidate><label>Date<input type="date" name="d" value="${td}" max="${td}" required></label><label>Type<select name="k"><option value="d">Deposit</option><option value="w">Withdrawal</option></select></label><label>Amount ($)<input type="number" name="a" step="any" min="0" inputmode="decimal" required placeholder="20000"></label><label>Rate (optional)<input type="number" name="r" step="any" min="0" inputmode="decimal" placeholder="Auto"></label><button type="submit">Add</button></form>
 ${fxErr ? `<p class="neg fxer">${fxErr}</p>` : ""}
 ${F.d.length ? `<div class="wrap fxw"><table class="fxt2"><thead><tr><th>Date</th><th>Type</th><th>Amount ($)</th><th>Rate</th><th data-nt>${esc(tr("In") + " " + c)}</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>${fxDash()}` : `<p class="mut fxe">No deposits yet. Add your first one above.</p>`}</div>`;

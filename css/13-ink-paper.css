@@ -1001,3 +1001,71 @@ button.lnk {
     flex: 1 1 100%;
   }
 }
+
+/* ---- The TradeInk drop-down list (js/18l-select.js), instead of the computer's gray list ---- */
+.selw {
+  position: fixed;
+  z-index: 3000;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 6px;
+  background: #fbf8f1;
+  color: #0f2620;
+  border: 1.5px solid rgba(124, 92, 230, 0.45);
+  border-radius: 16px;
+  box-shadow: 0 22px 48px -18px rgba(8, 22, 18, 0.55);
+  font-size: 14.5px;
+  animation: selIn 0.12s ease-out;
+}
+.selw [role="option"] {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px 8px 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-weight: 500;
+}
+[dir="rtl"] .selw [role="option"] {
+  padding: 8px 8px 8px 12px;
+}
+.selw [role="option"].hi {
+  background: rgba(184, 164, 255, 0.35);
+}
+.selw [role="option"][aria-selected="true"] {
+  font-weight: 700;
+  color: #4a2fb0;
+}
+.selw [role="option"][aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: default;
+}
+.selc {
+  width: 16px;
+  flex: none;
+  text-align: center;
+  color: #7c5ce6;
+  font-weight: 800;
+}
+.selw::-webkit-scrollbar {
+  width: 8px;
+}
+.selw::-webkit-scrollbar-thumb {
+  background: rgba(124, 92, 230, 0.35);
+  border-radius: 8px;
+}
+@keyframes selIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .selw {
+    animation: none;
+  }
+}
+:root.ay-m .selw {
+  animation: none;
+}
