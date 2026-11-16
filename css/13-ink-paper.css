@@ -892,3 +892,112 @@ button.ddm.on {
     grid-template-columns: 64px minmax(0, 1fr) 64px 20px;
   }
 }
+
+/* ---- Deposits, withdrawals and currency (js/18k) ---- */
+.fxp {
+  margin-top: 16px;
+}
+.fxset {
+  align-items: end;
+}
+.fxset .chk {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+.fxnow {
+  margin: 0;
+  align-self: center;
+  font-size: 14px;
+}
+.fxnow span {
+  color: var(--mut);
+  font-weight: 700;
+}
+.fxf {
+  align-items: end;
+  margin-top: 12px;
+}
+.fxw .fxt2 {
+  min-width: 560px;
+}
+.fxri {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.fxri input {
+  width: 96px;
+}
+.fxd {
+  margin-bottom: 16px;
+}
+.fxp .fxd {
+  margin: 14px 0 0;
+  box-shadow: none;
+  border: 1.5px dashed var(--line);
+}
+.fxd h2 {
+  margin-top: 0;
+}
+.fxs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  margin: 10px 0;
+}
+.fxs > div {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 16px;
+  border-radius: 16px;
+  background: rgba(var(--rgb, 15, 38, 32), 0.05);
+  min-width: 150px;
+}
+.fxs .fxt {
+  background: rgba(184, 164, 255, 0.3);
+}
+.fxs small,
+.fxk small {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--mut);
+}
+.fxs b {
+  font-size: 24px;
+}
+.fxop {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--mut);
+}
+.fxk {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 22px;
+  margin: 0;
+  font-size: 14px;
+}
+button.lnk {
+  padding: 0;
+  margin-top: 4px;
+  background: none;
+  border: 0;
+  box-shadow: none;
+  color: #5a3fc0;
+  font-size: 12.5px;
+  font-weight: 700;
+  text-decoration: underline;
+}
+:root:not(.th-l) .card button.lnk {
+  color: #5a3fc0;
+}
+@media (max-width: 640px) {
+  .fxop {
+    display: none;
+  }
+  .fxs > div {
+    flex: 1 1 100%;
+  }
+}

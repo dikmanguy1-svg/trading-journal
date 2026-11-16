@@ -366,6 +366,27 @@ function clean(d) {
     bd: Array.isArray(d.bd) ? d.bd.map(x => t(x, 20)).slice(0, 30) : null,
     pulse: Array.from({ length: (q1 || PQ).length }, (_, i) => yn(d.pulse, i)),
     pd: /^\d{4}-\d{2}-\d{2}$/.test(String(d.pd || "")) ? d.pd : "",
+    // Deposits, withdrawals and currency (js/18k): home currency, sync, rows.
+    ...(d.fx && typeof d.fx === "object"
+      ? {
+          fx: {
+            cur: /^[A-Z]{3}$/.test(d.fx.cur) ? d.fx.cur : "ILS",
+            sync: d.fx.sync !== false,
+            d: (Array.isArray(d.fx.d) ? d.fx.d : [])
+              .filter(r => r && /^\d{4}-\d{2}-\d{2}$/.test(r.d) && +r.a > 0)
+              .slice(0, 500)
+              .map(r => ({
+                id: t(r.id, 20) || "x" + Math.random().toString(36).slice(2, 9),
+                d: r.d,
+                k: r.k === "w" ? "w" : "d",
+                a: Math.min(+r.a, 1e12),
+                r: +r.r > 0 ? +r.r : null,
+                m: !!r.m && +r.r > 0,
+                c: /^[A-Z]{3}$/.test(r.c) ? r.c : ""
+              }))
+          }
+        }
+      : {}),
     // Monthly report (js/18g): what I learned per month, and open-trade prices on the month's first visit.
     mbl: Object.fromEntries(
       Object.entries(d.mbl && typeof d.mbl === "object" ? d.mbl : {})

@@ -169,7 +169,8 @@ function view() {
   if (tab === "scan") h = scanPage();
   if (tab === "pf") {
     ltOpen = false;
-    h = `<div class="card pfp"><div id="ltpg">${ltPageHTML()}</div></div>`;
+    h = `<div class="card pfp"><div id="ltpg">${ltPageHTML()}</div></div>${fxPage()}`;
+    fxLoad();
   }
   if (tab === "pulse")
     h = `<div class="card">${ltOnly() ? `<h2>Check-in before you invest</h2><p class="mut">Complete before every deposit or new purchase.</p>` : qMode() === "day" ? `<h2>Pre-market check</h2><p class="mut">Complete before the market opens, before your first trade of the day.</p>` : `<h2>Mental and macro pulse check</h2><p class="mut">Complete at the start of every trading day, before opening your trading platform.</p>`}${qblock("pulse")}${ltOnly() ? gate(S.pulse, "Ready: go ahead with your plan", "Not now: wait and check again", QP().length) : gate(S.pulse, "Approved: continue to step 2", "Stop for today: do not trade", QP().length)}<p><button class="gh sm" data-a="rp">Reset for a new day</button></p></div>`;
@@ -179,7 +180,7 @@ function view() {
     const r = calc(),
       p = S.set,
       c = S.calc;
-    h = `<div class="two"><div class="card"><details id="ds"${setOpen ? " open" : ""}><summary>Account and risk settings</summary><p class="mut" style="margin:8px 0 0">Current account <b>${$f(acct())}</b> (starting size plus closed-trade P&amp;L) · Invested <b>${$f(inv() + ltInvC())}</b> · Free cash <b class="${cash() < 0 ? "neg" : ""}">${$f(cash())}</b></p><div class="f" style="margin-top:10px"><label>Starting account size ($)<input type="number" data-k="pf" value="${p.pf}"></label><label>Allocation per position (%)<input type="number" step="any" data-k="al" value="${p.al * 100}"></label><label>Max $ risk per trade (% of account)<input type="number" step="any" data-k="mr" value="${p.mr * 100}"></label><label>Minimum R:R<input type="number" step="any" data-k="rr" value="${p.rr}"></label>${isDayTr() ? `<label>Max loss per day ($, 0 = off)<input type="number" step="any" min="0" data-k="dml" value="${p.dml || 0}"></label><label>Max new trades per day (0 = off)<input type="number" step="1" min="0" data-k="dmt" value="${p.dmt || 0}"></label><label>Stop after losses in a row today (0 = off)<input type="number" step="1" min="0" data-k="dmc" value="${p.dmc || 0}"></label>` : ""}</div></details>${dayLimMsg()}
+    h = `<div class="two"><div class="card"><details id="ds"${setOpen ? " open" : ""}><summary>Account and risk settings</summary><p class="mut" style="margin:8px 0 0">Current account <b>${$f(acct())}</b> (starting size plus closed-trade P&amp;L) · Invested <b>${$f(inv() + ltInvC())}</b> · Free cash <b class="${cash() < 0 ? "neg" : ""}">${$f(cash())}</b></p><div class="f" style="margin-top:10px"><label>Starting account size ($)<input type="number" data-k="pf" value="${p.pf}"${S.fx && S.fx.sync && S.fx.d.length ? ` disabled aria-describedby="pfx"` : ""}>${S.fx && S.fx.sync && S.fx.d.length ? `<small class="mut" id="pfx">From your deposits. <button type="button" class="lnk" data-t="pf">Deposits and currency</button></small>` : `<small><button type="button" class="lnk" data-t="pf">Deposits and currency</button></small>`}</label><label>Allocation per position (%)<input type="number" step="any" data-k="al" value="${p.al * 100}"></label><label>Max $ risk per trade (% of account)<input type="number" step="any" data-k="mr" value="${p.mr * 100}"></label><label>Minimum R:R<input type="number" step="any" data-k="rr" value="${p.rr}"></label>${isDayTr() ? `<label>Max loss per day ($, 0 = off)<input type="number" step="any" min="0" data-k="dml" value="${p.dml || 0}"></label><label>Max new trades per day (0 = off)<input type="number" step="1" min="0" data-k="dmt" value="${p.dmt || 0}"></label><label>Stop after losses in a row today (0 = off)<input type="number" step="1" min="0" data-k="dmc" value="${p.dmc || 0}"></label>` : ""}</div></details>${dayLimMsg()}
   <h2 style="margin-top:16px">Planned trade</h2><div class="f"><label>Ticker<input data-k="ct" value="${esc(c.t)}" style="text-transform:uppercase"></label><label>Direction<select data-k="cd"><option${c.dir === "Long" ? " selected" : ""}>Long</option><option${c.dir === "Short" ? " selected" : ""}>Short</option></select></label><label>Entry price ($)<input type="number" step="any" data-k="ce" value="${c.e}"></label><label>Stop-loss price ($)<input type="number" step="any" data-k="cs" value="${c.s}"></label><label>Target price ($)<input type="number" step="any" data-k="cg" value="${c.tg}"></label><label>Position size ($), optional<input type="number" step="any" data-k="ca" value="${esc(c.amt ?? "")}" placeholder="${r ? "auto: " + Math.round(r.mode === "amount" ? r.cost : Math.floor(S.set.al * acct())) : "auto"}"></label><label style="grid-column:1/-1">Reason for entry<textarea data-k="cth" rows="3" maxlength="2000" placeholder="Why this trade? Setup, trigger, what makes you wrong.">${esc(c.th ?? "")}</textarea></label><label>Shares, optional<input type="number" step="any" data-k="cn" value="${esc(c.shs ?? "")}" placeholder="${r ? "auto: " + (r.mode === "alloc" ? r.sh : Math.round((acct() * S.set.al) / r.e)) : "auto"}"></label></div></div>
   <div class="card"><h2>Automatic calculations</h2>${
     r
@@ -333,7 +334,8 @@ function view() {
       )
       .join("");
     // Day traders: the "Day trading" card first (js/18j).
-    h = dayDash() + h;
+    h = dayDash() + fxDash() + h;
+    if (S.fx && S.fx.d.length) fxLoad();
   }
   if (tab === "mon") {
     const cl = S.trades.filter(t => t.x != null),
