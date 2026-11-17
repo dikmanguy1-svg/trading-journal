@@ -8,7 +8,8 @@
  *   Variable GEMINI_MODEL     – model name from Google AI Studio
  *   Variable MAX_MSG, MAX_IMG, MAX_GLOBAL – daily limits (per user, per user, whole site)
  *   KV binding USAGE          – stores the daily counters (only numbers, never content)
- *   Secret   FINNHUB_API_KEY  – market facts for Wick, and live prices for the journal (GET /px, 13.11)
+ *   Secret   FINNHUB_API_KEY  – market facts for Wick, live prices (GET /px, 13.11), earnings dates (GET /earn)
+ *                              and news headlines (GET /news) for the journal (17.11)
  * To switch to Claude later: replace callModel() only.
  */
 
@@ -292,6 +293,146 @@ async function prices(req, env, ch) {
   return json(200, { p, old, miss: s.filter(t => p[t] == null), busy }, ch);
 }
 
+/* ---------- earnings dates and news headlines for the journal (17.11) ----------
+ * GET /earn?s=AAPL,MSFT  (up to 40) – next 30 days of earnings reports from Finnhub /calendar/earnings.
+ *   Returns { e: [{ s, d, h: "bmo"|"amc"|"", eps, q }] }. The whole calendar is fetched once and kept
+ *   12 hours (in KV, so all copies of the server share it); each request only filters it.
+ * GET /news?s=AAPL,MSFT  (up to 40) – Finnhub /company-news for the last 3 days, up to 5 headlines each.
+ * GET /news?s=_mkt                  – Finnhub /news?category=general, up to 8 headlines.
+ *   Returns { n: [{ s, t, u, src, ts }], miss: [...], busy }. Kept 3 hours per stock in KV.
+ *   Only the headline, link, source and time are sent, never the article text.
+ * Signed-in users only, same check as /px. A memory copy in front of KV saves KV reads.
+ * KV free plan: 1,000 writes a day (shared with Wick's counters). The calendar costs ~2 a day; news costs
+ * one write per stock per 3 hours, only for stocks someone actually asks about. */
+const EN_MAX = 40;        // symbols per request
+const NEWS_NEW = 15;      // new Finnhub calls per /news request (Finnhub allows 60 a minute)
+const EARN_TTL = 12 * 3600;
+const NEWS_TTL = 3 * 3600;
+const MEM = new Map();    // key -> { v, exp } (memory copy of KV)
+const MEM_WAIT = new Map(); // key -> Finnhub request already on its way
+
+// Who is asking (null = not signed in). Throws "keys" when Google's keys cannot be read.
+async function signedIn(req, env) {
+  return verifyIdToken((req.headers.get("Authorization") || "").replace(/^Bearer\s+/i, ""), env.FIREBASE_PROJECT);
+}
+// The symbols in ?s=, upper case, checked, no repeats.
+function symList(req, max) {
+  return [...new Set(String(new URL(req.url).searchParams.get("s") || "").toUpperCase().split(",").map(x => x.trim()).filter(x => PX_RE.test(x) || x === "_MKT"))].slice(0, max);
+}
+// Read a cached value: memory first, then KV. Returns undefined when there is none.
+async function cacheGet(env, key) {
+  const m = MEM.get(key);
+  if (m && m.exp > Date.now()) return m.v;
+  try {
+    const v = await env.USAGE.get(key, "json");
+    if (v != null) {
+      MEM.set(key, { v, exp: Date.now() + 10 * 60e3 }); // re-check KV every 10 minutes at most
+      return v;
+    }
+  } catch {}
+  return undefined;
+}
+// Keep a value in memory and in KV. A failed KV write (e.g. the daily limit) does not break the answer.
+async function cachePut(env, key, v, ttl) {
+  if (MEM.size > 3000) MEM.clear();
+  MEM.set(key, { v, exp: Date.now() + Math.min(ttl, 600) * 1000 });
+  try { await env.USAGE.put(key, JSON.stringify(v), { expirationTtl: ttl }); } catch (e) { console.log("cache write failed", key, String(e).slice(0, 120)); }
+}
+// One Finnhub call, shared by requests that need the same thing at the same time.
+// Returns the parsed answer, "busy" (Finnhub said too many), or null.
+function fhOnce(env, key, path) {
+  if (MEM_WAIT.has(key)) return MEM_WAIT.get(key);
+  const job = (async () => {
+    try {
+      const r = await fetch("https://finnhub.io/api/v1/" + path, { headers: { "X-Finnhub-Token": env.FINNHUB_API_KEY } });
+      if (r.status === 429) return "busy";
+      if (!r.ok) { console.log("finnhub", r.status, path.split("?")[0]); return null; }
+      return await r.json();
+    } catch { return null; }
+    finally { MEM_WAIT.delete(key); }
+  })();
+  MEM_WAIT.set(key, job);
+  return job;
+}
+const isoDay = t => new Date(t).toISOString().slice(0, 10);
+
+async function earnings(req, env, ch) {
+  let su = null;
+  try { su = await signedIn(req, env); } catch { return json(503, { e: "keys" }, ch); }
+  if (!su) return json(401, { e: "auth" }, ch);
+  if (!env.FINNHUB_API_KEY) return json(503, { e: "no key" }, ch);
+  const s = symList(req, EN_MAX).filter(x => x !== "_MKT");
+  if (!s.length) return json(400, { e: "input" }, ch);
+  let cal = await cacheGet(env, "earn:cal");
+  if (cal === undefined) {
+    const now = Date.now(), d = await fhOnce(env, "earn:cal", `calendar/earnings?from=${isoDay(now)}&to=${isoDay(now + 30 * 864e5)}`);
+    if (d === "busy") return json(503, { e: "busy" }, ch);
+    if (!d || !Array.isArray(d.earningsCalendar)) return json(502, { e: "source" }, ch);
+    // Keep only what the site needs, so the stored calendar stays small.
+    cal = d.earningsCalendar
+      .filter(e => e && e.symbol && /^\d{4}-\d{2}-\d{2}$/.test(e.date || ""))
+      .map(e => ({
+        s: String(e.symbol).toUpperCase(),
+        d: e.date,
+        h: e.hour === "bmo" || e.hour === "amc" ? e.hour : "",
+        eps: typeof e.epsEstimate === "number" && isFinite(e.epsEstimate) ? e.epsEstimate : null,
+        q: e.quarter && e.year ? `Q${e.quarter} ${e.year}` : "",
+      }));
+    await cachePut(env, "earn:cal", cal, EARN_TTL);
+  }
+  const want = new Set(s);
+  const e = cal.filter(x => want.has(x.s)).sort((a, b) => (a.d < b.d ? -1 : a.d > b.d ? 1 : a.s < b.s ? -1 : 1));
+  return json(200, { e }, ch);
+}
+
+// Headlines in the shape the site uses; only https links, no article text.
+function newsRows(arr, sym, max) {
+  return (Array.isArray(arr) ? arr : [])
+    .filter(a => a && a.headline && /^https:\/\//i.test(a.url || ""))
+    .sort((a, b) => (b.datetime || 0) - (a.datetime || 0))
+    .slice(0, max)
+    .map(a => ({ s: sym, t: String(a.headline).slice(0, 300), u: String(a.url).slice(0, 1000), src: String(a.source || "").slice(0, 60), ts: Number(a.datetime) || 0 }));
+}
+
+async function news(req, env, ch) {
+  let su = null;
+  try { su = await signedIn(req, env); } catch { return json(503, { e: "keys" }, ch); }
+  if (!su) return json(401, { e: "auth" }, ch);
+  if (!env.FINNHUB_API_KEY) return json(503, { e: "no key" }, ch);
+  const s = symList(req, EN_MAX).map(x => (x === "_MKT" ? "_mkt" : x));
+  if (!s.length) return json(400, { e: "input" }, ch);
+  const n = [], need = [];
+  for (const sym of s) {
+    const c = await cacheGet(env, "news:" + sym);
+    if (c === undefined) need.push(sym);
+    else n.push(...c);
+  }
+  const ask = need.slice(0, NEWS_NEW), miss = [];
+  let fhBusy = false;
+  const now = Date.now(), from = isoDay(now - 3 * 864e5), to = isoDay(now);
+  // Five at a time; stop asking once Finnhub says "too many" (the browser can ask again later).
+  for (let i = 0; i < ask.length; i += 5) {
+    const part = ask.slice(i, i + 5);
+    if (fhBusy) { miss.push(...part); continue; }
+    const got = await Promise.all(part.map(sym =>
+      sym === "_mkt"
+        ? fhOnce(env, "news:_mkt", "news?category=general")
+        : fhOnce(env, "news:" + sym, `company-news?symbol=${encodeURIComponent(sym)}&from=${from}&to=${to}`)
+    ));
+    for (let j = 0; j < part.length; j++) {
+      const sym = part[j], d = got[j];
+      if (d === "busy") { fhBusy = true; miss.push(sym); continue; }
+      if (d == null) { miss.push(sym); continue; }
+      const rows = newsRows(d, sym, sym === "_mkt" ? 8 : 5);
+      await cachePut(env, "news:" + sym, rows, NEWS_TTL);
+      n.push(...rows);
+    }
+  }
+  miss.push(...need.slice(NEWS_NEW));
+  // busy = some stocks were not asked this time; the browser may ask for them again in a minute.
+  return json(200, { n, miss, busy: miss.length > 0 && (fhBusy || need.length > ask.length) }, ch);
+}
+
 /* ---------- the model (swap this function to change provider) ---------- */
 async function callModel(env, inp) {
   if (!env.GEMINI_API_KEY || !env.GEMINI_MODEL) throw Object.assign(new Error("not configured"), { code: 503 });
@@ -338,6 +479,8 @@ export default {
       return new Response(data, { status: 200, headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "private, max-age=3600", ...ch } });
     }
     if (req.method === "GET" && new URL(req.url).pathname === "/px") return prices(req, env, ch);
+    if (req.method === "GET" && new URL(req.url).pathname === "/earn") return earnings(req, env, ch);
+    if (req.method === "GET" && new URL(req.url).pathname === "/news") return news(req, env, ch);
     if (req.method !== "POST") return json(405, { e: "method" }, ch);
     if (BLOCKED_COUNTRIES.has(String((req.cf && req.cf.country) || "").toUpperCase())) return json(451, { e: "region" }, ch);
 
