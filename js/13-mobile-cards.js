@@ -55,7 +55,7 @@ function jCards(rows) {
         const p = pnl(t) ?? fl(t),
           o = t.x == null,
           now = o ? lp(t) : null;
-        return `<article class="jc${o ? " jopen" : ""}" aria-label="${esc(t.t)}"><div class="jch"><span class="mut" data-nt>${esc(t.d)}</span><b data-n="${t.id}" role="button" tabindex="0" data-nt>${esc(t.t)}</b><span class="jdir">${t.dir}</span><span class="jpl ${p > 0 ? "pos" : p < 0 ? "neg" : ""}" data-nt>${$f(p, 2)}</span></div>
+        return `<article class="jc${o ? " jopen" : ""}" aria-label="${esc(t.t)}"><div class="jch"><span class="mut" data-nt>${esc(t.d)}</span><b data-n="${t.id}" role="button" tabindex="0" data-nt>${esc(t.t)}</b>${o ? nwTag(t.t) : ""}<span class="jdir">${t.dir}</span><span class="jpl ${p > 0 ? "pos" : p < 0 ? "neg" : ""}" data-nt>${$f(p, 2)}</span></div>
  <div class="rbox${t.th ? "" : " empty"}" data-n="${t.id}" role="button" tabindex="0">${t.th ? esc(t.th.slice(0, 90)) + (t.th.length > 90 ? "…" : "") : "Add reason"}</div>
  <div class="jkv"><div><span>Entry</span><b data-nt>${$f(t.e, 2)}</b></div><div><span>Shares</span><b data-nt>${t.sh}</b></div><div><span>${o ? "Now" : "Exit"}</span><b data-nt>${o ? (now == null ? "–" : $f(now, 2)) : $f(t.x, 2)}</b></div><div><span>R</span><b>${rCell(t)}</b></div></div>
  <div class="jact">${o ? `<button class="gh sm" data-a="cl" data-id="${t.id}">Close</button>` : ""}<button type="button" class="jopn" data-tpo="${t.id}"><span>Open the page</span> <span aria-hidden="true">›</span></button></div></article>`;
